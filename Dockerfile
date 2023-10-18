@@ -2,7 +2,7 @@ FROM node:18.12.0 as node
 
 WORKDIR /src/app
 
-COPY package.*json ./
+COPY package*.json ./
 
 RUN npm ci
 
