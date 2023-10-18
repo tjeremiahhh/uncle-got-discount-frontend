@@ -56,6 +56,60 @@
     }
 }
 
-// input {
-//     height: 120%;
-// }
+.horizontal-list {
+    overflow: hidden;
+}
+
+.home-section-restaurants {
+    position: relative;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.horizontal-list-title {
+    align-items: center;
+    color: #333;
+    display: flex;
+    font-size: 26px;
+    font-weight: 400;
+    justify-content: space-between;
+    line-height: 20px;
+    margin: auto;
+    padding: 8px 80px;
+    position: relative;
+    width: 100%;
+}
+
+.horizontal-list-title-text {
+    border-bottom: 1.5px solid #f5831f;
+    display: inline-block;
+    padding-bottom: 8px;
+    position: relative;
+}
+
+.horizontal-list-content {
+    display: flex;
+    margin: 20px auto auto;
+    padding: 0 80px;
+    position: relative;
+    width: 100%;
+    gap: 16px;
+    
+    nz-card {
+        width: 200px;
+        
+        div  {
+            padding: 10px;
+            background-color: rebeccapurple;
+        }
+    }
+
+}
+
+:host ::ng-deep .ant-card-bordered .ant-card-cover{
+    padding: 10px;
+    width: 200px;
+    height: 200px;
+}
+
+

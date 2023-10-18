@@ -4,21 +4,51 @@
       <h1>uncle got discount</h1>
 
       <div class="search-bar">
-        <input nz-input nzSize="large" type="text"/>
+        <input nz-input nzSize="large" type="text" />
         <button nz-button nzSize="large" nzType="primary">search</button>
       </div>
     </div>
 
     <nz-carousel nzAutoPlay="true" nzDots="false" nzEnableSwipe="false">
       <div nz-carousel-content class="carousel-item">
-        <img src="../../assets/images/banners/banner-1.jpg" alt="Banner 1"/>
+        <img src="../../assets/images/banners/banner-1.jpg" alt="Banner 1" />
       </div>
       <div nz-carousel-content class="carousel-item">
-        <img src="../../assets/images/banners/banner-2.jpg" alt="Banner 1"/>
+        <img src="../../assets/images/banners/banner-2.jpg" alt="Banner 1" />
       </div>
       <div nz-carousel-content class="carousel-item">
-        <img src="../../assets/images/banners/banner-3.jpg" alt="Banner 1"/>
+        <img src="../../assets/images/banners/banner-3.jpg" alt="Banner 1" />
       </div>
     </nz-carousel>
   </div>
+
+  <section class="horizontal-list home-section-restaurants">
+    <div class="horizontal-list-title">
+      <div class="horizontal-list-title-text">restaurants</div>
+    </div>
+    
+    <div class="horizontal-list-content">
+      <nz-card [nzCover]="coverTemplate" nzHoverable="true">
+        <nz-card-meta nzTitle="McDonald's" nzDescription="Singapore's No.1 Fast Food Chain"></nz-card-meta>
+      </nz-card>
+      <ng-template #coverTemplate>
+        <img alt="mcdonalds" src="../../assets/images/restaurants-logos/mcdonalds.png" />
+      </ng-template>
+
+      <nz-card [nzCover]="coverTemplate2" nzHoverable="true">
+        <nz-card-meta nzTitle="Saizeriya"
+          nzDescription="Japanese chain of family-style Italian yōshoku restaurants"></nz-card-meta>
+      </nz-card>
+      <ng-template #coverTemplate2>
+        <img alt="saizeriya" src="../../assets/images/restaurants-logos/saizeriya.png" />
+      </ng-template>
+
+      <nz-card [nzCover]="coverTemplate3" nzHoverable="true">
+        <nz-card-meta nzTitle="HaiDiLao Hotpot" nzDescription="Post clubbing supper spot"></nz-card-meta>
+      </nz-card>
+      <ng-template #coverTemplate3>
+        <img alt="haidilao" src="../../assets/images/restaurants-logos/haidilao.jpg" />
+      </ng-template>
+    </div>
+  </section>
 </main>
