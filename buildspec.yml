@@ -1,8 +1,19 @@
 version: 0.2
 
+env:
+  variables:
+    APP_NAME: "angular-cicd-pipeline-demo"
 phases:
+  install:
+    runtime-versions:
+      nodejs: 14.x
+    commands:
+      - echo install process started
+      - npm install && npm install -g @angular/cli
   pre_build:
     commands:
+      - echo build application
+      - ng build --configuration=production
       - echo Logging in to Amazon ECR...
       - aws --version
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
@@ -20,7 +31,3 @@ phases:
       - echo Writing image definitions file...
       - printf '[{"name":"uncle-got-discount-frontend","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json
-artifacts:
-  files:
-   - imagedefinitions.json
-   - dist/uncle-got-discount-frontend
