@@ -23,6 +23,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 
 import { UserOutline } from '@ant-design/icons-angular/icons';
+import { AuthenticateComponent } from './authentication/authenticate/authenticate.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { UserOutline } from '@ant-design/icons-angular/icons';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    AuthenticateComponent,
   ],
   imports: [
     BrowserModule,
