@@ -9,7 +9,7 @@ RUN npm install
 
 FROM node:alpine as main
 
-COPY --from=build . /
+COPY --from=build /usr/src/app /
 
 # RUN npm run build --prod
 
