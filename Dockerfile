@@ -1,6 +1,8 @@
-FROM node:18.12.0 as node
+# base image
+FROM node:18-alpine as node
 
-WORKDIR /src/app
+# set working directory
+WORKDIR /usr/src/app
 
 COPY package*.json ./
 
@@ -12,4 +14,4 @@ RUN npm run build --prod
 
 EXPOSE 4200
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "ng serve"]
