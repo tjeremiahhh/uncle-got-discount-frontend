@@ -6,11 +6,25 @@ import { HeaderComponent } from './layout/header/header.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzInputModule} from 'ng-zorro-antd/input'
-import { NzDividerModule} from 'ng-zorro-antd/divider'
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
+import { RegisterComponent } from './register/register.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { HttpClientModule } from '@angular/common/http'
+
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+
+import { UserOutline } from '@ant-design/icons-angular/icons';
+import { AuthenticateComponent } from './authentication/authenticate/authenticate.component';
+
 
 @NgModule({
   declarations: [
@@ -18,17 +32,30 @@ import { FooterComponent } from './layout/footer/footer.component';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
+    RegisterComponent,
+    AuthenticateComponent,
   ],
   imports: [
     BrowserModule,
     NzButtonModule,
-    AppRoutingModule, 
+    AppRoutingModule,
     NzCarouselModule,
     NzInputModule,
     NzCardModule,
     NzDividerModule,
+    NzModalModule,
+    NzFormModule,
+    NzIconModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    NzIconModule.forChild([UserOutline]),
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas, far);
+  }
+ }
