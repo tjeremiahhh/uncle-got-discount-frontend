@@ -8,7 +8,7 @@ COPY package*.json ./
 RUN npm ci
 # RUN npm install
 
-FROM node:alpine as main
+FROM node:18-alpine as main
 
 COPY --from=build /usr/dist/uncle-got-discount-frontend /
 
