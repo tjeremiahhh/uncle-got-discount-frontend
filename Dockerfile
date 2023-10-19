@@ -1,14 +1,15 @@
 # base image
-FROM node:18-alpine as node
+FROM node:18 as build
 
 # set working directory
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+RUN npm install
 
-# RUN npm ci
+FROM node:alpine as main
 
-COPY . .
+COPY --from=build . .
 
 # RUN npm run build --prod
 
