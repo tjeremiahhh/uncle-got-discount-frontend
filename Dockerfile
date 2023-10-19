@@ -2,7 +2,6 @@
 FROM node:18-alpine as node
 
 # set working directory
-RUN MKDIR /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package*.json ./
