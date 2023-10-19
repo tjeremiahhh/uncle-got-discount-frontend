@@ -11,12 +11,14 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http'
+import { FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -46,10 +48,13 @@ import { AuthenticateComponent } from './authentication/authenticate/authenticat
     NzModalModule,
     NzFormModule,
     NzIconModule,
+    NzNotificationModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NzIconModule.forChild([UserOutline]),
     FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

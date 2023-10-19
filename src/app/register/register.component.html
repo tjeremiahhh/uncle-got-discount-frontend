@@ -10,53 +10,68 @@
   <div class="w-1/2 p-6 mt-8">
     <span class="font-bold text-[32px] text-slate-800">register</span>
     <div class="mt-4">
-      <form nz-form>
+      <form nz-form [formGroup]="registerForm">
         <nz-form-item>
-          <nz-form-control>
+          <nz-form-control [nzErrorTip]="nameErrorMsgTpl">
             <nz-input-group [nzPrefix]="namePrefixTemplate">
-              <input type="text" nz-input placeholder="name" />
+              <input type="text" nz-input placeholder="name" formControlName="name" />
             </nz-input-group>
             <ng-template #namePrefixTemplate><fa-icon class="mr-2" nz-icon icon="user"></fa-icon></ng-template>
+            <ng-template #nameErrorMsgTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">Name is required</ng-container>
+            </ng-template>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control>
+          <nz-form-control [nzErrorTip]="emailErrorMsgTpl">
             <nz-input-group [nzPrefix]="emailPrefixTemplate">
-              <input type="text" nz-input placeholder="email address" />
+              <input type="text" nz-input placeholder="email address" formControlName="emailAddress" />
             </nz-input-group>
             <ng-template #emailPrefixTemplate><fa-icon class="mr-2" nz-icon icon="envelope"></fa-icon></ng-template>
+            <ng-template #emailErrorMsgTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">Email Address is required</ng-container>
+            </ng-template>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control>
+          <nz-form-control [nzErrorTip]="passwordErrorMsgTpl">
             <nz-input-group [nzPrefix]="passwordPrefixTemplate">
-              <input type="text" nz-input placeholder="password" />
+              <input type="password" nz-input placeholder="password" formControlName="password" />
             </nz-input-group>
             <ng-template #passwordPrefixTemplate><fa-icon class="mr-2" nz-icon icon="lock"></fa-icon></ng-template>
+            <ng-template #passwordErrorMsgTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">Password is required</ng-container>
+            </ng-template>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control>
-            <nz-input-group [nzPrefix]="passwordPrefixTemplate">
-              <input type="text" nz-input placeholder="re-enter password" />
+          <nz-form-control [nzErrorTip]="rePasswordErrorMsgTpl">
+            <nz-input-group [nzPrefix]="rePasswordPrefixTemplate">
+              <input type="password" nz-input placeholder="re-enter password" formControlName="rePassword" />
             </nz-input-group>
-            <ng-template #passwordPrefixTemplate><fa-icon class="mr-2" nz-icon icon="lock"></fa-icon></ng-template>
+            <ng-template #rePasswordPrefixTemplate><fa-icon class="mr-2" nz-icon icon="lock"></fa-icon></ng-template>
+            <ng-template #rePasswordErrorMsgTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">Please re-enter password</ng-container>
+            </ng-template>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control>
+          <nz-form-control [nzErrorTip]="phoneNumberErrorMsgTpl">
             <nz-input-group [nzPrefix]="mobilePrefixTemplate">
-              <input type="text" nz-input placeholder="mobile number" />
+              <input type="text" nz-input placeholder="mobile number" formControlName="phoneNumber" />
             </nz-input-group>
             <ng-template #mobilePrefixTemplate><fa-icon class="mr-2" nz-icon icon="phone"></fa-icon></ng-template>
+            <ng-template #phoneNumberErrorMsgTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">Mobile Number is required</ng-container>
+            </ng-template>
           </nz-form-control>
         </nz-form-item>
 
-        <button class="w-full" nz-button nzType="primary">register</button>
+        <button class="w-full" nz-button nzType="primary" (click)="onRegister()">register</button>
       </form>
     </div>
 
