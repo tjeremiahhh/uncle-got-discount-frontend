@@ -10,7 +10,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build --prod
+# RUN npm run build --prod
 
 EXPOSE 4200
 
