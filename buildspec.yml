@@ -4,16 +4,16 @@ env:
   variables:
     APP_NAME: "angular-cicd-pipeline-demo"
 phases:
-  # install:
-  #   runtime-versions:
-  #     nodejs: 18.x
-  #   commands:
-  #     - echo install process started
-  #     - npm install && npm install -g @angular/cli
+  install:
+    runtime-versions:
+      nodejs: 18.x
+    commands:
+      - echo install process started
+      - npm install && npm install -g @angular/cli
   pre_build:
     commands:
       - echo build application
-      # - ng build --configuration=production
+      - ng build --configuration=production
       - echo Logging in to Amazon ECR...
       - aws --version
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
