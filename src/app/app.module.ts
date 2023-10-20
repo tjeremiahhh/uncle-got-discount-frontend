@@ -14,6 +14,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -28,6 +29,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 
 import { UserOutline } from '@ant-design/icons-angular/icons';
 import { AuthenticateComponent } from './authentication/authenticate/authenticate.component';
+import { NewBusinessListingComponent } from './business-listing/new-business-listing/new-business-listing.component';
 
 
 @NgModule({
@@ -38,6 +40,7 @@ import { AuthenticateComponent } from './authentication/authenticate/authenticat
     HomeComponent,
     RegisterComponent,
     AuthenticateComponent,
+    NewBusinessListingComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,7 @@ import { AuthenticateComponent } from './authentication/authenticate/authenticat
     NzNotificationModule,
     NzDropDownModule,
     NzMenuModule,
+    NzStepsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NzIconModule.forChild([UserOutline]),
