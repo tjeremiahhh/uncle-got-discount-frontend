@@ -2,13 +2,13 @@
 FROM node:18 as build
 
 # set working directory
-WORKDIR /usr/dist/uncle-got-discount-frontend
-
+WORKDIR /app
 COPY package*.json ./
+RUN npm install
 
 FROM node:18-alpine as main
 
-COPY --from=build ./ /
+COPY --from=build /app /
 
 # RUN npm ci
 # RUN npm install
