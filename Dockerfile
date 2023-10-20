@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm install
 
 FROM node:18-alpine as main
-
+RUN npm install
 COPY --from=build /app /
 
 # RUN npm ci
