@@ -4,12 +4,12 @@ env:
   variables:
     APP_NAME: "angular-cicd-pipeline-demo"
 phases:
-  install:
-    runtime-versions:
-      nodejs: 18.x
-    commands:
-      - echo install process started
-      - npm install && npm install -g @angular/cli
+  # install:
+  #   runtime-versions:
+  #     nodejs: 18.x
+  #   commands:
+  #     - echo install process started
+  #     - npm install && npm install -g @angular/cli
   pre_build:
     commands:
       - echo build application
