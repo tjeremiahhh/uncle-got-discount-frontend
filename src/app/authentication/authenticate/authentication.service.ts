@@ -10,7 +10,7 @@ import { NzModalService } from "ng-zorro-antd/modal";
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticateService {
+export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<any>;
     public currentUser$: Observable<any>;
     private currentTokenSubject: BehaviorSubject<any>;

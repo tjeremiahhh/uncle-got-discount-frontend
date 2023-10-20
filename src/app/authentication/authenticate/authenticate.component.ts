@@ -3,7 +3,7 @@ import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { RegisterComponent } from 'src/app/register/register.component';
 import { AuthenticationRequest } from './model/authenticate.model';
-import { AuthenticateService } from './authenticate.service';
+import { AuthenticationService } from './authentication.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
@@ -18,7 +18,7 @@ export class AuthenticateComponent implements OnInit {
     private modalService : NzModalService,
     private modalRef : NzModalRef,
     private fb : FormBuilder,
-    private authenticateService : AuthenticateService,
+    private authenticationService : AuthenticationService,
     private notificationService : NzNotificationService
     
   ) {
@@ -29,7 +29,7 @@ export class AuthenticateComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log(this.authenticateService.currentUser)
+    console.log(this.authenticationService.currentUser)
   }
 
   onRegister() {
@@ -52,7 +52,7 @@ export class AuthenticateComponent implements OnInit {
       authenticationRequest.emailAddress = this.authenticateForm.get('emailAddress')?.value;
       authenticationRequest.password = this.authenticateForm.get('password')?.value;
 
-      this.authenticateService.authenticate(authenticationRequest).subscribe({
+      this.authenticationService.authenticate(authenticationRequest).subscribe({
         next: (res : any) => {
           this.notificationService.success('', "Successfully logged in!");
           this.modalRef.close();

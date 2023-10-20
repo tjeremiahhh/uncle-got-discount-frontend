@@ -30,9 +30,12 @@
     <div class="horizontal-list-content">
       <ng-container *ngIf="businessListings">
         <div *ngFor="let listing of businessListings">
-          <nz-card nzHoverable="true">
+          <nz-card [nzCover]="coverTemplate" nzHoverable="true">
             <nz-card-meta nzTitle="{{listing.outletName}}" nzDescription="{{ listing.address }}"></nz-card-meta>
           </nz-card>
+          <ng-template #coverTemplate>
+            <img alt="mcdonalds" src="../../assets/images/restaurants-logos/mcdonalds.png" />
+          </ng-template>
         </div>
       </ng-container>
 
@@ -60,4 +63,17 @@
       </ng-template> -->
     </div>
   </section>
+
+  <div class="business-banner">
+    <div class="business-content">
+      <h1>own a restaurant? join us</h1>
+      <nz-divider class="bg-[#FDC827] text-[20px]"></nz-divider>
+      <h2 class="font-normal text-[20px]">
+        Looking to fill those empty seats, especially during those times when you're not as busy? We are a restaurant
+        reservation platform which offers time-based discounts of up to 50% off, every day at all of its 4000+
+        restaurants.
+      </h2>
+      <button class="w-1/12 !h-[40px] mt-4" nz-button nzType="primary" [routerLink]="'/join-us'">join us</button>
+    </div>
+  </div>
 </main>
