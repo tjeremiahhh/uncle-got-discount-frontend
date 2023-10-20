@@ -1,21 +1,18 @@
 # base image
-FROM node:18 as build
+FROM node:18-alpine as build
 
 # set working directory
+RUN npm install -g @angular/cli
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
+COPY . .
+RUN npm run build 
 
-FROM node:18-alpine as main
-
-COPY --from=build /app /app
+FROM node:18-alpine
 WORKDIR /app
-RUN npm install
-
-# RUN npm ci
-# RUN npm install
-# RUN npm run build --prod
-
+COPY --from=build /app /app
+ENV NODE_ENV=production
 EXPOSE 4200
 
 CMD ["npm", "start"]
