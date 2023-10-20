@@ -8,11 +8,11 @@ COPY package*.json ./
 
 FROM node:18-alpine as main
 
-COPY --from=build /usr/dist/uncle-got-discount-frontend /
+COPY --from=build ./ /
 
-RUN npm ci
-RUN npm install
-RUN npm run build --prod
+# RUN npm ci
+# RUN npm install
+# RUN npm run build --prod
 
 EXPOSE 4200
 
