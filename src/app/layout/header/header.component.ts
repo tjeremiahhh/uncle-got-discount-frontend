@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { AuthenticateComponent } from 'src/app/authentication/authenticate/authenticate.component';
-import { AuthenticateService } from 'src/app/authentication/authenticate/authenticate.service';
+import { AuthenticationService } from 'src/app/authentication/authenticate/authentication.service';
 import { RegisterComponent } from 'src/app/register/register.component';
 
 @Component({
@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private modalService: NzModalService,
-    private authenticationService: AuthenticateService
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit() {
