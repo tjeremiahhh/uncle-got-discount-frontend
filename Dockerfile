@@ -11,8 +11,8 @@ RUN npm run build
 
 FROM node:18-alpine
 WORKDIR /app
-COPY --from=build /app/package.json /app
-COPY --from=build /app/dist /app/dist
+COPY --from=build /package*.json /
+COPY --from=build /dist /dist
 ENV NODE_ENV=production
 EXPOSE 4200
 
