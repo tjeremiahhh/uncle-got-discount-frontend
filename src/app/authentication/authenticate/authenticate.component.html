@@ -10,11 +10,11 @@
   <div class="w-1/2 p-6 mt-8">
     <span class="font-bold text-[32px] text-slate-800">log in</span>
     <div class="mt-4">
-      <form nz-form>
+      <form nz-form [formGroup]="authenticateForm"> 
         <nz-form-item>
           <nz-form-control>
             <nz-input-group [nzPrefix]="emailPrefixTemplate">
-              <input type="text" nz-input placeholder="email address" />
+              <input type="text" nz-input placeholder="email address" formControlName="emailAddress" />
             </nz-input-group>
             <ng-template #emailPrefixTemplate><fa-icon class="mr-2" nz-icon icon="envelope"></fa-icon></ng-template>
           </nz-form-control>
@@ -23,13 +23,13 @@
         <nz-form-item>
           <nz-form-control>
             <nz-input-group [nzPrefix]="passwordPrefixTemplate">
-              <input type="text" nz-input placeholder="password" />
+              <input type="password" nz-input placeholder="password" formControlName="password" />
             </nz-input-group>
             <ng-template #passwordPrefixTemplate><fa-icon class="mr-2" nz-icon icon="lock"></fa-icon></ng-template>
           </nz-form-control>
         </nz-form-item>
 
-        <button class="w-full" nz-button nzType="primary">log in</button>
+        <button class="w-full" nz-button nzType="primary" (click)="onLogIn()">log in</button>
       </form>
     </div>
 

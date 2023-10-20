@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { AuthenticateComponent } from 'src/app/authentication/authenticate/authenticate.component';
+import { AuthenticateService } from 'src/app/authentication/authenticate/authenticate.service';
 import { RegisterComponent } from 'src/app/register/register.component';
 
 @Component({
@@ -9,12 +10,19 @@ import { RegisterComponent } from 'src/app/register/register.component';
   styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit {
+  currentUser: any;
 
   constructor(
     private modalService: NzModalService,
+    private authenticationService: AuthenticateService
   ) { }
 
   ngOnInit() {
+    this.authenticationService.currentUser$.subscribe({
+      next: (user) => {
+        this.currentUser = user;
+      }
+    })
   }
 
   onRegister() {
@@ -39,6 +47,10 @@ export class HeaderComponent implements OnInit {
         'padding': '0'
       }
     })
+  }
+
+  onLogOut(){
+    this.authenticationService.logOut();
   }
 
 }

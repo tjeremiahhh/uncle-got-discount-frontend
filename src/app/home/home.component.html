@@ -28,7 +28,16 @@
     </div>
     
     <div class="horizontal-list-content">
-      <nz-card [nzCover]="coverTemplate" nzHoverable="true">
+      <ng-container *ngIf="businessListings">
+        <div *ngFor="let listing of businessListings">
+          <nz-card nzHoverable="true">
+            <nz-card-meta nzTitle="{{listing.outletName}}" nzDescription="{{ listing.address }}"></nz-card-meta>
+          </nz-card>
+        </div>
+      </ng-container>
+
+
+      <!-- <nz-card [nzCover]="coverTemplate" nzHoverable="true">
         <nz-card-meta nzTitle="McDonald's" nzDescription="Singapore's No.1 Fast Food Chain"></nz-card-meta>
       </nz-card>
       <ng-template #coverTemplate>
@@ -48,7 +57,7 @@
       </nz-card>
       <ng-template #coverTemplate3>
         <img alt="haidilao" src="../../assets/images/restaurants-logos/haidilao.jpg" />
-      </ng-template>
+      </ng-template> -->
     </div>
   </section>
 </main>

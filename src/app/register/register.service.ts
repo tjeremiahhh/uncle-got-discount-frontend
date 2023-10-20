@@ -8,7 +8,7 @@ import { RegisterRequest } from "./model/register.model";
     providedIn: 'root'
 })
 export class RegisterService {
-    baseUrl = "https://gew0xe9lag.execute-api.ap-southeast-1.amazonaws.com/Test1/authentication/"
+    baseUrl = "https://gew0xe9lag.execute-api.ap-southeast-1.amazonaws.com/api/authentication/"
 
     constructor(private http : HttpClient) {}
 

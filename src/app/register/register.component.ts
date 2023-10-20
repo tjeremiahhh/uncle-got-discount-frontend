@@ -60,8 +60,8 @@ export class RegisterComponent implements OnInit {
 
       this.registerService.register(registerRequest).subscribe({
         next: (res : any) => {
-          console.log(res);
           this.notificationService.success('', "Account successfully created!");
+          this.modalRef.close();
         }
       })
 

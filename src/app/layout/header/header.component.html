@@ -1,11 +1,23 @@
-<header>
+<header class="bg-[#B35340]">
   <div class="wrapper">
     <div>
       logo
     </div>
-    <nav>
-      <a (click)="onLogIn()" style="margin-right: 1em; color: #000;">log in</a>
+    <nav *ngIf="!currentUser">
+      <a (click)="onLogIn()" class="mr-4">log in</a>
       <a (click)="onRegister()">register</a>
+    </nav>
+    <nav *ngIf="currentUser">
+      <a class="mr-4" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+        {{ currentUser.name | titlecase }}
+      </a>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item>my profile</li>
+          <li nz-menu-item>my reservations</li>
+        </ul>
+      </nz-dropdown-menu>
+      <a (click)="onLogOut()">log out</a>
     </nav>
   </div>
 </header>
