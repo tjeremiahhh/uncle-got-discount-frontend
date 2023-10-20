@@ -11,7 +11,9 @@ RUN npm install
 COPY . .
 
 FROM node:18-alpine as main
-COPY --from=build /usr/src/app /
+COPY --from=build ./ /
+
+WORKDIR /usr/src/app
 # RUN npm install
 # RUN npm run build --prod
 
