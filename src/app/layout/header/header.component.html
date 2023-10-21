@@ -1,8 +1,6 @@
 <header class="bg-[#B35340]">
   <div class="wrapper">
-    <div>
-      logo
-    </div>
+    <a [routerLink]="''" class="logo"></a>
     <nav *ngIf="!currentUser">
       <a (click)="onLogIn()" class="mr-4">log in</a>
       <a (click)="onRegister()">register</a>

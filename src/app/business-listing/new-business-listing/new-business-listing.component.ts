@@ -55,7 +55,6 @@ export class NewBusinessListingComponent implements OnInit {
 
 
   onRegister() {
-    this.currentStep += 1;
     if(this.registerForm.valid) {
       let registerRequest = new RegisterRequest;
       registerRequest.name = this.registerForm.get('name')?.value;
