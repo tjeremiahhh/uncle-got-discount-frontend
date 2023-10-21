@@ -5,6 +5,8 @@ import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { RegisterRequest } from './model/register.model';
 import { RegisterService } from './register.service';
+import { AuthenticationService } from '../authentication/authenticate/authentication.service';
+import { AuthenticationRequest } from '../authentication/authenticate/model/authenticate.model';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +14,7 @@ import { RegisterService } from './register.service';
   styleUrls: ['./register.component.less']
 })
 export class RegisterComponent implements OnInit {
-  registerForm : UntypedFormGroup;
+  registerForm: UntypedFormGroup;
 
   constructor(
     private modalService: NzModalService,
@@ -20,7 +22,8 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private notificationService: NzNotificationService,
     private registerService: RegisterService,
-  ) { 
+    private authenticationService: AuthenticationService,
+  ) {
     this.registerForm = this.fb.group({
       name: [null, [Validators.required]],
       emailAddress: [null, [Validators.required]],
@@ -32,7 +35,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   onLogIn() {
@@ -50,7 +53,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegister() {
-    if(this.registerForm.valid) {
+    if (this.registerForm.valid) {
       let registerRequest = new RegisterRequest;
       registerRequest.name = this.registerForm.get('name')?.value;
       registerRequest.emailAddress = this.registerForm.get('emailAddress')?.value;
@@ -59,15 +62,16 @@ export class RegisterComponent implements OnInit {
       registerRequest.isBusinessOwner = false;
 
       this.registerService.register(registerRequest).subscribe({
-        next: (res : any) => {
+        next: (res: any) => {
           this.notificationService.success('', "Account successfully created!");
           this.modalRef.close();
+          this.authenticate();
         }
       })
 
     } else {
       Object.values(this.registerForm.controls).forEach(control => {
-        if(control.invalid) {
+        if (control.invalid) {
           control.markAsDirty();
           control.updateValueAndValidity({ 'onlySelf': true });
         }
@@ -76,4 +80,11 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  authenticate() {
+    let authenticationRequest = new AuthenticationRequest;
+    authenticationRequest.emailAddress = this.registerForm.get('emailAddress')?.value;
+    authenticationRequest.password = this.registerForm.get('password')?.value;
+
+    this.authenticationService.authenticate(authenticationRequest).subscribe();
+  }
 }

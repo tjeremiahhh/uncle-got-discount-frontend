@@ -15,6 +15,10 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -57,6 +61,10 @@ import { NewBusinessListingComponent } from './business-listing/new-business-lis
     NzDropDownModule,
     NzMenuModule,
     NzStepsModule,
+    NzUploadModule,
+    NzMessageModule,
+    NzCheckboxModule,
+    NzSelectModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NzIconModule.forChild([UserOutline]),
