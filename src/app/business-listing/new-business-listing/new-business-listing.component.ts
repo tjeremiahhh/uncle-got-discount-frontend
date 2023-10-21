@@ -97,8 +97,6 @@ export class NewBusinessListingComponent implements OnInit {
     this.discountsArrayForm = this.fb.group({
       discountsAdded: this.fb.array([this.discountsForm])
     })
-
-
   }
 
   ngOnInit() {
@@ -109,8 +107,6 @@ export class NewBusinessListingComponent implements OnInit {
     } else {
       this.currentStep = 0;
     }
-
-    this.currentStep = 4;
   }
 
 
