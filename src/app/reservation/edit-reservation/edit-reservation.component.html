@@ -1,3 +1,199 @@
-<p>
-  edit-reservation works!
-</p>
+<main class="container mx-auto px-3 py-6">
+  <div nz-row nzGutter="16">
+      <!-- Restaurant details -->
+      <div nz-col nzSpan="15" class="restaurant-details">
+          <div class="flex flex-col">
+              <h1 class="text-2xl font-normal mb-2">{{businessListing.outletName}}</h1>
+
+              <div class="flex gap-1 items-center justify-between text-gray-500">
+                  <div class="flex gap-1 items-center">
+                      <p *ngFor="let cuisine of businessListingDescription.cuisines, index as i" class="m-0">
+                          <nz-divider *ngIf="i != 0" nzType="vertical"></nz-divider>
+                          {{cuisine}}
+                      </p>
+                  </div>
+                  <p class="m-0">1,434 reservations</p>
+              </div>
+          </div>
+
+          <nz-divider></nz-divider>
+
+          <img class="aspect-video object-cover object-center mb-3"
+              src="../../assets/images/restaurants-logos/restaurant-{{businessId ? businessId : 1}}.jpg" />
+
+          <nz-card nzSize="small">
+              <div nz-row nzGutter="16" class="p-4">
+                  <div nz-col nzSpan="12">
+                      <div class="flex flex-col gap-4">
+
+                          <div>
+                              <p class="mb-1 font-bold">address</p>
+                              <p class="m-0">
+                                  {{businessListing.address}}
+                              </p>
+                          </div>
+
+                          <div *ngIf="businessListing.menuUrl || businessListing.websiteUrl">
+                              <p class="mb-1 font-bold">websites</p>
+                              <p *ngIf="businessListing.menuUrl" class="m-0">
+                                  <a href="{{businessListing.menuUrl}}">{{businessListing.menuUrl}}</a>
+                              </p>
+                              <p *ngIf="businessListing.websiteUrl" class="m-0">
+                                  <a href="{{businessListing.websiteUrl}}">{{businessListing.websiteUrl}}</a>
+                              </p>
+                          </div>
+
+                          <div>
+                              <p class="mb-1 font-bold">payment options</p>
+                              <p *ngFor="let payment of businessListingDescription.paymentOptions" class="m-0">
+                                  {{payment}}
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+                  <div nz-col nzSpan="12">
+                      <div class="flex flex-col gap-4">
+                          <div>
+                              <p class="mb-1 font-bold">atmospheres</p>
+                              <p *ngFor="let atmosphere of businessListingDescription.atmospheres" class="m-0">
+                                  {{atmosphere}}
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </nz-card>
+      </div>
+
+      <!-- Reservation form -->
+      <div nz-col nzSpan="9" class="reservation-form">
+          <nz-card>
+              <p class="inline-block font-medium border-b border-orange-600 pb-1">reservation details</p>
+
+              <form nz-form [formGroup]="reservationGroup">
+                  <nz-form-item>
+                      <nz-form-control [nzErrorTip]="dateErrorMsgTpl">
+                          <nz-date-picker [nzSuffixIcon]="datePrefixTemplate" nzPlaceHolder="today"
+                              formControlName="date" nzFormat="dd/MM/yyyy"
+                              (ngModelChange)="filterDiscount($event)"></nz-date-picker>
+
+                          <ng-template #datePrefixTemplate><fa-icon class="mr-2" nz-icon
+                                  icon="calendar"></fa-icon></ng-template>
+                          <ng-template #dateErrorMsgTpl let-control>
+                              <ng-container *ngIf="control.hasError('required')">Date is required</ng-container>
+                          </ng-template>
+                      </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                      <nz-form-control [nzErrorTip]="nameErrorMsgTpl">
+                          <nz-input-group [nzPrefix]="namePrefixTemplate">
+                              <input type="number" nz-input placeholder="2 people" formControlName="noOfDiners" />
+                          </nz-input-group>
+                          <ng-template #namePrefixTemplate><fa-icon class="mr-2" nz-icon
+                                  icon="user-group"></fa-icon></ng-template>
+                          <ng-template #nameErrorMsgTpl let-control>
+                              <ng-container *ngIf="control.hasError('required')">People is required</ng-container>
+                          </ng-template>
+                      </nz-form-control>
+                  </nz-form-item>
+
+                  <nz-form-item>
+                      <nz-form-control [nzErrorTip]="timeErrorMsgTpl">
+                          <div class="text-gray-400 flex items-center mb-3">
+                              <fa-icon class="mr-2" nz-icon icon="clock"></fa-icon>
+                              choose time & discount
+                          </div>
+
+                          <div class="flex overflow-auto w-full gap-2 pb-4">
+                              <div *ngIf="discountsDisplayed.length == 0">
+                                  <div class="text-red-700">Sorry, this day is fully booked! Please choose a different
+                                      date.</div>
+                              </div>
+
+                              <div *ngFor="let listing of discountsDisplayed">
+                                  <button (click)="onTimeSelect(listing.id)"
+                                      class="aspect-square flex-col flex text-center discount-btn items-center justify-center p-3"
+                                      [ngClass]="reservationGroup.get('businessListingDiscountsId')?.value === listing.id ? 'active':'' ">
+                                      <fa-icon icon="certificate"></fa-icon>
+                                      <span class="text-xs">{{listing.time}}</span>
+                                      <span class="font-bold text-lg">-{{listing.discountInPercent}}%</span>
+                                  </button>
+                              </div>
+                          </div>
+
+                          <ng-template #timeErrorMsgTpl let-control>
+                              <ng-container *ngIf="control.hasError('required')">Time is required</ng-container>
+                          </ng-template>
+                      </nz-form-control>
+                  </nz-form-item>
+                  <button class="w-full" nz-button nzType="primary" (click)="handleReviewReservation()"
+                      [disabled]="discountsDisplayed.length == 0">edit reservation</button>
+              </form>
+
+          </nz-card>
+      </div>
+  </div>
+
+  <!-- Modal -->
+  <nz-modal nzWidth="700px" nzClassName="reservation-review" [(nzVisible)]="showReservationModal"
+      (nzOnCancel)="handleCloseModal()" (nzOnOk)="onReserve()">
+      <ng-container *nzModalContent>
+          <div class="relative p-4 text-center reservation-modal-title">
+              <span class="text-lg font-medium">Please confirm your reservation.</span>
+          </div>
+
+          <div nz-row nzGutter="16" class="pt-4 reservation-form">
+              <div nz-col nzSpan="12">
+                  <p class="mb-2 font-bold">terms & conditions</p>
+                  <p class="text-xs">1. Please arrive on time as your reservation is only guaranteed for 15 minutes.
+                  </p>
+                  <p class="text-xs">2. Once you arrive, tell the host or hostess that you have a reservation with
+                      uncle.</p>
+                  <p class="text-xs">3. Remember your discount is on all food on the menu but does not include drinks.
+                      (unless
+                      restaurant has a special policy. See above.)</p>
+                  <p class="text-xs">4. Service fee charges may or may not be covered under uncle discount. It will be
+                      under the
+                      discretion of the restaurant.</p>
+                  <p class="text-xs">5. The discount cannot be combined with any in-house promotions.</p>
+                  <p class="text-xs">6. The discount is applicable for dine-in only and cannot be used with delivery
+                      or take away
+                      orders.</p>
+                  <p class="text-xs">7. Prices may vary from the regular menu on special holidays. Please contact the
+                      restaurant
+                      directly to confirm the menu on special holidays.</p>
+                  <p class="text-xs">8. If you need assistance email us at support.sg@uncle.com or contact us via live
+                      chat.</p>
+              </div>
+
+              <div nz-col nzSpan="12">
+                  <p class="inline-block font-medium border-b border-orange-600 pb-1">reservation details</p>
+
+                  <nz-card nzSize="small">
+                      <div class="mb-3">
+                          <fa-icon class="mr-2 aspect-square" nz-icon icon="calendar"></fa-icon>
+                          <span>{{ reservation.date | date: 'dd/MM/yyyy'}}</span>
+                      </div>
+
+                      <div class="mb-3">
+                          <fa-icon class="mr-2 aspect-square" nz-icon icon="user-group"></fa-icon>
+                          <span>{{reservation.noOfDiners ?? 0}} people</span>
+                      </div>
+
+                      <div class="mb-3">
+                          <fa-icon class="mr-2 aspect-square" nz-icon icon="clock"></fa-icon>
+                          <span>{{ selectedDiscount.time }} / {{ selectedDiscount.discountInPercent }}%</span>
+                      </div>
+
+                      <div class="mb-3 flex flex-no wrap items-center">
+                          <fa-icon class="mr-2 aspect-square" nz-icon icon="note-sticky"></fa-icon>
+                          <textarea nz-input placeholder="special requests" [nzAutosize]="{ minRows: 2 }" [(ngModel)]="reservation.specialRequests"></textarea>
+                      </div>
+                  </nz-card>
+              </div>
+          </div>
+
+      </ng-container>
+  </nz-modal>
+
+</main>

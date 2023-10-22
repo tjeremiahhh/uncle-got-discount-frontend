@@ -1,4 +1,4 @@
-<main class="container mx-auto px-3 py-6">
+<main class="container mx-auto px-3 py-6" id="reservation-container">
     <div nz-row nzGutter="16">
         <!-- Restaurant details -->
         <div nz-col nzMd="13" nzLg="15" nzXl="14" class="restaurant-details">
@@ -67,7 +67,7 @@
 
         <!-- Reservation form -->
         <div nz-col nzMd="11" nzLg="9" nzXl="10" class="reservation-form">
-            <nz-card>
+            <nz-card id="reservation-form">
                 <p class="inline-block font-medium border-b border-orange-600 pb-1">reservation details</p>
 
                 <form nz-form [formGroup]="reservationGroup">

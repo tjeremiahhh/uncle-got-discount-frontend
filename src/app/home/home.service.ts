@@ -22,4 +22,8 @@ export class HomeService {
 
         return this.http.get<ISearchResult[]>(devMicroserviceUrl.search_filter + 'search-by-outlet-name', { params: params });
     }
+
+    getBusinessListingDescriptionDetails(): Observable<any> {
+        return this.http.get<any>(this.businessListingUrl + 'get-business-listing-description-details');
+    }
 }

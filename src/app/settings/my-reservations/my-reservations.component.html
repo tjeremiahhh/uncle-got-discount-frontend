@@ -56,7 +56,7 @@
         </ng-template>
 
         <ng-template #actionEdit>
-          <div class="flex items-center justify-center">
+          <div class="flex items-center justify-center" (click)="onEdit(listing.id, 1)">
             <fa-icon class="mr-2 inline-block" nz-icon icon="edit"></fa-icon> edit reservation
           </div>
         </ng-template>
