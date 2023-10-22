@@ -23,39 +23,41 @@ export class MyReservationComponent implements OnInit {
   type: string = 'upcoming';
   // reservations: Reservation[] = [];
 
+
+
   reservations: Reservation[] = [
-    {
-      id: 1,
-      businessListingId: 1,
-      businessListingDiscountsId: 1,
-      noOfDiners: 1,
-      date: '2023-10-03 11:00PM',
-      specialRequests: "string",
-    },
-    {
-      id: 2,
-      businessListingId: 2,
-      businessListingDiscountsId: 1,
-      noOfDiners: 1,
-      date: '2023-10-03 11:00PM',
-      specialRequests: "string",
-    },
-    {
-      id: 3,
-      businessListingId: 3,
-      businessListingDiscountsId: 1,
-      noOfDiners: 1,
-      date: '2023-10-03 11:00PM',
-      specialRequests: "string",
-    },
-    {
-      id: 4,
-      businessListingId: 4,
-      businessListingDiscountsId: 1,
-      noOfDiners: 1,
-      date: '2023-10-03 11:00PM',
-      specialRequests: "string",
-    }
+    // {
+    //   id: 1,
+    //   businessListingId: 1,
+    //   businessListingDiscountsId: 1,
+    //   noOfDiners: 1,
+    //   date: '2023-10-03 11:00PM',
+    //   specialRequests: "string",
+    // },
+    // {
+    //   id: 2,
+    //   businessListingId: 2,
+    //   businessListingDiscountsId: 1,
+    //   noOfDiners: 1,
+    //   date: '2023-10-03 11:00PM',
+    //   specialRequests: "string",
+    // },
+    // {
+    //   id: 3,
+    //   businessListingId: 3,
+    //   businessListingDiscountsId: 1,
+    //   noOfDiners: 1,
+    //   date: '2023-10-03 11:00PM',
+    //   specialRequests: "string",
+    // },
+    // {
+    //   id: 4,
+    //   businessListingId: 4,
+    //   businessListingDiscountsId: 1,
+    //   noOfDiners: 1,
+    //   date: '2023-10-03 11:00PM',
+    //   specialRequests: "string",
+    // }
   ];
 
   constructor(
@@ -79,12 +81,14 @@ export class MyReservationComponent implements OnInit {
     })
 
     let params = new HttpParams;
-    params = params.set('id', this.currentUser.id);
+    params = params.set('userId', this.currentUser.id);
 
     if (this.type === 'history') {
       this.reservationService.getAllHistoricalReservations(params).subscribe({
         next: (res: any) => {
           this.reservations = res;
+          console.log(res)
+          this.getBusinessListingAndDiscounts()
         }
       });
     }
@@ -92,9 +96,29 @@ export class MyReservationComponent implements OnInit {
       this.reservationService.getAllUpcomingReservations(params).subscribe({
         next: (res: any) => {
           this.reservations = res;
+          this.getBusinessListingAndDiscounts()
         }
       });
     }
+  }
+
+  getBusinessListingAndDiscounts() {
+    for(let reservation of this.reservations) {
+      if(reservation.businessListingDiscountsId != null) {
+        let params = new HttpParams;
+        params = params.set('discountId', reservation.businessListingDiscountsId);
+  
+        this.reservationService.getBusinessListingAndDiscount(params).subscribe({
+          next: (res: any) => {
+            reservation.businessListing = res.businessListing;
+            reservation.businessListingId = res.businessListing.id
+            reservation.businessListingDiscount = res.businessListingDiscounts;
+
+            console.log(reservation)
+          }
+        });
+      }
+      }
   }
 
   onEdit(reservationId: number | undefined, businessId: number) {

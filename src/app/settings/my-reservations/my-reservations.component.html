@@ -30,7 +30,7 @@
 
             <div class="flex flex-col">
               <p class="m-0 text-gray-500">Date: </p>
-              <p class="m-0">{{listing.date}}</p>
+              <p class="m-0">{{listing.date | date: 'dd/MM/yyyy'}}</p>
             </div>
 
             <div class="flex flex-col">
@@ -43,7 +43,7 @@
               <p class="m-0">{{listing.noOfDiners}}</p>
             </div>
 
-            <div class="flex flex-col">
+            <div class="flex flex-col" *ngIf="listing.specialRequests != null">
               <p class="m-0 text-gray-500">Special Request(s): </p>
               <p class="m-0">{{listing.specialRequests}}</p>
             </div>
