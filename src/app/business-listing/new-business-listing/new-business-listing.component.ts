@@ -8,7 +8,7 @@ import { RegisterService } from 'src/app/register/register.service';
 import { BusinessListingService } from '../business-listing.service';
 import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Atmospheres, BusinessListing, BusinessListingDescription, BusinessListingSpecialConditions, Cuisines, Days, Discounts, PaymentOptions, Timings } from '../model/business-listing.model';
+import { Atmospheres, BusinessListing, BusinessListingDescription, BusinessListingDiscounts, BusinessListingRequest, BusinessListingSpecialConditions, Cuisines, Days, Discounts, PaymentOptions, Timings } from '../model/business-listing.model';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
@@ -31,7 +31,10 @@ export class NewBusinessListingComponent implements OnInit {
 
   alreadyRegistered: boolean = false;
 
-  businessListing!: BusinessListing;
+  businessListing: BusinessListing = new BusinessListing();
+  businessListingDescription: BusinessListingDescription = new BusinessListingDescription();
+  businessListingSpecialConditions: BusinessListingSpecialConditions = new BusinessListingSpecialConditions();
+  businessListingDiscounts: BusinessListingDiscounts[] = [];
 
   atmospheres: Atmospheres[] = [];
   cuisines: Cuisines[] = [];
@@ -70,9 +73,9 @@ export class NewBusinessListingComponent implements OnInit {
       address: [null, [Validators.required]],
       imageFile: [null],
       websiteUrl: [null],
-      allowPublicHoliday: [null, [Validators.required]],
+      allowPublicHoliday: [false],
       menuUrl: [null],
-      halalCertified: [null, [Validators.required]]
+      halalCertified: [false]
     })
 
     this.additionalInfoForm = this.fb.group({
@@ -107,6 +110,18 @@ export class NewBusinessListingComponent implements OnInit {
     } else {
       this.currentStep = 0;
     }
+    // this.getBusinessListingDescriptionDetails(); //TODO: REMOVE
+    // this.currentStep = 1 //TODO: REMOVE
+  }
+
+  onNext() {
+    this.currentStep += 1;
+  }
+
+  onPrev() {
+    if (this.currentStep > 1) {
+      this.currentStep -= 1
+    }
   }
 
 
@@ -127,6 +142,7 @@ export class NewBusinessListingComponent implements OnInit {
 
           this.authenticationService.authenticate(authenticationRequest).subscribe({
             next: (res: any) => {
+              this.currentUser = this.authenticationService.currentUser;
               this.currentStep += 1;
             }
           });
@@ -140,7 +156,6 @@ export class NewBusinessListingComponent implements OnInit {
           control.updateValueAndValidity({ 'onlySelf': true });
         }
       });
-      this.registerForm.markAllAsTouched();
     }
   }
 
@@ -157,6 +172,7 @@ export class NewBusinessListingComponent implements OnInit {
       this.authenticationService.authenticate(authenticationRequest).subscribe({
         next: (res: any) => {
           this.currentStep += 1;
+          this.currentUser = this.authenticationService.currentUser;
         }
       })
     } else {
@@ -166,7 +182,6 @@ export class NewBusinessListingComponent implements OnInit {
           control.updateValueAndValidity({ 'onlySelf': true });
         }
       });
-      this.authenticateForm.markAllAsTouched();
     }
   }
 
@@ -176,39 +191,43 @@ export class NewBusinessListingComponent implements OnInit {
 
   createBusinessListing() {
     if (this.businessListingForm.valid) {
-      let businessListing = new BusinessListing;
-      businessListing.outletName = this.businessListingForm.get('outletName')?.value;
-      businessListing.emailAddress = this.businessListingForm.get('emailAddress')?.value;
-      businessListing.phoneNumber = this.businessListingForm.get('phoneNumber')?.value;
-      businessListing.address = this.businessListingForm.get('address')?.value;
-      businessListing.imageFile = this.businessListingForm.get('imageFile')?.value;
-      businessListing.websiteUrl = this.businessListingForm.get('websiteUrl')?.value;
-      businessListing.allowPublicHoliday = this.businessListingForm.get('allowPublicHoliday')?.value;
-      businessListing.menuUrl = this.businessListingForm.get('menuUrl')?.value;
-      businessListing.halalCertified = this.businessListingForm.get('halalCertified')?.value;
+      this.businessListing.userId = this.currentUser.id;
+      this.businessListing.outletName = this.businessListingForm.get('outletName')?.value;
+      this.businessListing.emailAddress = this.businessListingForm.get('emailAddress')?.value;
+      this.businessListing.phoneNumber = this.businessListingForm.get('phoneNumber')?.value;
+      this.businessListing.address = this.businessListingForm.get('address')?.value;
+      // this.businessListing.imageFile = this.businessListingForm.get('imageFile')?.value;
+      this.businessListing.websiteUrl = this.businessListingForm.get('websiteUrl')?.value;
+      this.businessListing.allowPublicHoliday = this.businessListingForm.get('allowPublicHoliday')?.value;
+      this.businessListing.menuUrl = this.businessListingForm.get('menuUrl')?.value;
+      this.businessListing.halalCertified = this.businessListingForm.get('halalCertified')?.value;
 
-      const formData: FormData = new FormData();
-      formData.append("logoFile", this.file);
-      formData.append('businessListing', new Blob([JSON
-        .stringify(businessListing)], {
-        type: 'application/json'
-      }));
+      this.currentStep += 1
 
-      this.businessListingService.createBusinessListing(formData).subscribe({
-        next: (res: any) => {
-          this.businessListing = res;
-          this.currentStep += 1;
-          this.getBusinessListingDescriptionDetails();
-        }
-      })
-    } else {
-      Object.values(this.businessListingForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ 'onlySelf': true });
-        }
-      });
-      this.businessListingForm.markAllAsTouched();
+      this.getBusinessListingDescriptionDetails();
+      //   const formData: FormData = new FormData();
+      //   formData.append('businessListing', new Blob([JSON
+      //     .stringify(this.businessListing)], {
+      //     type: 'application/json'
+      //   }));
+      //   formData.append("logoFile", this.file, this.file.name);
+
+      //   this.businessListingService.createBusinessListing(formData).subscribe({
+      //     next: (res: any) => {
+      //       this.businessListing = res;
+      //       console.log("hello", this.businessListing)
+      //       // this.currentStep += 1;
+      //       // this.getBusinessListingDescriptionDetails();
+      //     }
+      //   })
+      // } else {
+      //   Object.values(this.businessListingForm.controls).forEach(control => {
+      //     if (control.invalid) {
+      //       control.markAsDirty();
+      //       control.updateValueAndValidity({ 'onlySelf': true });
+      //     }
+      //   });
+      // }
     }
   }
 
@@ -227,44 +246,43 @@ export class NewBusinessListingComponent implements OnInit {
 
   createBusinessListingDescription() {
     if (this.additionalInfoForm.valid) {
-      let businessListingDescription = new BusinessListingDescription();
-      businessListingDescription.businessListingId = 1;
-      businessListingDescription.about = this.additionalInfoForm.get('about')?.value;
-      businessListingDescription.cuisines = this.additionalInfoForm.get('cuisines')?.value.toString().replace(',', '|');
-      businessListingDescription.atmospheres = this.additionalInfoForm.get('atmospheres')?.value.toString().replace(',', '|');
-      businessListingDescription.languages = this.additionalInfoForm.get('languages')?.value.toString().replace(',', '|');
-      businessListingDescription.paymentOptions = this.additionalInfoForm.get('paymentOptions')?.value.toString().replace(',', '|');
+      // this.businessListingDescription.businessListingId = 1;
+      this.businessListingDescription.about = this.additionalInfoForm.get('about')?.value;
+      this.businessListingDescription.cuisines = this.additionalInfoForm.get('cuisines')?.value.toString().replace(',', '|');
+      this.businessListingDescription.atmospheres = this.additionalInfoForm.get('atmospheres')?.value.toString().replace(',', '|');
+      this.businessListingDescription.languages = this.additionalInfoForm.get('languages')?.value.toString().replace(',', '|');
+      this.businessListingDescription.paymentOptions = this.additionalInfoForm.get('paymentOptions')?.value.toString().replace(',', '|');
 
-      this.businessListingService.createBusinessListingDescription(businessListingDescription).subscribe({
-        next: (res: any) => {
-          this.currentStep += 1;
-        }
-      })
+      this.currentStep += 1;
+      // this.businessListingService.createBusinessListingDescription(businessListingDescription).subscribe({
+      //   next: (res: any) => {
+      //     this.currentStep += 1;
+      //   }
+      // })
     } else {
       Object.values(this.additionalInfoForm.controls).forEach(control => {
         if (control.invalid) {
-          console.log(control)
           control.markAsDirty();
           control.updateValueAndValidity({ 'onlySelf': true });
         }
       });
-      this.additionalInfoForm.markAllAsTouched();
     }
   }
 
   createBusinessListingSpecialConditions() {
     if (this.specialConditionsForm.get('condition')?.value != null && this.specialConditionsForm.get('condition')?.value != '') {
-      let businessListingSpecialConditions = new BusinessListingSpecialConditions();
+      // this.businessListingSpecialConditions.businessListingId = this.businessListing.id;
+      this.businessListingSpecialConditions.condition = this.specialConditionsForm.get('condition')?.value;
 
-      businessListingSpecialConditions.businessListingId = this.businessListing.id;
-      businessListingSpecialConditions.condition = this.specialConditionsForm.get('condition')?.value;
+      this.currentStep += 1;
 
-      this.businessListingService.createBusinessListingSpecialConditions(businessListingSpecialConditions).subscribe({
-        next: (res: any) => {
-          this.currentStep += 1;
-        }
-      })
+      // this.businessListingService.createBusinessListingSpecialConditions(businessListingSpecialConditions).subscribe({
+      //   next: (res: any) => {
+      //     this.currentStep += 1;
+      //   }
+      // })
     } else {
+      this.businessListingSpecialConditions = {};
       this.currentStep += 1;
     }
   }
@@ -289,13 +307,52 @@ export class NewBusinessListingComponent implements OnInit {
   }
 
   createDiscounts() {
-    let params = new HttpParams();
-    params = params.set('businessListingId', this.businessListing.id != null ?  this.businessListing.id : 0);
+    this.businessListingDiscounts = this.discountsArrayForm.get('discountsAdded')?.value;
 
-    this.businessListingService.createBusinessListingDiscounts(this.discountsArrayForm.get('discountsAdded')?.value, params).subscribe({
+    let businessListingRequest = new BusinessListingRequest();
+    businessListingRequest.businessListing = this.businessListing;
+    businessListingRequest.businessListingDescription = this.businessListingDescription;
+    businessListingRequest.businessListingSpecialConditions = this.businessListingSpecialConditions;
+    businessListingRequest.businessListingDiscounts = this.businessListingDiscounts;
+
+    const formData: FormData = new FormData();
+
+    formData.append("logoFile", this.file);
+
+    formData.append('businessListing', new Blob([JSON
+      .stringify(this.businessListing)], {
+      type: 'application/json'
+    }));
+
+    formData.append('businessListingDescription', new Blob([JSON
+      .stringify(this.businessListingDescription)], {
+      type: 'application/json'
+    }));
+
+    if(Object.keys(this.businessListingSpecialConditions).length != 0) {
+      formData.append('businessListingSpecialConditions', new Blob([JSON
+        .stringify(this.businessListingSpecialConditions)], {
+        type: 'application/json'
+      }));
+    }
+
+    formData.append('businessListingDiscounts', new Blob([JSON
+      .stringify(this.businessListingDiscounts)], {
+      type: 'application/json'
+    }));
+
+    this.businessListingService.createBusinessListing(formData).subscribe({
       next: (res: any) => {
-        this.currentStep += 1;
+        console.log('created')
       }
-    });
+    })
+    // let params = new HttpParams();
+    // params = params.set('businessListingId', this.businessListing.id != null ?  this.businessListing.id : 0);
+
+    // this.businessListingService.createBusinessListingDiscounts(this.discountsArrayForm.get('discountsAdded')?.value, params).subscribe({
+    //   next: (res: any) => {
+    //     this.currentStep += 1;
+    //   }
+    // });
   }
 }

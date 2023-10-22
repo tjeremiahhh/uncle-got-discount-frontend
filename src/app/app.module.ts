@@ -34,6 +34,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { UserOutline } from '@ant-design/icons-angular/icons';
 import { AuthenticateComponent } from './authentication/authenticate/authenticate.component';
 import { NewBusinessListingComponent } from './business-listing/new-business-listing/new-business-listing.component';
+import { EditBusinessListingComponent } from './business-listing/edit-business-listing/edit-business-listing.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { NewBusinessListingComponent } from './business-listing/new-business-lis
     RegisterComponent,
     AuthenticateComponent,
     NewBusinessListingComponent,
+    EditBusinessListingComponent
   ],
   imports: [
     BrowserModule,

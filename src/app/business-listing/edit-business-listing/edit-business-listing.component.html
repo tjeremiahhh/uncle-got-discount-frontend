@@ -1,0 +1,491 @@
+<main>
+  <div class="business-banner">
+    <div class="business-content">
+      <h1>uncle got discount</h1>
+      <nz-divider class="bg-[#FDC827] text-[20px]"></nz-divider>
+      <h2 class="font-normal text-[30px]">
+        Attract new customers to your restaurant with us.
+      </h2>
+    </div>
+  </div>
+
+  <section class="p-8">
+    <div>
+      <nz-steps [nzCurrent]="currentStep">
+        <nz-step nzTitle="register"></nz-step>
+        <nz-step nzTitle="business details"></nz-step>
+        <nz-step nzTitle="additional information"></nz-step>
+        <nz-step nzTitle="special conditions"></nz-step>
+        <nz-step nzTitle="discounts"></nz-step>
+      </nz-steps>
+    </div>
+
+    <div class="steps-content flex justify-center">
+      <ng-container *ngIf="currentStep == 0">
+        <ng-container *ngIf="!alreadyRegistered">
+          <div class="banner w-1/2">
+            <div class="p-6 mt-8 z-1 relative">
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="people-group"></fa-icon>more customers</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="money-bill-trend-up"></fa-icon>more profit</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="shield"></fa-icon>no risks</div>
+            </div>
+          </div>
+
+          <div class="w-1/2 p-6 flex flex-col">
+            <span class="font-bold text-[32px] text-slate-800">register</span>
+            <div class="mt-4">
+              <form nz-form [formGroup]="registerForm">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="nameErrorMsgTpl">
+                    <nz-input-group [nzPrefix]="namePrefixTemplate">
+                      <input type="text" nz-input placeholder="name" formControlName="name" />
+                    </nz-input-group>
+                    <ng-template #namePrefixTemplate><fa-icon class="mr-2" nz-icon icon="user"></fa-icon></ng-template>
+                    <ng-template #nameErrorMsgTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">Name is required</ng-container>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="emailErrorMsgTpl">
+                    <nz-input-group [nzPrefix]="emailPrefixTemplate">
+                      <input type="text" nz-input placeholder="email address" formControlName="emailAddress" />
+                    </nz-input-group>
+                    <ng-template #emailPrefixTemplate><fa-icon class="mr-2" nz-icon
+                        icon="envelope"></fa-icon></ng-template>
+                    <ng-template #emailErrorMsgTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">Email Address is required</ng-container>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="passwordErrorMsgTpl">
+                    <nz-input-group [nzPrefix]="passwordPrefixTemplate">
+                      <input type="password" nz-input placeholder="password" formControlName="password" />
+                    </nz-input-group>
+                    <ng-template #passwordPrefixTemplate><fa-icon class="mr-2" nz-icon
+                        icon="lock"></fa-icon></ng-template>
+                    <ng-template #passwordErrorMsgTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">Password is required</ng-container>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="rePasswordErrorMsgTpl">
+                    <nz-input-group [nzPrefix]="rePasswordPrefixTemplate">
+                      <input type="password" nz-input placeholder="re-enter password" formControlName="rePassword" />
+                    </nz-input-group>
+                    <ng-template #rePasswordPrefixTemplate><fa-icon class="mr-2" nz-icon
+                        icon="lock"></fa-icon></ng-template>
+                    <ng-template #rePasswordErrorMsgTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">Please re-enter password</ng-container>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="phoneNumberErrorMsgTpl">
+                    <nz-input-group [nzPrefix]="mobilePrefixTemplate">
+                      <input type="text" nz-input placeholder="mobile number" formControlName="phoneNumber" />
+                    </nz-input-group>
+                    <ng-template #mobilePrefixTemplate><fa-icon class="mr-2" nz-icon
+                        icon="phone"></fa-icon></ng-template>
+                    <ng-template #phoneNumberErrorMsgTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">Mobile Number is required</ng-container>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+                <button class="w-full" nz-button nzType="primary" (click)="onRegister()">register</button>
+              </form>
+            </div>
+            <span class="font-bold text-[20px] text-slate-800 mt-4 text-center">have an account already? <a
+                (click)="toggleRegistered()">log in</a></span>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="alreadyRegistered">
+          <div class="banner w-1/2">
+            <div class="p-6 mt-8 z-1 relative">
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="people-group"></fa-icon>more customers</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="money-bill-trend-up"></fa-icon>more profit</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="shield"></fa-icon>no risks</div>
+            </div>
+          </div>
+
+          <div class="w-1/2 p-6 mt-8">
+            <span class="font-bold text-[32px] text-slate-800">log in</span>
+            <div class="mt-4">
+              <form nz-form [formGroup]="authenticateForm">
+                <nz-form-item>
+                  <nz-form-control>
+                    <nz-input-group [nzPrefix]="emailPrefixTemplate">
+                      <input type="text" nz-input placeholder="email address" formControlName="emailAddress" />
+                    </nz-input-group>
+                    <ng-template #emailPrefixTemplate><fa-icon class="mr-2" nz-icon
+                        icon="envelope"></fa-icon></ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-control>
+                    <nz-input-group [nzPrefix]="passwordPrefixTemplate">
+                      <input type="password" nz-input placeholder="password" formControlName="password" />
+                    </nz-input-group>
+                    <ng-template #passwordPrefixTemplate><fa-icon class="mr-2" nz-icon
+                        icon="lock"></fa-icon></ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <button class="w-full" nz-button nzType="primary" (click)="onLogIn()">log in</button>
+              </form>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="currentStep == 1">
+        <div class="banner w-1/2">
+          <div class="p-6 mt-8 z-1 relative">
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="people-group"></fa-icon>more customers</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="money-bill-trend-up"></fa-icon>more profit</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="shield"></fa-icon>no risks</div>
+          </div>
+        </div>
+
+        <div class="w-1/2 p-6 flex flex-col">
+          <span class="font-bold text-[32px] text-slate-800">business details</span>
+          <div class="mt-4">
+            <form nz-form [formGroup]="businessListingForm">
+              <nz-form-item>
+                <nz-form-control [nzErrorTip]="nameErrorMsgTpl">
+                  <nz-input-group [nzPrefix]="namePrefixTemplate">
+                    <input type="text" nz-input placeholder="restaurant name" formControlName="outletName" />
+                  </nz-input-group>
+                  <ng-template #namePrefixTemplate><fa-icon class="mr-2" nz-icon icon="user"></fa-icon></ng-template>
+                  <ng-template #nameErrorMsgTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">Restaurant Name is required</ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control [nzErrorTip]="addressErrorMsgTpl">
+                  <nz-input-group [nzPrefix]="addressPrefixTemplate">
+                    <input type="text" nz-input placeholder="address" formControlName="address" />
+                  </nz-input-group>
+                  <ng-template #addressPrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="location-dot"></fa-icon></ng-template>
+                  <ng-template #addressErrorMsgTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">Address is required</ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-input-group [nzPrefix]="phoneNumberPrefixTemplate">
+                    <input type="text" nz-input placeholder="contact number" formControlName="phoneNumber" />
+                  </nz-input-group>
+                  <ng-template #phoneNumberPrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="phone"></fa-icon></ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-input-group [nzPrefix]="emailPrefixTemplate">
+                    <input type="text" nz-input placeholder="email address" formControlName="emailAddress" />
+                  </nz-input-group>
+                  <ng-template #emailPrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="envelope"></fa-icon></ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-input-group [nzPrefix]="websitePrefixTemplate">
+                    <input type="text" nz-input placeholder="website url" formControlName="websiteUrl" />
+                  </nz-input-group>
+                  <ng-template #websitePrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="window-maximize"></fa-icon></ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-input-group [nzPrefix]="menuPrefixTemplate">
+                    <input type="text" nz-input placeholder="menu url" formControlName="menuUrl" />
+                  </nz-input-group>
+                  <ng-template #menuPrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="newspaper"></fa-icon></ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control>
+                  <input type="file" formControlName="imageFile" (change)="onUploadFile($event)" />
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control>
+                  <label nz-checkbox formControlName="allowPublicHoliday">allow reservations on public holidays</label>
+                  <ng-template #holidayPrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="envelope"></fa-icon></ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control>
+                  <label nz-checkbox formControlName="halalCertified">halal certified</label>
+                  <ng-template #halalPrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="envelope"></fa-icon></ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <button class="w-full" nz-button type="submit" nzType="primary" (click)="createBusinessListing()">next</button>
+            </form>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="currentStep == 2">
+        <div class="banner w-1/2">
+          <div class="p-6 mt-8 z-1 relative">
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="people-group"></fa-icon>more customers</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="money-bill-trend-up"></fa-icon>more profit</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="shield"></fa-icon>no risks</div>
+          </div>
+        </div>
+
+        <div class="w-1/2 p-6 flex flex-col">
+          <span class="font-bold text-[32px] text-slate-800">additional information</span>
+          <div class="mt-4">
+            <form nz-form [formGroup]="additionalInfoForm">
+              <nz-form-item>
+                <nz-form-control [nzErrorTip]="aboutErrorMsgTpl">
+                  <nz-input-group [nzPrefix]="aboutPrefixTemplate">
+                    <textarea nz-input placeholder="about" nzBorderless nzAutosize formControlName="about"></textarea>
+                  </nz-input-group>
+                  <ng-template #aboutPrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="comments"></fa-icon></ng-template>
+                  <ng-template #aboutErrorMsgTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">About is required</ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control [nzErrorTip]="cuisineErrorMsgTpl">
+                  <nz-input-group [nzPrefix]="cuisinePrefixTemplate">
+                    <nz-select formControlName="cuisines" [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder"
+                      nzMode="multiple" nzPlaceHolder="cuisines" nzBorderless>
+                      <nz-option *ngFor="let c of cuisines" [nzLabel]="c.cuisine" [nzValue]="c.id"></nz-option>
+                    </nz-select>
+                  </nz-input-group>
+                  <ng-template #tagPlaceHolder let-selectedList>+ {{ selectedList.length }}</ng-template>
+                  <ng-template #cuisinePrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="utensils"></fa-icon></ng-template>
+                  <ng-template #cuisineErrorMsgTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">Cuisine is required</ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control [nzErrorTip]="atmosphereErrorMsgTpl">
+                  <nz-input-group [nzPrefix]="atmospherePrefixTemplate">
+                    <nz-select formControlName="atmospheres" [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder"
+                      nzMode="multiple" nzPlaceHolder="atmospheres" nzBorderless>
+                      <nz-option *ngFor="let a of atmospheres" [nzLabel]="a.atmosphere" [nzValue]="a.id"></nz-option>
+                    </nz-select>
+                  </nz-input-group>
+                  <ng-template #tagPlaceHolder let-selectedList>+ {{ selectedList.length }}</ng-template>
+                  <ng-template #atmospherePrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="sun"></fa-icon></ng-template>
+                  <ng-template #atmosphereErrorMsgTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">Atmosphere is required</ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control [nzErrorTip]="languagesErrorMsgTpl">
+                  <nz-input-group [nzPrefix]="languagesPrefixTemplate">
+                    <nz-select formControlName="languages" [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder"
+                      nzMode="multiple" nzPlaceHolder="languages" nzBorderless>
+                      <nz-option [nzLabel]="'English'" [nzValue]="1"></nz-option>
+                      <nz-option [nzLabel]="'Chinese'" [nzValue]="2"></nz-option>
+                      <nz-option [nzLabel]="'Tamil'" [nzValue]="3"></nz-option>
+                      <nz-option [nzLabel]="'Malay'" [nzValue]="4"></nz-option>
+                    </nz-select>
+                  </nz-input-group>
+                  <ng-template #tagPlaceHolder let-selectedList>+ {{ selectedList.length }}</ng-template>
+                  <ng-template #languagesPrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="language"></fa-icon></ng-template>
+                  <ng-template #languagesErrorMsgTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">Language is required</ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control [nzErrorTip]="paymentOptionsErrorMsgTpl">
+                  <nz-input-group [nzPrefix]="paymentOptionsPrefixTemplate">
+                    <nz-select formControlName="paymentOptions" [nzMaxTagCount]="3"
+                      [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple" nzPlaceHolder="paymentOptions"
+                      nzBorderless>
+                      <nz-option *ngFor="let p of paymentOptions" [nzLabel]="p.paymentOption" [nzValue]="p.id"></nz-option>
+                    </nz-select>
+                  </nz-input-group>
+                  <ng-template #tagPlaceHolder let-selectedList>+ {{ selectedList.length }}</ng-template>
+                  <ng-template #paymentOptionsPrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="credit-card"></fa-icon></ng-template>
+                  <ng-template #paymentOptionsErrorMsgTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">Payment Option is required</ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <div class="flex flex-nowrap">
+                <button class="w-full" nz-button nzType="default" (click)="onPrev()">previous</button>
+                <button class="w-full" nz-button nzType="primary" (click)="createBusinessListingDescription()">next</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="currentStep == 3">
+        <div class="banner w-1/2">
+          <div class="p-6 mt-8 z-1 relative">
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="people-group"></fa-icon>more customers</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="money-bill-trend-up"></fa-icon>more profit</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="shield"></fa-icon>no risks</div>
+          </div>
+        </div>
+
+        <div class="w-1/2 p-6 flex flex-col">
+          <span class="font-bold text-[32px] text-slate-800">special conditions</span>
+          <div class="mt-4">
+            <form nz-form [formGroup]="specialConditionsForm">
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-input-group [nzPrefix]="conditionsPrefixTemplate">
+                    <textarea nz-input placeholder="special conditions" nzBorderless nzAutosize
+                      formControlName="condition"></textarea>
+                  </nz-input-group>
+                  <span class="text-[#B35340]">* press next if there are no special conditions</span>
+                  <ng-template #conditionsPrefixTemplate><fa-icon class="mr-2" nz-icon
+                      icon="note-sticky"></fa-icon></ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <div class="flex flex-nowrap">
+                <button class="w-full" nz-button nzType="default" (click)="onPrev()">previous</button>
+                <button class="w-full" nz-button nzType="primary" (click)="createBusinessListingSpecialConditions()">next</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="currentStep == 4">
+        <div class="banner w-1/2">
+          <div class="p-6 mt-8 z-1 relative">
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="people-group"></fa-icon>more customers</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="money-bill-trend-up"></fa-icon>more profit</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon icon="shield"></fa-icon>no risks</div>
+          </div>
+        </div>
+        <div class="w-1/2 p-6 flex flex-col">
+          <span class="font-bold text-[32px] text-slate-800">discounts</span>
+          <div class="mt-4">
+            <form nz-form [formGroup]="discountsArrayForm">
+              <ng-container formArrayName="discountsAdded">
+                <ng-container *ngFor="let discountsForm of discountsAdded.controls; let i = index">
+                  <form nz-form [formGroupName]="i">
+                    <div class="flex flex-nowrap gap-2 ">
+                      <nz-form-item class="w-full">
+                        <nz-form-control [nzErrorTip]="dayIdOptionsErrorMsgTpl">
+                          <nz-input-group [nzPrefix]="dayIdOptionsPrefixTemplate">
+                            <nz-select formControlName="dayId" nzPlaceHolder="day" nzBorderless>
+                              <nz-option *ngFor="let d of days" [nzLabel]="d.day" [nzValue]="d.id"></nz-option>
+                            </nz-select>
+                          </nz-input-group>
+                          <ng-template #dayIdOptionsPrefixTemplate><fa-icon class="mr-2" nz-icon
+                              icon="calendar"></fa-icon></ng-template>
+                          <ng-template #dayIdOptionsErrorMsgTpl let-control>
+                            <ng-container *ngIf="control.hasError('required')">Day is required</ng-container>
+                          </ng-template>
+                        </nz-form-control>
+                      </nz-form-item>
+
+                      <nz-form-item class="w-full">
+                        <nz-form-control [nzErrorTip]="timingsIdOptionsErrorMsgTpl">
+                          <nz-input-group [nzPrefix]="timingsIdOptionsPrefixTemplate">
+                            <nz-select formControlName="timingsId" nzPlaceHolder="timings" nzBorderless>
+                              <nz-option *ngFor="let t of timings" [nzLabel]="t.time" [nzValue]="t.id"></nz-option>
+                            </nz-select>
+                          </nz-input-group>
+                          <ng-template #timingsIdOptionsPrefixTemplate><fa-icon class="mr-2" nz-icon
+                              icon="clock"></fa-icon></ng-template>
+                          <ng-template #timingsIdOptionsErrorMsgTpl let-control>
+                            <ng-container *ngIf="control.hasError('required')">Timing is required</ng-container>
+                          </ng-template>
+                        </nz-form-control>
+                      </nz-form-item>
+
+                      <nz-form-item class="w-full">
+                        <nz-form-control [nzErrorTip]="discountsIdOptionsErrorMsgTpl">
+                          <nz-input-group [nzPrefix]="discountsIdOptionsPrefixTemplate">
+                            <nz-select formControlName="discountsId" nzPlaceHolder="discounts" nzBorderless>
+                              <nz-option *ngFor="let d of discounts" [nzLabel]="d.discount" [nzValue]="d.id"></nz-option>
+                            </nz-select>
+                          </nz-input-group>
+                          <ng-template #discountsIdOptionsPrefixTemplate><fa-icon class="mr-2" nz-icon
+                              icon="tag"></fa-icon></ng-template>
+                          <ng-template #discountsIdOptionsErrorMsgTpl let-control>
+                            <ng-container *ngIf="control.hasError('required')">Discount is required</ng-container>
+                          </ng-template>
+                        </nz-form-control>
+                      </nz-form-item>
+
+                      <nz-form-item class="w-full">
+                        <nz-form-control>
+                          <nz-input-group class="h-[42px]" [nzPrefix]="maxHeadCountPrefixTemplate">
+                            <input type="number" nz-input placeholder="max head count" formControlName="maxHeadCount" />
+                          </nz-input-group>
+                          <ng-template #maxHeadCountPrefixTemplate><fa-icon class="mr-2" nz-icon
+                              icon="user-group"></fa-icon></ng-template>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <a class="h-[42px] items-center flex"><fa-icon nz-icon icon="trash" (click)="deleteDiscount(i)"></fa-icon></a>
+                    </div>
+                  </form>
+                </ng-container>
+              </ng-container>
+
+
+              <div class="flex w-full flex-nowrap">
+                <button class="w-full mb-4" nz-button nzType="primary" (click)="addDiscount()">add discount</button>
+                <button class="w-full" nz-button nzType="default" (click)="onPrev()">previous</button>
+                <button class="w-full" nz-button nzType="primary" (click)="createDiscounts()">next</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+</main>

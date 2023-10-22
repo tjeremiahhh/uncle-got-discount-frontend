@@ -23,6 +23,19 @@
     <div class="steps-content flex justify-center">
       <ng-container *ngIf="currentStep == 0">
         <ng-container *ngIf="!alreadyRegistered">
+          <div class="banner w-1/2">
+            <div class="p-6 mt-8 z-1 relative">
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                  icon="people-group"></fa-icon>more customers</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                  icon="money-bill-trend-up"></fa-icon>more profit</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                  icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                  icon="shield"></fa-icon>no risks</div>
+            </div>
+          </div>
+
           <div class="w-1/2 p-6 flex flex-col">
             <span class="font-bold text-[32px] text-slate-800">register</span>
             <div class="mt-4">
@@ -99,6 +112,19 @@
         </ng-container>
 
         <ng-container *ngIf="alreadyRegistered">
+          <div class="banner w-1/2">
+            <div class="p-6 mt-8 z-1 relative">
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                  icon="people-group"></fa-icon>more customers</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                  icon="money-bill-trend-up"></fa-icon>more profit</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                  icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+              <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                  icon="shield"></fa-icon>no risks</div>
+            </div>
+          </div>
+
           <div class="w-1/2 p-6 mt-8">
             <span class="font-bold text-[32px] text-slate-800">log in</span>
             <div class="mt-4">
@@ -131,10 +157,23 @@
       </ng-container>
 
       <ng-container *ngIf="currentStep == 1">
+        <div class="banner w-1/2">
+          <div class="p-6 mt-8 z-1 relative">
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="people-group"></fa-icon>more customers</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="money-bill-trend-up"></fa-icon>more profit</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="shield"></fa-icon>no risks</div>
+          </div>
+        </div>
+
         <div class="w-1/2 p-6 flex flex-col">
           <span class="font-bold text-[32px] text-slate-800">business details</span>
           <div class="mt-4">
-            <form nz-form [formGroup]="businessListingForm">
+            <form nz-form [formGroup]="businessListingForm" enctype="multipart/form-data">
               <nz-form-item>
                 <nz-form-control [nzErrorTip]="nameErrorMsgTpl">
                   <nz-input-group [nzPrefix]="namePrefixTemplate">
@@ -207,24 +246,18 @@
               </nz-form-item>
 
               <nz-form-item>
-                <nz-form-control [nzErrorTip]="holidayErrorMsgTpl">
+                <nz-form-control>
                   <label nz-checkbox formControlName="allowPublicHoliday">allow reservations on public holidays</label>
                   <ng-template #holidayPrefixTemplate><fa-icon class="mr-2" nz-icon
                       icon="envelope"></fa-icon></ng-template>
-                  <ng-template #holidayErrorMsgTpl let-control>
-                    <ng-container *ngIf="control.hasError('required')">Checkbox is required</ng-container>
-                  </ng-template>
                 </nz-form-control>
               </nz-form-item>
 
               <nz-form-item>
-                <nz-form-control [nzErrorTip]="halalErrorMsgTpl">
+                <nz-form-control>
                   <label nz-checkbox formControlName="halalCertified">halal certified</label>
                   <ng-template #halalPrefixTemplate><fa-icon class="mr-2" nz-icon
                       icon="envelope"></fa-icon></ng-template>
-                  <ng-template #halalErrorMsgTpl let-control>
-                    <ng-container *ngIf="control.hasError('required')">Checkbox is required</ng-container>
-                  </ng-template>
                 </nz-form-control>
               </nz-form-item>
 
@@ -235,6 +268,19 @@
       </ng-container>
 
       <ng-container *ngIf="currentStep == 2">
+        <div class="banner w-1/2">
+          <div class="p-6 mt-8 z-1 relative">
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="people-group"></fa-icon>more customers</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="money-bill-trend-up"></fa-icon>more profit</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="shield"></fa-icon>no risks</div>
+          </div>
+        </div>
+
         <div class="w-1/2 p-6 flex flex-col">
           <span class="font-bold text-[32px] text-slate-800">additional information</span>
           <div class="mt-4">
@@ -257,11 +303,7 @@
                   <nz-input-group [nzPrefix]="cuisinePrefixTemplate">
                     <nz-select formControlName="cuisines" [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder"
                       nzMode="multiple" nzPlaceHolder="cuisines" nzBorderless>
-                      <nz-option [nzLabel]="'Western'" [nzValue]="1"></nz-option>
-                      <nz-option [nzLabel]="'Chinese'" [nzValue]="2"></nz-option>
-                      <nz-option [nzLabel]="'Korean'" [nzValue]="3"></nz-option>
-                      <nz-option [nzLabel]="'Japanese'" [nzValue]="4"></nz-option>
-                      <nz-option [nzLabel]="'Buffet'" [nzValue]="5"></nz-option>
+                      <nz-option *ngFor="let c of cuisines" [nzLabel]="c.cuisine" [nzValue]="c.id"></nz-option>
                     </nz-select>
                   </nz-input-group>
                   <ng-template #tagPlaceHolder let-selectedList>+ {{ selectedList.length }}</ng-template>
@@ -278,10 +320,7 @@
                   <nz-input-group [nzPrefix]="atmospherePrefixTemplate">
                     <nz-select formControlName="atmospheres" [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder"
                       nzMode="multiple" nzPlaceHolder="atmospheres" nzBorderless>
-                      <nz-option [nzLabel]="'Casual Dining'" [nzValue]="1"></nz-option>
-                      <nz-option [nzLabel]="'Fine Dining'" [nzValue]="2"></nz-option>
-                      <nz-option [nzLabel]="'Pub'" [nzValue]="3"></nz-option>
-                      <nz-option [nzLabel]="'Family Friendly'" [nzValue]="4"></nz-option>
+                      <nz-option *ngFor="let a of atmospheres" [nzLabel]="a.atmosphere" [nzValue]="a.id"></nz-option>
                     </nz-select>
                   </nz-input-group>
                   <ng-template #tagPlaceHolder let-selectedList>+ {{ selectedList.length }}</ng-template>
@@ -319,10 +358,8 @@
                     <nz-select formControlName="paymentOptions" [nzMaxTagCount]="3"
                       [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple" nzPlaceHolder="paymentOptions"
                       nzBorderless>
-                      <nz-option [nzLabel]="'Visa'" [nzValue]="1"></nz-option>
-                      <nz-option [nzLabel]="'Mastercard'" [nzValue]="2"></nz-option>
-                      <nz-option [nzLabel]="'American Express'" [nzValue]="3"></nz-option>
-                      <nz-option [nzLabel]="'NETS'" [nzValue]="4"></nz-option>
+                      <nz-option *ngFor="let p of paymentOptions" [nzLabel]="p.paymentOption"
+                        [nzValue]="p.id"></nz-option>
                     </nz-select>
                   </nz-input-group>
                   <ng-template #tagPlaceHolder let-selectedList>+ {{ selectedList.length }}</ng-template>
@@ -334,14 +371,30 @@
                 </nz-form-control>
               </nz-form-item>
 
-              <button class="w-full" nz-button nzType="primary"
-                (click)="createBusinessListingDescription()">next</button>
+              <div class="flex flex-nowrap">
+                <button class="w-full" nz-button nzType="default" (click)="onPrev()">previous</button>
+                <button class="w-full" nz-button nzType="primary"
+                  (click)="createBusinessListingDescription()">next</button>
+              </div>
             </form>
           </div>
         </div>
       </ng-container>
 
       <ng-container *ngIf="currentStep == 3">
+        <div class="banner w-1/2">
+          <div class="p-6 mt-8 z-1 relative">
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="people-group"></fa-icon>more customers</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="money-bill-trend-up"></fa-icon>more profit</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="shield"></fa-icon>no risks</div>
+          </div>
+        </div>
+
         <div class="w-1/2 p-6 flex flex-col">
           <span class="font-bold text-[32px] text-slate-800">special conditions</span>
           <div class="mt-4">
@@ -358,15 +411,30 @@
                 </nz-form-control>
               </nz-form-item>
 
-              <button class="w-full" nz-button nzType="primary"
-                (click)="createBusinessListingSpecialConditions()">next</button>
+              <div class="flex flex-nowrap">
+                <button class="w-full" nz-button nzType="default" (click)="onPrev()">previous</button>
+                <button class="w-full" nz-button nzType="primary"
+                  (click)="createBusinessListingSpecialConditions()">next</button>
+              </div>
             </form>
           </div>
         </div>
       </ng-container>
 
       <ng-container *ngIf="currentStep == 4">
-        <div class="w-4/6 p-6 flex flex-col">
+        <div class="banner w-1/2">
+          <div class="p-6 mt-8 z-1 relative">
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="people-group"></fa-icon>more customers</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="money-bill-trend-up"></fa-icon>more profit</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="shield"></fa-icon>no risks</div>
+          </div>
+        </div>
+        <div class="w-1/2 p-6 flex flex-col">
           <span class="font-bold text-[32px] text-slate-800">discounts</span>
           <div class="mt-4">
             <form nz-form [formGroup]="discountsArrayForm">
@@ -378,10 +446,7 @@
                         <nz-form-control [nzErrorTip]="dayIdOptionsErrorMsgTpl">
                           <nz-input-group [nzPrefix]="dayIdOptionsPrefixTemplate">
                             <nz-select formControlName="dayId" nzPlaceHolder="day" nzBorderless>
-                              <nz-option [nzLabel]="'Monday'" [nzValue]="1"></nz-option>
-                              <nz-option [nzLabel]="'Tuesday'" [nzValue]="2"></nz-option>
-                              <nz-option [nzLabel]="'Wednesday'" [nzValue]="3"></nz-option>
-                              <nz-option [nzLabel]="'Thursday'" [nzValue]="4"></nz-option>
+                              <nz-option *ngFor="let d of days" [nzLabel]="d.day" [nzValue]="d.id"></nz-option>
                             </nz-select>
                           </nz-input-group>
                           <ng-template #dayIdOptionsPrefixTemplate><fa-icon class="mr-2" nz-icon
@@ -396,10 +461,7 @@
                         <nz-form-control [nzErrorTip]="timingsIdOptionsErrorMsgTpl">
                           <nz-input-group [nzPrefix]="timingsIdOptionsPrefixTemplate">
                             <nz-select formControlName="timingsId" nzPlaceHolder="timings" nzBorderless>
-                              <nz-option [nzLabel]="'12:00'" [nzValue]="1"></nz-option>
-                              <nz-option [nzLabel]="'13:00'" [nzValue]="2"></nz-option>
-                              <nz-option [nzLabel]="'14:00'" [nzValue]="3"></nz-option>
-                              <nz-option [nzLabel]="'15:00'" [nzValue]="4"></nz-option>
+                              <nz-option *ngFor="let t of timings" [nzLabel]="t.time" [nzValue]="t.id"></nz-option>
                             </nz-select>
                           </nz-input-group>
                           <ng-template #timingsIdOptionsPrefixTemplate><fa-icon class="mr-2" nz-icon
@@ -414,10 +476,8 @@
                         <nz-form-control [nzErrorTip]="discountsIdOptionsErrorMsgTpl">
                           <nz-input-group [nzPrefix]="discountsIdOptionsPrefixTemplate">
                             <nz-select formControlName="discountsId" nzPlaceHolder="discounts" nzBorderless>
-                              <nz-option [nzLabel]="'10%'" [nzValue]="1"></nz-option>
-                              <nz-option [nzLabel]="'20%'" [nzValue]="2"></nz-option>
-                              <nz-option [nzLabel]="'30%'" [nzValue]="3"></nz-option>
-                              <nz-option [nzLabel]="'40%'" [nzValue]="4"></nz-option>
+                              <nz-option *ngFor="let d of discounts" [nzLabel]="d.discount"
+                                [nzValue]="d.id"></nz-option>
                             </nz-select>
                           </nz-input-group>
                           <ng-template #discountsIdOptionsPrefixTemplate><fa-icon class="mr-2" nz-icon
@@ -437,15 +497,17 @@
                               icon="user-group"></fa-icon></ng-template>
                         </nz-form-control>
                       </nz-form-item>
-                      <a class="h-[42px] items-center flex"><fa-icon nz-icon icon="trash" (click)="deleteDiscount(i)"></fa-icon></a>
+                      <a class="h-[42px] items-center flex"><fa-icon nz-icon icon="trash"
+                          (click)="deleteDiscount(i)"></fa-icon></a>
                     </div>
-
                   </form>
                 </ng-container>
               </ng-container>
 
+
               <div class="flex w-full flex-nowrap">
-                <button class="w-full mb-4" nz-button nzType="default" (click)="addDiscount()">add discount</button>
+                <button class="w-full mb-4" nz-button nzType="primary" (click)="addDiscount()">add discount</button>
+                <button class="w-full" nz-button nzType="default" (click)="onPrev()">previous</button>
                 <button class="w-full" nz-button nzType="primary" (click)="createDiscounts()">next</button>
               </div>
 
