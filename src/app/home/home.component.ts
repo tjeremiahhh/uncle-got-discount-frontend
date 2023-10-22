@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BusinessListing } from './model/home.model';
+import { BusinessListing, ISearchResult } from './model/home.model';
 import { HomeService } from './home.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -31,5 +33,4 @@ export class HomeComponent implements OnInit {
       slider.scrollLeft += sliderItem * direction;
     }
   }
-
 }

@@ -20,6 +20,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
@@ -41,6 +42,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { UserOutline, TagOutline } from '@ant-design/icons-angular/icons';
 import { AuthenticateComponent } from './authentication/authenticate/authenticate.component';
 import { NewBusinessListingComponent } from './business-listing/new-business-listing/new-business-listing.component';
+import { SearchFilterBarComponent } from './search-filter/search-filter-bar/search-filter-bar.component';
 import { EditBusinessListingComponent } from './business-listing/edit-business-listing/edit-business-listing.component';
 import { MyProfileComponent } from './settings/my-profile/my-profile.component';
 import en from '@angular/common/locales/en'
@@ -61,6 +63,7 @@ registerLocaleData(en);
     RegisterComponent,
     AuthenticateComponent,
     NewBusinessListingComponent,
+    SearchFilterBarComponent,
     EditBusinessListingComponent,
     ViewBuinessListingComponent,
     SettingsComponent,
@@ -87,6 +90,7 @@ registerLocaleData(en);
     NzMessageModule,
     NzCheckboxModule,
     NzSelectModule,
+    NzAutocompleteModule,
     NzAvatarModule,
     NzTimePickerModule,
     NzLayoutModule,
