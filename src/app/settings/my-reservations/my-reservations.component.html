@@ -23,9 +23,9 @@
         <nz-card [nzCover]="coverTemplate" nzHoverable="true" [nzActions]="type === 'upcoming' ? [actionEdit] : []">
           <div class="flex flex-col gap-2">
             <div class="flex flex-col mb-3">
-              <p class="m-0 font-bold text-lg">Restaurant</p>
-              <p class="m-0 text-gray-400">western | korean</p>
-              <p class="m-0">Blk 123 depot road</p>
+              <p class="m-0 font-bold text-lg">{{ listing.businessListing?.outletName }}</p>
+              <!-- <p class="m-0 text-gray-400">western | korean</p> -->
+              <p class="m-0">{{ listing.businessListing?.address }}</p>
             </div>
 
             <div class="flex flex-col">
@@ -35,7 +35,7 @@
 
             <div class="flex flex-col">
               <p class="m-0 text-gray-500">Time: </p>
-              <p class="m-0">12:00 (30% discount)</p>
+              <p class="m-0">{{listing.businessListingDiscount?.time}} / {{listing.businessListingDiscount?.discountInPercent}}%</p>
             </div>
 
             <div class="flex flex-col">

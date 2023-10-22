@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AuthenticationService } from '../../authentication/authenticate/authentication.service';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Reservation } from 'src/app/business-listing/model/business-listing.model';
+import { BusinessListingDescription, BusinessListingDiscounts, Reservation } from 'src/app/business-listing/model/business-listing.model';
 import { ReservationsService } from './reservations.service';
 import { HttpParams } from '@angular/common/http';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { EditReservationComponent } from 'src/app/reservation/edit-reservation/edit-reservation.component';
+import { BusinessListingService } from 'src/app/business-listing/business-listing.service';
 
 @Component({
   selector: 'app-my-reservations',
@@ -17,6 +18,8 @@ export class MyReservationComponent implements OnInit {
   currentUser: any;
 
   profileForm!: UntypedFormGroup;
+
+  businessListingDescriptionMaster: any;
 
   selectedTab: number = 0;
 
@@ -64,6 +67,7 @@ export class MyReservationComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private reservationService: ReservationsService,
+    private businessListingService: BusinessListingService,
     private fb: FormBuilder,
     private modalService: NzModalService,
   ) {
@@ -100,25 +104,57 @@ export class MyReservationComponent implements OnInit {
         }
       });
     }
+
+    // On load, call api to get details 
+    // Getting master list of metadata
+    this.businessListingService.getBusinessListingDescriptionDetails().subscribe({
+      next: (res: any) => {
+        this.businessListingDescriptionMaster = res;
+      }
+    })
   }
 
   getBusinessListingAndDiscounts() {
-    for(let reservation of this.reservations) {
-      if(reservation.businessListingDiscountsId != null) {
+    for (let reservation of this.reservations) {
+      if (reservation.businessListingDiscountsId != null) {
         let params = new HttpParams;
         params = params.set('discountId', reservation.businessListingDiscountsId);
-  
+
         this.reservationService.getBusinessListingAndDiscount(params).subscribe({
           next: (res: any) => {
             reservation.businessListing = res.businessListing;
             reservation.businessListingId = res.businessListing.id
-            reservation.businessListingDiscount = res.businessListingDiscounts;
+            reservation.businessListingDiscount = this.processBusinessListingDiscounts(res.businessListingDiscounts);
 
-            console.log(reservation)
+            console.log(reservation.businessListingDiscount)
+            // reservation.businessListingDescription = this.processBusinessListingDescription(res.businessListingDescription);
+            
           }
         });
       }
-      }
+    }
+  }
+
+  // Mapping the data with master list: businessListingDescription
+  processBusinessListingDescription(businessListingDescription: BusinessListingDescription) {
+    const cuisineIdMap = businessListingDescription.cuisines?.split("|");
+    const cuisineList = this.businessListingDescriptionMaster.cuisines.filter((a: any) =>
+      cuisineIdMap?.includes(a.id.toString())
+    );
+
+    businessListingDescription.cuisines = cuisineList.map((val: any) => val.cuisine);
+
+    return businessListingDescription;
+  }
+
+
+  // Mapping the data with master list: businessListingDescription
+  processBusinessListingDiscounts(businessListingDiscounts: BusinessListingDiscounts) {
+    businessListingDiscounts.day = this.businessListingDescriptionMaster.days.find((val: any) => val.id === businessListingDiscounts.dayId);
+    businessListingDiscounts.time = this.businessListingDescriptionMaster.timings.find((val: any) => val.id === businessListingDiscounts.timingsId).time;
+    businessListingDiscounts.discountInPercent = this.businessListingDescriptionMaster.discounts.find((val: any) => val.id === businessListingDiscounts.discountsId).discount;
+   
+    return businessListingDiscounts;
   }
 
   onEdit(reservationId: number | undefined, businessId: number) {
