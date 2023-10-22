@@ -22,58 +22,43 @@
     </nz-carousel>
   </div>
 
-  <section class="horizontal-list home-section-restaurants">
-    <div class="horizontal-list-title">
-      <div class="horizontal-list-title-text">restaurants</div>
-    </div>
+  <section class="p-6">
+    <p class="text-xl inline-block font-medium border-b border-orange-600 pb-1">restaurants</p>
 
-    <div class="horizontal-list-content">
-      <ng-container *ngIf="businessListings">
-        <div *ngFor="let listing of businessListings">
-          <nz-card [nzCover]="coverTemplate" nzHoverable="true">
-            <nz-card-meta nzTitle="{{listing.outletName}}" nzDescription="{{ listing.address }}"></nz-card-meta>
-          </nz-card>
-          <ng-template #coverTemplate>
-            <img alt="mcdonalds" src="../../assets/images/restaurants-logos/mcdonalds.png" />
-          </ng-template>
-        </div>
-      </ng-container>
+    <div nz-row class="custom-list-wrapper py-3 " nzGutter="16" id="slider-1">
+      <button (click)="slideChange(1, 'slider-1')" nzSize="large" nz-button nzShape="circle"
+        class="custom-list-btn custom-list-right-btn">
+        <span nz-icon nzType="right" nzTheme="outline"></span>
+      </button>
+      <button (click)="slideChange(-1, 'slider-1')" nzSize="large" nz-button nzShape="circle"
+        class="custom-list-btn custom-list-left-btn">
+        <span nz-icon nzType="left" nzTheme="outline"></span>
+      </button>
 
-
-      <!-- <nz-card [nzCover]="coverTemplate" nzHoverable="true">
-        <nz-card-meta nzTitle="McDonald's" nzDescription="Singapore's No.1 Fast Food Chain"></nz-card-meta>
-      </nz-card>
-      <ng-template #coverTemplate>
-        <img alt="mcdonalds" src="../../assets/images/restaurants-logos/mcdonalds.png" />
-      </ng-template>
-
-      <nz-card [nzCover]="coverTemplate2" nzHoverable="true">
-        <nz-card-meta nzTitle="Saizeriya"
-          nzDescription="Japanese chain of family-style Italian yōshoku restaurants"></nz-card-meta>
-      </nz-card>
-      <ng-template #coverTemplate2>
-        <img alt="saizeriya" src="../../assets/images/restaurants-logos/saizeriya.png" />
-      </ng-template>
-
-      <nz-card [nzCover]="coverTemplate3" nzHoverable="true">
-        <nz-card-meta nzTitle="HaiDiLao Hotpot" nzDescription="Post clubbing supper spot"></nz-card-meta>
-      </nz-card>
-      <ng-template #coverTemplate3>
-        <img alt="haidilao" src="../../assets/images/restaurants-logos/haidilao.jpg" />
-      </ng-template> -->
+      <div nz-col nzSpan="5" class="custom-list-item" *ngFor="let listing of businessListings; index as i "
+        routerLink="/reservation/{{listing.id}}">
+        <nz-card [nzCover]="coverTemplate" nzHoverable="true">
+          <nz-card-meta nzTitle="{{listing.outletName}}" nzDescription="{{ listing.address }}"></nz-card-meta>
+        </nz-card>
+        <ng-template #coverTemplate>
+          <img alt="{{listing.outletName}}" class="aspect-video object-cover"
+            src="../../assets/images/restaurants-logos/restaurant-{{listing.id}}.jpg" />
+        </ng-template>
+      </div>
     </div>
   </section>
 
+
   <div class="business-banner">
-    <div class="business-content">
+    <div class="business-content items-start">
       <h1>own a restaurant? join us</h1>
-      <nz-divider class="bg-[#FDC827] text-[20px]"></nz-divider>
-      <h2 class="font-normal text-[20px]">
+      <nz-divider class="bg-[#FDC827] text-lg"></nz-divider>
+      <h2 class="font-normal text-lg">
         Looking to fill those empty seats, especially during those times when you're not as busy? We are a restaurant
         reservation platform which offers time-based discounts of up to 50% off, every day at all of its 4000+
         restaurants.
       </h2>
-      <button class="w-1/12 !h-[40px] mt-4" nz-button nzType="primary" [routerLink]="'/join-us'">join us</button>
+      <button class="mt-4" nz-button nzType="primary" [routerLink]="'/join-us'">join us</button>
     </div>
   </div>
 </main>
