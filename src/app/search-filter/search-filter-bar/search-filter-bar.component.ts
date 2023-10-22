@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {ICuisine, ISearchResult } from '../model/search-filter.model';
 import { SearchFilterService } from '../search-filter.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-filter-bar.component.less']
 })
 export class SearchFilterBarComponent implements OnInit {
+  @Input("hasCuisineFilter") hasCuisineFilter ?: boolean;
   searchValue ?: string;
   searchResults ?: ISearchResult[] = [];
   cuisineValue ?: number;
