@@ -7,12 +7,15 @@ import { ViewBuinessListingComponent } from './business-listing/view-business-li
 import { MyProfileComponent } from './settings/my-profile/my-profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MyReservationComponent } from './settings/my-reservations/my-reservations.component';
+import { EditReservationComponent } from './reservation/edit-reservation/edit-reservation.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'join-us', component: NewBusinessListingComponent },
   { path: 'edit-business-listing', component: EditBusinessListingComponent },
   { path: 'reservation/:id', component: ViewBuinessListingComponent },
+  { path: 'edit-reservation/:id', component: EditReservationComponent },
+
   {
     path: '', component: SettingsComponent,
     children: [
