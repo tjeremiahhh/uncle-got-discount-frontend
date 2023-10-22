@@ -32,6 +32,7 @@ import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { DatePipe } from '@angular/common'
 
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -47,6 +48,7 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { ViewBuinessListingComponent } from './business-listing/view-business-listing/view-business-listing.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MyReservationComponent } from './settings/my-reservations/my-reservations.component';
+import { EditReservationComponent } from './reservation/edit-reservation/edit-reservation.component';
 
 registerLocaleData(en);
 
@@ -63,7 +65,8 @@ registerLocaleData(en);
     ViewBuinessListingComponent,
     SettingsComponent,
     MyProfileComponent,
-    MyReservationComponent
+    MyReservationComponent,
+    EditReservationComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,7 +98,7 @@ registerLocaleData(en);
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [{ provide: NZ_I18N, useValue: en_US,  }, DatePipe],
   bootstrap: [AppComponent]
 })
 

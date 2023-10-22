@@ -53,6 +53,7 @@ export class NewBusinessListingComponent implements OnInit {
     private businessListingService: BusinessListingService,
     private fb: FormBuilder,
     private msg: NzMessageService,
+    private notificationService: NzNotificationService,
   ) {
     this.registerForm = this.fb.group({
       name: [null, [Validators.required]],
@@ -113,7 +114,7 @@ export class NewBusinessListingComponent implements OnInit {
       this.currentStep = 0;
     }
 
-    this.currentStep = 1 //TODO: REMOVE
+    // this.currentStep = 5 //TODO: REMOVE
   }
 
   onNext() {
@@ -328,40 +329,40 @@ export class NewBusinessListingComponent implements OnInit {
     businessListingRequest.businessListingDescription = this.businessListingDescription;
     businessListingRequest.businessListingSpecialConditions = this.businessListingSpecialConditions;
     businessListingRequest.businessListingDiscounts = this.businessListingDiscounts;
-    // console.log(this.businessListing)
 
 
-    const formData: FormData = new FormData();
+    // const formData: FormData = new FormData();
 
-    formData.append("logoFile", this.file);
+    // formData.append("logoFile", this.file);
 
-    formData.append('businessListing', new Blob([JSON
-      .stringify(this.businessListing)], {
-      type: 'application/json'
-    }));
+    // formData.append('businessListing', new Blob([JSON
+    //   .stringify(this.businessListing)], {
+    //   type: 'application/json'
+    // }));
 
-    formData.append('businessListingDescription', new Blob([JSON
-      .stringify(this.businessListingDescription)], {
-      type: 'application/json'
-    }));
+    // formData.append('businessListingDescription', new Blob([JSON
+    //   .stringify(this.businessListingDescription)], {
+    //   type: 'application/json'
+    // }));
 
-    if (Object.keys(this.businessListingSpecialConditions).length != 0) {
-      formData.append('businessListingSpecialConditions', new Blob([JSON
-        .stringify(this.businessListingSpecialConditions)], {
-        type: 'application/json'
-      }));
-    }
+    // if (Object.keys(this.businessListingSpecialConditions).length != 0) {
+    //   formData.append('businessListingSpecialConditions', new Blob([JSON
+    //     .stringify(this.businessListingSpecialConditions)], {
+    //     type: 'application/json'
+    //   }));
+    // }
 
-    formData.append('businessListingDiscounts', new Blob([JSON
-      .stringify(this.businessListingDiscounts)], {
-      type: 'application/json'
-    }));
+    // formData.append('businessListingDiscounts', new Blob([JSON
+    //   .stringify(this.businessListingDiscounts)], {
+    //   type: 'application/json'
+    // }));
 
 
 
-    this.businessListingService.createBusinessListing(formData).subscribe({
+    this.businessListingService.createBusinessListing(businessListingRequest).subscribe({
       next: (res: any) => {
-        console.log('created')
+        this.notificationService.success('', "Success!");
+        this.currentStep += 1;
       }
     })
     // let params = new HttpParams();

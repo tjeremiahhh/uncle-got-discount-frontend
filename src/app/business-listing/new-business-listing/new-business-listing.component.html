@@ -173,7 +173,7 @@
         <div class="w-1/2 p-6 flex flex-col">
           <span class="font-bold text-[32px] text-slate-800">business details</span>
           <div class="mt-4">
-            <form nz-form [formGroup]="businessListingForm" enctype="multipart/form-data">
+            <form nz-form [formGroup]="businessListingForm">
               <nz-form-item>
                 <nz-form-control [nzErrorTip]="nameErrorMsgTpl">
                   <nz-input-group [nzPrefix]="namePrefixTemplate">
@@ -512,6 +512,29 @@
               </div>
 
             </form>
+          </div>
+        </div>
+      </ng-container>
+
+
+      <ng-container *ngIf="currentStep == 5">
+        <div class="banner w-1/2">
+          <div class="p-6 mt-8 z-1 relative">
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="people-group"></fa-icon>more customers</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="money-bill-trend-up"></fa-icon>more profit</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="arrow-up-right-dots"></fa-icon>higher efficiency</div>
+            <div class="font-bold text-[32px] text-white"><fa-icon class="mr-2 !text-[#FDC827]" nz-icon
+                icon="shield"></fa-icon>no risks</div>
+          </div>
+        </div>
+        <div class="w-1/2 p-6 flex flex-col">
+          <span class="font-bold text-[32px] text-slate-800">welcome!</span>
+          <div class="mt-4">
+            <span class="font-medium text-[20px] text-slate-800">get ready to fill empty tables with empty
+              stomachs!</span>
           </div>
         </div>
       </ng-container>

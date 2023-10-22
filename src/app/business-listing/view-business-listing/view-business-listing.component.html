@@ -74,7 +74,8 @@
                     <nz-form-item>
                         <nz-form-control [nzErrorTip]="dateErrorMsgTpl">
                             <nz-date-picker [nzSuffixIcon]="datePrefixTemplate" nzPlaceHolder="today"
-                                formControlName="date"></nz-date-picker>
+                                formControlName="date" nzFormat="dd/MM/yyyy"
+                                (ngModelChange)="filterDiscount($event)"></nz-date-picker>
 
                             <ng-template #datePrefixTemplate><fa-icon class="mr-2" nz-icon
                                     icon="calendar"></fa-icon></ng-template>
@@ -104,7 +105,12 @@
                             </div>
 
                             <div class="flex overflow-auto w-full gap-2 pb-4">
-                                <div *ngFor="let listing of businessListingDiscounts">
+                                <div *ngIf="discountsDisplayed.length == 0">
+                                    <div class="text-red-700">Sorry, this day is fully booked! Please choose a different
+                                        date.</div>
+                                </div>
+
+                                <div *ngFor="let listing of discountsDisplayed">
                                     <button (click)="onTimeSelect(listing.id)"
                                         class="aspect-square flex-col flex text-center discount-btn items-center justify-center p-3"
                                         [ngClass]="reservationGroup.get('businessListingDiscountsId')?.value === listing.id ? 'active':'' ">
@@ -120,7 +126,8 @@
                             </ng-template>
                         </nz-form-control>
                     </nz-form-item>
-                    <button class="w-full" nz-button nzType="primary" (click)="handleReviewReservation()">review
+                    <button class="w-full" nz-button nzType="primary" (click)="handleReviewReservation()"
+                        [disabled]="discountsDisplayed.length == 0">review
                         reservation</button>
                 </form>
 
@@ -166,17 +173,22 @@
                     <nz-card nzSize="small">
                         <div class="mb-3">
                             <fa-icon class="mr-2 aspect-square" nz-icon icon="calendar"></fa-icon>
-                            <span>today</span>
+                            <span>{{ reservation.date | date: 'dd/MM/yyyy'}}</span>
                         </div>
 
                         <div class="mb-3">
                             <fa-icon class="mr-2 aspect-square" nz-icon icon="user-group"></fa-icon>
-                            <span>{{reservationGroup.get('noOfDiners')?.value ?? 0}} people</span>
+                            <span>{{reservation.noOfDiners ?? 0}} people</span>
                         </div>
 
                         <div class="mb-3">
                             <fa-icon class="mr-2 aspect-square" nz-icon icon="clock"></fa-icon>
-                            <span>today</span>
+                            <span>{{ selectedDiscount.time }} / {{ selectedDiscount.discountInPercent }}%</span>
+                        </div>
+
+                        <div class="mb-3 flex flex-no wrap items-center">
+                            <fa-icon class="mr-2 aspect-square" nz-icon icon="note-sticky"></fa-icon>
+                            <textarea nz-input placeholder="special requests" [nzAutosize]="{ minRows: 2 }" [(ngModel)]="reservation.specialRequests"></textarea>
                         </div>
                     </nz-card>
                 </div>

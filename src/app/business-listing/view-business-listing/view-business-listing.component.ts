@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BusinessListingService } from '../business-listing.service';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { BusinessListing, BusinessListingDescription, BusinessListingDiscounts, BusinessListingSpecialConditions } from '../model/business-listing.model';
+import { BusinessListing, BusinessListingDescription, BusinessListingDiscounts, BusinessListingSpecialConditions, Reservation } from '../model/business-listing.model';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NzModalComponent } from 'ng-zorro-antd/modal';
+import { AuthenticationService } from 'src/app/authentication/authenticate/authentication.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-reservation',
@@ -22,49 +25,21 @@ export class ViewBuinessListingComponent implements OnInit {
     businessListingDiscounts: BusinessListingDiscounts[] = [];
     businessListingDescriptionMaster: any;
 
+    discountsDisplayed: BusinessListingDiscounts[] = [];
+    selectedDiscount: BusinessListingDiscounts = new BusinessListingDiscounts();
 
-    listOfDiscouts: BusinessListingDiscounts[] = [
-        {
-            id: 1,
-            businessListingId: 1,
-            dayId: 1,
-            timingsId: 3,
-            discountsId: 20,
-            maxHeadCount: 3
-        },
-        {
-            id: 2,
-            businessListingId: 1,
-            dayId: 1,
-            timingsId: 3,
-            discountsId: 25,
-            maxHeadCount: 3
-        },
-        {
-            id: 3,
-            businessListingId: 1,
-            dayId: 1,
-            timingsId: 3,
-            discountsId: 20,
-            maxHeadCount: 3
-        },
-        {
-            id: 4,
-            businessListingId: 1,
-            dayId: 1,
-            timingsId: 3,
-            discountsId: 15,
-            maxHeadCount: 3
-        }
-    ]
+    reservation!: Reservation;
 
     constructor(
+        private authenticationService: AuthenticationService,
         private businessListingService: BusinessListingService,
         private fb: FormBuilder,
         private route: ActivatedRoute,
+        private notificationService: NzNotificationService,
+        private datepipe: DatePipe
     ) {
         this.reservationGroup = this.fb.group({
-            date: [null, [Validators.required]],
+            date: [new Date(), [Validators.required]],
             noOfDiners: [null, [Validators.required]],
             businessListingDiscountsId: [null, [Validators.required]],
             specialRequest: [null],
@@ -83,10 +58,15 @@ export class ViewBuinessListingComponent implements OnInit {
             // Getting master list of metadata
             this.businessListingService.getBusinessListingDescriptionDetails().subscribe({
                 next: (res: any) => {
-                    this.businessListingDescriptionMaster = res
+                    this.businessListingDescriptionMaster = res;
+                    this.getBusinessListing();
                 }
             })
+        }
+    }
 
+    getBusinessListing() {
+        if (this.businessId) {
             let params = new HttpParams;
             params = params.set('id', this.businessId);
             this.businessListingService.getBusinessListing(params).subscribe({
@@ -146,17 +126,40 @@ export class ViewBuinessListingComponent implements OnInit {
     }
 
     onReserve() {
+        this.businessListingService.createNewReservation(this.reservation).subscribe({
+            next: (res: any) => {
+                this.notificationService.success('', "Reservation created!");
+                this.showReservationModal = false;
+                this.reservationGroup.reset(({date: new Date()}));
+            }
+        })
+    }
 
+    filterDiscount(event: any) {
+        let day = event.getDay();
+
+        if (day == 0) {
+            day = 7;
+        }
+        this.discountsDisplayed = this.businessListingDiscounts.filter((obj) => {
+            return (obj.dayId == day);
+        })
     }
 
     handleReviewReservation() {
         if (this.reservationGroup.valid) {
+            this.reservation = new Reservation();
+            this.reservation.date = this.datepipe.transform(this.reservationGroup.get('date')?.value, 'yyyy-MM-dd HH:mm');
+            this.reservation.businessListingDiscountsId = this.reservationGroup.get('businessListingDiscountsId')?.value;
+            this.reservation.noOfDiners = this.reservationGroup.get('noOfDiners')?.value;
+            this.reservation.createdBy = this.authenticationService.currentUser.id;
+
+            this.selectedDiscount = this.businessListingDiscounts.find((x: any) => x.id === this.reservation.businessListingDiscountsId) as BusinessListingDiscounts;
+           
             this.showReservationModal = true;
         } else {
             Object.values(this.reservationGroup.controls).forEach(control => {
                 if (control.invalid) {
-                    console.log(control)
-
                     control.markAsDirty();
                     control.updateValueAndValidity({ 'onlySelf': true });
                 }
