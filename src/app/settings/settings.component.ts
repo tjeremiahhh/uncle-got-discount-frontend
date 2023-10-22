@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { AuthenticationService } from '../authentication/authenticate/authentication.service';
+
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from '../authentication/authenticate/authentication.service';
 
 @Component({
-  selector: 'app-my-profile',
-  templateUrl: './my-profile.component.html',
-  styleUrls: ['./my-profile.component.less']
+  selector: 'app-settings',
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.less']
 })
-export class MyProfileComponent implements OnInit {
+
+export class SettingsComponent implements OnInit {
   currentUser: any;
 
   profileForm!: UntypedFormGroup;
@@ -20,7 +22,7 @@ export class MyProfileComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private fb: FormBuilder,
   ) {
-    
+
   }
 
   ngOnInit() {

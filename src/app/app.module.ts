@@ -23,6 +23,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -35,14 +37,16 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 
-import { UserOutline } from '@ant-design/icons-angular/icons';
+import { UserOutline, TagOutline } from '@ant-design/icons-angular/icons';
 import { AuthenticateComponent } from './authentication/authenticate/authenticate.component';
 import { NewBusinessListingComponent } from './business-listing/new-business-listing/new-business-listing.component';
 import { EditBusinessListingComponent } from './business-listing/edit-business-listing/edit-business-listing.component';
-import { MyProfileComponent } from './my-profile/my-profile.component';
+import { MyProfileComponent } from './settings/my-profile/my-profile.component';
 import en from '@angular/common/locales/en'
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { ViewBuinessListingComponent } from './business-listing/view-business-listing/view-business-listing.component';
+import { SettingsComponent } from './settings/settings.component';
+import { MyReservationComponent } from './settings/my-reservations/my-reservations.component';
 
 registerLocaleData(en);
 
@@ -56,8 +60,10 @@ registerLocaleData(en);
     AuthenticateComponent,
     NewBusinessListingComponent,
     EditBusinessListingComponent,
-    MyProfileComponent,
     ViewBuinessListingComponent,
+    SettingsComponent,
+    MyProfileComponent,
+    MyReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -80,10 +86,11 @@ registerLocaleData(en);
     NzSelectModule,
     NzAvatarModule,
     NzTimePickerModule,
+    NzLayoutModule,
     NzDatePickerModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NzIconModule.forChild([UserOutline]),
+    NzIconModule.forChild([UserOutline, TagOutline]),
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,

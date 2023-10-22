@@ -1,7 +1,14 @@
+:host {
+  display: flex;
+
+  nz-layout {
+    flex-grow: 1;
+  }
+}
+
 [nz-menu] {
   width: 100%;
 }
-
 
 :host ::ng-deep .ant-avatar-icon {
   display: flex;
@@ -31,4 +38,23 @@ button.menu-text:hover {
   color: #FDC827;
   background-color: #B35340;
   pointer-events: none;
+}
+
+.avatar-wrapper {
+  position: relative;
+
+  &::before {
+    top: 0;
+    left: 0;
+    content: '';
+    background-color: #e8e8e8;
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    opacity: 0.6;
+  }
+}
+
+.min-w-100 {
+  min-width: 140px
 }

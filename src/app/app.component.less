@@ -1,0 +1,13 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+:host ::ng-deep app-home,
+:host ::ng-deep app-my-profile,
+:host ::ng-deep app-reservation,
+:host ::ng-deep app-new-business-listing,
+:host ::ng-deep app-settings {
+    flex-grow: 1;
+}

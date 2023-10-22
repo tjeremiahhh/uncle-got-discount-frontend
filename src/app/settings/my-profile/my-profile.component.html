@@ -1,0 +1,89 @@
+<nz-card>
+  <!-- Name -->
+  <div>
+    <div class=" flex justify-between items-center gap-3">
+      <div class="flex flex-col items-start">
+        <p class="inline-block font-medium border-b border-orange-600 pb-1">
+          name
+        </p>
+
+        <span class="text-xs text-gray-700">
+          Your first name will appear as your display name.
+        </span>
+      </div>
+    </div>
+    <div class="flex items-center p-6">
+      <span class="text-gray-500 inline-block min-w-100">name</span>
+      <input nz-input type="text" placeholder="enter name" value="{{currentUser.name}}">
+    </div>
+    <nz-divider></nz-divider>
+  </div>
+
+  <!-- Email -->
+  <div>
+    <div class="flex justify-between items-center gap-3">
+      <div class="flex flex-col items-start">
+        <p class="inline-block font-medium border-b border-orange-600 pb-1">
+          email
+        </p>
+
+        <span class="text-xs text-gray-700">
+          Add and verify email addresses here. Your first email will automatically be your primary email.
+        </span>
+      </div>
+    </div>
+    <div class="flex items-center p-6">
+      <span class="text-gray-500 inline-block min-w-100">email</span>
+      <input nz-input type="email" placeholder="enter email" value="{{currentUser.emailAddress}}">
+    </div>
+    <nz-divider></nz-divider>
+  </div>
+
+
+  <!-- Password -->
+  <div>
+    <div class=" flex justify-between items-center gap-3">
+      <div class="flex flex-col items-start">
+        <p class="inline-block font-medium border-b border-orange-600 pb-1">
+          password
+        </p>
+
+        <span class="text-xs text-gray-700">
+          Change your password by entering your current one first.
+        </span>
+      </div>
+    </div>
+    <div class="flex items-center pt-6 px-6">
+      <span class="text-gray-500 inline-block min-w-100">current password</span>
+      <input nz-input type="password" placeholder="enter current password">
+    </div>
+    <div class="flex items-center p-6 pt-3 pb-6">
+      <span class="text-gray-500 inline-block min-w-100">new password</span>
+      <input nz-input type="password" placeholder="enter new password">
+    </div>
+    <nz-divider></nz-divider>
+  </div>
+
+
+
+  <!-- Phone number -->
+  <div>
+    <div class="flex justify-between items-center gap-3">
+      <div class="flex flex-col items-start">
+        <p class="inline-block font-medium border-b border-orange-600 pb-1">
+          mobile number
+        </p>
+
+        <span class="text-xs text-gray-700">
+          Add your mobile phone number to make reservations.
+        </span>
+      </div>
+    </div>
+    <div class="flex items-center p-6">
+      <span class="text-gray-500 inline-block min-w-100">mobile number</span>
+      <input nz-input type="number" placeholder="enter mobile number" value="{{currentUser.phoneNumber}}">
+    </div>
+    <nz-divider></nz-divider>
+  </div>
+  <button nz-button nzType="primary">Save profile</button>
+</nz-card>
