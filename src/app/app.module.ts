@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
@@ -20,23 +21,36 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http'
-import { FormsModule, ReactiveFormsModule} from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 
-import { UserOutline } from '@ant-design/icons-angular/icons';
+import { UserOutline, TagOutline } from '@ant-design/icons-angular/icons';
 import { AuthenticateComponent } from './authentication/authenticate/authenticate.component';
 import { NewBusinessListingComponent } from './business-listing/new-business-listing/new-business-listing.component';
 import { SearchFilterBarComponent } from './search-filter/search-filter-bar/search-filter-bar.component';
+import { EditBusinessListingComponent } from './business-listing/edit-business-listing/edit-business-listing.component';
+import { MyProfileComponent } from './settings/my-profile/my-profile.component';
+import en from '@angular/common/locales/en'
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { ViewBuinessListingComponent } from './business-listing/view-business-listing/view-business-listing.component';
+import { SettingsComponent } from './settings/settings.component';
+import { MyReservationComponent } from './settings/my-reservations/my-reservations.component';
 
+registerLocaleData(en);
 
 @NgModule({
   declarations: [
@@ -47,7 +61,12 @@ import { SearchFilterBarComponent } from './search-filter/search-filter-bar/sear
     RegisterComponent,
     AuthenticateComponent,
     NewBusinessListingComponent,
-    SearchFilterBarComponent
+    SearchFilterBarComponent,
+    EditBusinessListingComponent,
+    ViewBuinessListingComponent,
+    SettingsComponent,
+    MyProfileComponent,
+    MyReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -69,18 +88,23 @@ import { SearchFilterBarComponent } from './search-filter/search-filter-bar/sear
     NzCheckboxModule,
     NzSelectModule,
     NzAutocompleteModule,
+    NzAvatarModule,
+    NzTimePickerModule,
+    NzLayoutModule,
+    NzDatePickerModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NzIconModule.forChild([UserOutline]),
+    NzIconModule.forChild([UserOutline, TagOutline]),
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIconPacks(fas, far);
   }
- }
+}

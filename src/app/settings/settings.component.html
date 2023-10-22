@@ -1,0 +1,29 @@
+<nz-layout>
+  <nz-sider nzWidth="200px" nzTheme="light">
+    <div class="pb-4 pt-8 avatar-wrapper">
+      <div class="gap-2 w-full flex flex-col justify-center items-center">
+        <nz-avatar [nzSize]="96" nzIcon="user"></nz-avatar>
+        <div>{{currentUser.name}}</div>
+      </div>
+    </div>
+
+    <ul nz-menu nzMode="inline">
+      <li nz-menu-item routerLink='/my-profile'>
+        <span nz-icon nzType="user"></span>
+        <span>my profile</span>
+      </li>
+      <li nz-submenu nzOpen nzIcon="tag" nzTitle="my reservations">
+        <ul>
+          <li routerLink='/my-upcoming-reservations' nz-menu-item>upcoming</li>
+          <li routerLink='/my-reservations-history' nz-menu-item>historical</li>
+        </ul>
+      </li>
+    </ul>
+
+  </nz-sider>
+  <nz-layout class="inner-layout">
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

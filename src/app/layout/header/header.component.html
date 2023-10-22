@@ -11,8 +11,9 @@
       </a>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu>
-          <li nz-menu-item>my profile</li>
+          <li nz-menu-item [routerLink]="'/my-profile'">my profile</li>
           <li nz-menu-item>my reservations</li>
+          <li *ngIf="currentUser.isBusinessOwner" [routerLink]="['/edit-business-listing']" [queryParams]="{ id: 1 }" nz-menu-item>my restaurant</li>
         </ul>
       </nz-dropdown-menu>
       <a (click)="onLogOut()">log out</a>

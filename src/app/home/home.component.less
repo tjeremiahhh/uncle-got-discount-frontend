@@ -1,3 +1,7 @@
+:host {
+    flex-grow: 1;
+}
+
 .hero-banner {
     position: relative;
 
@@ -16,7 +20,7 @@
             font-size: 6em;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             color: white;
-            text-shadow: 0px 0px 6px rgba(0,0,0,0.6);
+            text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.6);
         }
 
         app-search-filter-bar {
@@ -63,7 +67,7 @@
             font-size: 3em;
             text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.6);
         }
-        
+
     }
 }
 
@@ -119,16 +123,14 @@
     position: relative;
     width: 100%;
     gap: 16px;
-    
+
     nz-card {
         width: 20%;
     }
 
 }
 
-:host ::ng-deep .ant-card-bordered .ant-card-cover{
+:host ::ng-deep .ant-card-bordered .ant-card-cover {
     padding: 24px;
     aspect-ratio: 1/1;
 }
-
-
