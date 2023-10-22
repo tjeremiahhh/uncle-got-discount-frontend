@@ -19,6 +19,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -34,6 +35,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { UserOutline } from '@ant-design/icons-angular/icons';
 import { AuthenticateComponent } from './authentication/authenticate/authenticate.component';
 import { NewBusinessListingComponent } from './business-listing/new-business-listing/new-business-listing.component';
+import { SearchFilterBarComponent } from './search-filter/search-filter-bar/search-filter-bar.component';
 
 
 @NgModule({
@@ -45,6 +47,7 @@ import { NewBusinessListingComponent } from './business-listing/new-business-lis
     RegisterComponent,
     AuthenticateComponent,
     NewBusinessListingComponent,
+    SearchFilterBarComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,7 @@ import { NewBusinessListingComponent } from './business-listing/new-business-lis
     NzMessageModule,
     NzCheckboxModule,
     NzSelectModule,
+    NzAutocompleteModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NzIconModule.forChild([UserOutline]),

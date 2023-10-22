@@ -1,32 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { BusinessListing, ISearchResult } from './model/home.model';
-import { HomeService } from './home.service';
+import {ISearchResult } from '../model/search-filter.model';
+import { SearchFilterService } from '../search-filter.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.less']
+  selector: 'app-search-filter-bar',
+  templateUrl: './search-filter-bar.component.html',
+  styleUrls: ['./search-filter-bar.component.less']
 })
-export class HomeComponent implements OnInit {
-  businessListings : BusinessListing[] = [];
+export class SearchFilterBarComponent implements OnInit {
   searchValue ?: string;
   searchResults ?: ISearchResult[] = [];
   thumbnail : any;
 
   constructor(
-    private homeService : HomeService,
+    private searchFilterService: SearchFilterService,
     private sanitizer: DomSanitizer,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.homeService.getAllBusinessListings().subscribe({
-      next: (res : any) => {
-        this.businessListings = res;
-      }
-    })
   }
   
   public clearSearchValue(): void {
@@ -42,7 +36,7 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    this.homeService.searchByOutletName(value).subscribe({
+    this.searchFilterService.searchByOutletName(value).subscribe({
       next: (res: ISearchResult[]) => {
         this.searchResults = res;
         this.searchResults.forEach((result: ISearchResult) => {
@@ -62,6 +56,6 @@ export class HomeComponent implements OnInit {
   }
   
   public routeToViewRestaurant(): void {
-    this.router.navigate(['view-restaurant'], { queryParams: { id: this.searchValue }});
+    // Route to reservation component
   }
 }
