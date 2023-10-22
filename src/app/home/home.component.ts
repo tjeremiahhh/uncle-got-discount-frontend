@@ -3,6 +3,7 @@ import { BusinessListing, ISearchResult } from './model/home.model';
 import { HomeService } from './home.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Cuisines } from '../business-listing/model/business-listing.model';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   businessListings: BusinessListing[] = [];
+  cuisines: Cuisines[] = []
 
   constructor(
     private homeService: HomeService,
@@ -20,6 +22,12 @@ export class HomeComponent implements OnInit {
     this.homeService.getAllBusinessListings().subscribe({
       next: (res: any) => {
         this.businessListings = res;
+      }
+    })
+
+    this.homeService.getBusinessListingDescriptionDetails().subscribe({
+      next: (res: any) => {
+        this.cuisines = res.cuisines;
       }
     })
   }

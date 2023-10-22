@@ -6,6 +6,7 @@ import { Reservation } from 'src/app/business-listing/model/business-listing.mod
 import { ReservationsService } from './reservations.service';
 import { HttpParams } from '@angular/common/http';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { EditReservationComponent } from 'src/app/reservation/edit-reservation/edit-reservation.component';
 
 @Component({
   selector: 'app-my-reservations',
@@ -94,6 +95,19 @@ export class MyReservationComponent implements OnInit {
         }
       });
     }
+  }
+
+  onEdit(reservationId: number | undefined, businessId: number) {
+    this.modalService.create({
+      nzTitle: "<b class='text-[20px]'>edit reservation</b>",
+      nzContent: EditReservationComponent,
+      nzWidth: "1000px",
+      nzFooter: null,
+      nzData: {
+        businessId: 1,
+        reservationId: reservationId
+      }
+    })
   }
 
 }
