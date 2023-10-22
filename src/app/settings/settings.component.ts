@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../authentication/authenticate/authentication.service';
@@ -17,10 +17,15 @@ export class SettingsComponent implements OnInit {
 
   selectedTab: number = 0;
 
+  isProfile: boolean = false;
+  isUpcoming: boolean = false;
+  isHistorical: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private fb: FormBuilder,
+    private router: Router,
   ) {
 
   }
@@ -34,6 +39,16 @@ export class SettingsComponent implements OnInit {
       password: [this.currentUser.password, [Validators.required]],
       phoneNumber: [this.currentUser.phoneNumber, [Validators.required]]
     })
+
+    console.log(this.router.url);
+
+    if(this.router.url.includes('upcoming')){
+      this.isUpcoming = true;
+    } else if (this.router.url.includes('profile')) {
+      this.isProfile = true;
+    } else if (this.router.url.includes('historical')) {
+      this.isHistorical = true;
+    }
   }
 
 }

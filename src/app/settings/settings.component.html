@@ -8,14 +8,14 @@
     </div>
 
     <ul nz-menu nzMode="inline">
-      <li nz-menu-item routerLink='/my-profile'>
+      <li nz-menu-item routerLink='/my-profile' [nzSelected]="isProfile">
         <span nz-icon nzType="user"></span>
         <span>my profile</span>
       </li>
       <li nz-submenu nzOpen nzIcon="tag" nzTitle="my reservations">
         <ul>
-          <li routerLink='/my-upcoming-reservations' nz-menu-item>upcoming</li>
-          <li routerLink='/my-reservations-history' nz-menu-item>historical</li>
+          <li routerLink='/my-upcoming-reservations' nz-menu-item [nzSelected]="isUpcoming">upcoming</li>
+          <li routerLink='/my-reservations-history' nz-menu-item [nzSelected]="isHistorical">historical</li>
         </ul>
       </li>
     </ul>
