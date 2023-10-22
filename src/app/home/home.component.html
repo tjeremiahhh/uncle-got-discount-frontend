@@ -44,6 +44,32 @@
     </div>
   </section>
 
+  <section class="p-6">
+    <p class="text-xl inline-block font-medium border-b border-orange-600 pb-1">cuisines</p>
+
+    <div nz-row class="custom-list-wrapper py-3 " nzGutter="16" id="slider-2">
+      <button (click)="slideChange(1, 'slider-1')" nzSize="large" nz-button nzShape="circle"
+        class="custom-list-btn custom-list-right-btn">
+        <span nz-icon nzType="right" nzTheme="outline"></span>
+      </button>
+      <button (click)="slideChange(-1, 'slider-1')" nzSize="large" nz-button nzShape="circle"
+        class="custom-list-btn custom-list-left-btn">
+        <span nz-icon nzType="left" nzTheme="outline"></span>
+      </button>
+
+      <div nz-col nzXs="14" nzSm="10" nzMd="7" nzLg="5" nzXl="4" class="custom-list-item"
+        *ngFor="let cuisine of cuisines; index as i ">
+        <nz-card [nzCover]="coverTemplate" nzHoverable="true">
+          <nz-card-meta nzTitle="{{cuisine.cuisine}}"></nz-card-meta>
+        </nz-card>
+        <ng-template #coverTemplate>
+          <img alt="{{cuisine.cuisine}}" class="aspect-video object-cover"
+            src="../../assets/images/cuisine-logos/cuisine-{{cuisine.id}}.jpg" />
+        </ng-template>
+      </div>
+    </div>
+  </section>
+
   <div class="business-banner">
     <div class="business-content items-start">
       <h1>own a restaurant? join us</h1>
