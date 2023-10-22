@@ -1,8 +1,11 @@
 <div class="search-bar">
   <nz-input-group [nzSuffix]="inputClearTpl">
     <input nz-input nzSize="large" type="text" [nzAutocomplete]="auto" [(ngModel)]="searchValue"
-      (input)="searchByOutletName($event)" />
+      (input)="searchByOutletName($event)" (click)="searchByOutletName($event)" placeholder="Search for a Restaurant Name"/>
   </nz-input-group>
+  <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a Cuisine" [(ngModel)]="cuisineValue">
+    <nz-option *ngFor="let cuisine of cuisineList" [nzValue]="cuisine.id" [nzLabel]="cuisine.cuisine"></nz-option>
+  </nz-select>
   <button nz-button nzSize="large" nzType="primary">search</button>
 </div>
 <ng-template #inputClearTpl>

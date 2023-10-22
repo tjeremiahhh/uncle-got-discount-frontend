@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { devMicroserviceUrl } from "src/environments/environments";
-import { ISearchResult } from "./model/search-filter.model";
+import { ICuisine, ISearchResult } from "./model/search-filter.model";
 
 
 @Injectable({
@@ -14,9 +14,17 @@ export class SearchFilterService {
 
     constructor(private http : HttpClient) {}
 
-    searchByOutletName(outletName: string): Observable<ISearchResult[]> {
+    searchByOutletName(outletName: string, cuisine?: number): Observable<ISearchResult[]> {
         let params: HttpParams = new HttpParams().set("outletName", outletName);
 
+        if (cuisine) {
+            params = params.set("cuisine", cuisine);
+        }
+
         return this.http.get<ISearchResult[]>(devMicroserviceUrl.search_filter + 'search-by-outlet-name', { params: params });
+    }
+
+    getAllCuisines(): Observable<ICuisine[]> {
+        return this.http.get<ICuisine[]>(devMicroserviceUrl.search_filter + 'get-all-cuisines');
     }
 }

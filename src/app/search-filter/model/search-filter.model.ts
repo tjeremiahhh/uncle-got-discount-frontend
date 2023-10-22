@@ -4,3 +4,8 @@ export interface ISearchResult {
     address ?: string;
     imageFile ?: Uint8Array;
 }
+
+export interface ICuisine {
+    id: number;
+    cuisine: string;
+}

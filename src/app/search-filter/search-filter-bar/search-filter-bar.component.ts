@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ISearchResult } from '../model/search-filter.model';
+import {ICuisine, ISearchResult } from '../model/search-filter.model';
 import { SearchFilterService } from '../search-filter.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class SearchFilterBarComponent implements OnInit {
   searchValue ?: string;
   searchResults ?: ISearchResult[] = [];
+  cuisineValue ?: number;
+  cuisineList ?: ICuisine[] = [];
   thumbnail : any;
 
   constructor(
@@ -21,6 +23,13 @@ export class SearchFilterBarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loadCuisineList();
+  }
+
+  public loadCuisineList(): void {
+    this.searchFilterService.getAllCuisines().subscribe((cuisineList: ICuisine[]) => {
+      this.cuisineList = cuisineList;
+    });
   }
   
   public clearSearchValue(): void {
@@ -36,21 +45,21 @@ export class SearchFilterBarComponent implements OnInit {
       return;
     }
 
-    this.searchFilterService.searchByOutletName(value).subscribe({
+    this.searchFilterService.searchByOutletName(value, this.cuisineValue).subscribe({
       next: (res: ISearchResult[]) => {
         this.searchResults = res;
-        this.searchResults.forEach((result: ISearchResult) => {
-          if (result.imageFile) {
-            const blob = new Blob([result.imageFile], {type: 'image/jpeg'})
-            var reader = new FileReader();
-            var base64data;
-            reader.readAsDataURL(blob);
-            reader.onloadend = () => {
-              this.thumbnail = reader.result;
-              console.log(this.thumbnail);
-            }
-          }
-        })
+        // this.searchResults.forEach((result: ISearchResult) => {
+        //   if (result.imageFile) {
+        //     const blob = new Blob([result.imageFile], {type: 'image/jpeg'})
+        //     var reader = new FileReader();
+        //     var base64data;
+        //     reader.readAsDataURL(blob);
+        //     reader.onloadend = () => {
+        //       this.thumbnail = reader.result;
+        //       console.log(this.thumbnail);
+        //     }
+        //   }
+        // })
       }
     })
   }
