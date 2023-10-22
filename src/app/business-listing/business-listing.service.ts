@@ -8,9 +8,9 @@ import { BusinessListing, BusinessListingDescription, BusinessListingDiscounts, 
     providedIn: 'root'
 })
 export class BusinessListingService {
-    // baseUrl = "https://gew0xe9lag.execute-api.ap-southeast-1.amazonaws.com/api/business-listing/"
+    baseUrl = "https://gew0xe9lag.execute-api.ap-southeast-1.amazonaws.com/api/business-listing/"
 
-    baseUrl = "http://localhost:8080/api/business-listing/"
+    // baseUrl = "http://localhost:8080/api/business-listing/"
 
     constructor(private http: HttpClient) { }
 

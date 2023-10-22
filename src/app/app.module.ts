@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
@@ -19,13 +20,17 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http'
-import { FormsModule, ReactiveFormsModule} from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -35,7 +40,11 @@ import { UserOutline } from '@ant-design/icons-angular/icons';
 import { AuthenticateComponent } from './authentication/authenticate/authenticate.component';
 import { NewBusinessListingComponent } from './business-listing/new-business-listing/new-business-listing.component';
 import { EditBusinessListingComponent } from './business-listing/edit-business-listing/edit-business-listing.component';
+import { ViewBuinessListingComponent } from './business-listing/view-business-listing/view-business-listing.component';
+import en from '@angular/common/locales/en';
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 
+registerLocaleData(en);
 
 @NgModule({
   declarations: [
@@ -46,7 +55,8 @@ import { EditBusinessListingComponent } from './business-listing/edit-business-l
     RegisterComponent,
     AuthenticateComponent,
     NewBusinessListingComponent,
-    EditBusinessListingComponent
+    EditBusinessListingComponent,
+    ViewBuinessListingComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +77,9 @@ import { EditBusinessListingComponent } from './business-listing/edit-business-l
     NzMessageModule,
     NzCheckboxModule,
     NzSelectModule,
+    NzTabsModule,
+    NzDatePickerModule,
+    NzTimePickerModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NzIconModule.forChild([UserOutline]),
@@ -74,11 +87,12 @@ import { EditBusinessListingComponent } from './business-listing/edit-business-l
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIconPacks(fas, far);
   }
- }
+}

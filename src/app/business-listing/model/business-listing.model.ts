@@ -53,23 +53,26 @@ export interface Atmospheres {
 }
 
 export class BusinessListingSpecialConditions {
-    id ?: number;
-    businessListingId ?: number;
-    condition ?: string;
+    id?: number;
+    businessListingId?: number;
+    condition?: string;
 }
 
 export class BusinessListingDiscounts {
-    id ?: number;
-    businessListingId ?: number;
-    dayId ?: number;
-    timingsId ?: number;
-    discountsId ?: number;
-    maxHeadCount ?: number;
+    id?: number;
+    businessListingId?: number;
+    dayId?: number;
+    timingsId?: number;
+    discountsId?: number;
+    maxHeadCount?: number;
+    time?: string;
+    discountInPercent?: number;
+    day?: Days;
 }
 
 export class BusinessListingRequest {
-    businessListing ?: BusinessListing;
-    businessListingDescription ?: BusinessListingDescription;
-    businessListingSpecialConditions ?: BusinessListingSpecialConditions;
-    businessListingDiscounts ?: BusinessListingDiscounts[];
+    businessListing?: BusinessListing;
+    businessListingDescription?: BusinessListingDescription;
+    businessListingSpecialConditions?: BusinessListingSpecialConditions;
+    businessListingDiscounts?: BusinessListingDiscounts[];
 }
