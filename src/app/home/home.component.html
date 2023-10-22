@@ -35,8 +35,8 @@
         <span nz-icon nzType="left" nzTheme="outline"></span>
       </button>
 
-      <div nz-col nzSpan="5" class="custom-list-item" *ngFor="let listing of businessListings; index as i "
-        routerLink="/reservation/{{listing.id}}">
+      <div nz-col nzXs="14" nzSm="10" nzMd="7" nzLg="5" nzXl="4" class="custom-list-item"
+        *ngFor="let listing of businessListings; index as i " routerLink="/reservation/{{listing.id}}">
         <nz-card [nzCover]="coverTemplate" nzHoverable="true">
           <nz-card-meta nzTitle="{{listing.outletName}}" nzDescription="{{ listing.address }}"></nz-card-meta>
         </nz-card>
@@ -47,7 +47,7 @@
       </div>
     </div>
   </section>
-  
+
   <div class="business-banner">
     <div class="business-content items-start">
       <h1>own a restaurant? join us</h1>

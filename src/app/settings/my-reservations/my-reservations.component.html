@@ -1,18 +1,67 @@
 <nz-card>
   <!-- Name -->
-  <div>
-    <div class=" flex justify-between items-center gap-3">
-      <div class="flex flex-col items-start">
-        <p class="inline-block font-medium border-b border-orange-600 pb-1">
-          Upcoming reservations
-        </p>
 
-        <span class="text-xs text-gray-700">
-          your upcoming reservations will appear here
-        </span>
+  <div class=" flex flex-col justify-between gap-3">
+    <div class="flex flex-col items-start">
+      <p class="inline-block font-medium border-b border-orange-600 pb-1">
+        {{type === 'upcoming' ? "upcoming reservations" : "reservation history"}}
+      </p>
+
+      <span class="text-xs text-gray-700">
+        your {{type === 'upcoming' ? "upcoming reservations" : "reservation history"}} will appear here
+      </span>
+    </div>
+
+    <div *ngIf="reservations.length === 0"
+      class="flex flex-col gap-2 text-center border border-gray-200 p-5 text-gray-400">
+      <fa-icon class=" mb-2 text-5xl" nz-icon icon="calendar-alt"></fa-icon>
+      <p class="m-0">Oh no, you have no reservations at this point.</p>
+    </div>
+
+    <div *ngIf="reservations.length > 0" nz-row nzGutter="16">
+      <div nz-col nzXs="24" nzMd="12" nzLg="8" nzXl="6" *ngFor="let listing of reservations; index as i" class="mt-4">
+        <nz-card [nzCover]="coverTemplate" nzHoverable="true" [nzActions]="type === 'upcoming' ? [actionEdit] : []">
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-col mb-3">
+              <p class="m-0 font-bold text-lg">Restaurant</p>
+              <p class="m-0 text-gray-400">western | korean</p>
+              <p class="m-0">Blk 123 depot road</p>
+            </div>
+
+            <div class="flex flex-col">
+              <p class="m-0 text-gray-500">Date: </p>
+              <p class="m-0">{{listing.date}}</p>
+            </div>
+
+            <div class="flex flex-col">
+              <p class="m-0 text-gray-500">Time: </p>
+              <p class="m-0">12:00 (30% discount)</p>
+            </div>
+
+            <div class="flex flex-col">
+              <p class="m-0 text-gray-500">No. of Diners: </p>
+              <p class="m-0">{{listing.noOfDiners}}</p>
+            </div>
+
+            <div class="flex flex-col">
+              <p class="m-0 text-gray-500">Special Request(s): </p>
+              <p class="m-0">{{listing.specialRequests}}</p>
+            </div>
+          </div>
+        </nz-card>
+
+        <ng-template #coverTemplate>
+          <img alt="{{listing.noOfDiners}}" class="{{type}} aspect-video object-cover"
+            src="../../assets/images/restaurants-logos/restaurant-{{listing.businessListingId}}.jpg" />
+        </ng-template>
+
+        <ng-template #actionEdit>
+          <div class="flex items-center justify-center">
+            <fa-icon class="mr-2 inline-block" nz-icon icon="edit"></fa-icon> edit reservation
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>
-
 
 </nz-card>

@@ -40,13 +40,11 @@ export class SettingsComponent implements OnInit {
       phoneNumber: [this.currentUser.phoneNumber, [Validators.required]]
     })
 
-    console.log(this.router.url);
-
-    if(this.router.url.includes('upcoming')){
+    if (this.router.url.includes('upcoming')) {
       this.isUpcoming = true;
     } else if (this.router.url.includes('profile')) {
       this.isProfile = true;
-    } else if (this.router.url.includes('historical')) {
+    } else if (this.router.url.includes('history')) {
       this.isHistorical = true;
     }
   }

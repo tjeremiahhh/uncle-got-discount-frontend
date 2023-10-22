@@ -98,7 +98,7 @@ registerLocaleData(en);
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US,  }, DatePipe],
+  providers: [{ provide: NZ_I18N, useValue: en_US, }, DatePipe],
   bootstrap: [AppComponent]
 })
 

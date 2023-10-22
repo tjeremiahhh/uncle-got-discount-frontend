@@ -79,6 +79,7 @@ export class BusinessListingRequest {
 
 export class Reservation {
     id?: number;
+    businessListingId?: number;
     businessListingDiscountsId?: number;
     noOfDiners?: number;
     date?: string | null | Date;
