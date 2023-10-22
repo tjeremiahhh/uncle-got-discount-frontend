@@ -47,6 +47,17 @@ export class ViewBuinessListingComponent implements OnInit {
     }
 
     ngOnInit() {
+        window.addEventListener('scroll', () => {
+            const container = document.getElementById('reservation-container');
+            const form = document.getElementById('reservation-form');
+
+            if (form && container) {
+                if (window.scrollY <= container.getBoundingClientRect().height - form.getBoundingClientRect().height - 48)
+                    form.style.marginTop = window.scrollY + 'px';
+            }
+
+        })
+
         // Setting routes id into variable
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.businessId = params.get('id');
@@ -130,7 +141,7 @@ export class ViewBuinessListingComponent implements OnInit {
             next: (res: any) => {
                 this.notificationService.success('', "Reservation created!");
                 this.showReservationModal = false;
-                this.reservationGroup.reset(({date: new Date()}));
+                this.reservationGroup.reset(({ date: new Date() }));
             }
         })
     }
@@ -155,7 +166,7 @@ export class ViewBuinessListingComponent implements OnInit {
             this.reservation.createdBy = this.authenticationService.currentUser.id;
 
             this.selectedDiscount = this.businessListingDiscounts.find((x: any) => x.id === this.reservation.businessListingDiscountsId) as BusinessListingDiscounts;
-           
+
             this.showReservationModal = true;
         } else {
             Object.values(this.reservationGroup.controls).forEach(control => {
