@@ -10,6 +10,7 @@ import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Atmospheres, BusinessListing, BusinessListingDescription, BusinessListingDiscounts, BusinessListingRequest, BusinessListingSpecialConditions, Cuisines, Days, Discounts, PaymentOptions, Timings } from '../model/business-listing.model';
 import { HttpParams } from '@angular/common/http';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-new-business-listing',
@@ -44,6 +45,7 @@ export class NewBusinessListingComponent implements OnInit {
   timings: Timings[] = [];
 
   file!: File;
+  fileString!: string;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -110,8 +112,8 @@ export class NewBusinessListingComponent implements OnInit {
     } else {
       this.currentStep = 0;
     }
-    // this.getBusinessListingDescriptionDetails(); //TODO: REMOVE
-    // this.currentStep = 1 //TODO: REMOVE
+
+    this.currentStep = 1 //TODO: REMOVE
   }
 
   onNext() {
@@ -187,6 +189,18 @@ export class NewBusinessListingComponent implements OnInit {
 
   onUploadFile(event: any) {
     this.file = event.target.files[0];
+    this.convertFile(event.target.files[0]).subscribe(base64 => {
+      this.fileString = base64;
+    });
+  }
+
+  convertFile(file: File): Observable<string> {
+    const result = new ReplaySubject<string>(1);
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+
+    reader.onload = (event) => result.next(btoa(event.target != null ? event.target.result != null ? event.target.result.toString() : '' : ''));
+    return result;
   }
 
   createBusinessListing() {
@@ -196,12 +210,12 @@ export class NewBusinessListingComponent implements OnInit {
       this.businessListing.emailAddress = this.businessListingForm.get('emailAddress')?.value;
       this.businessListing.phoneNumber = this.businessListingForm.get('phoneNumber')?.value;
       this.businessListing.address = this.businessListingForm.get('address')?.value;
-      // this.businessListing.imageFile = this.businessListingForm.get('imageFile')?.value;
       this.businessListing.websiteUrl = this.businessListingForm.get('websiteUrl')?.value;
       this.businessListing.allowPublicHoliday = this.businessListingForm.get('allowPublicHoliday')?.value;
       this.businessListing.menuUrl = this.businessListingForm.get('menuUrl')?.value;
       this.businessListing.halalCertified = this.businessListingForm.get('halalCertified')?.value;
 
+      console.log(this.businessListing)
       this.currentStep += 1
 
       this.getBusinessListingDescriptionDetails();
@@ -220,14 +234,14 @@ export class NewBusinessListingComponent implements OnInit {
       //       // this.getBusinessListingDescriptionDetails();
       //     }
       //   })
-      // } else {
-      //   Object.values(this.businessListingForm.controls).forEach(control => {
-      //     if (control.invalid) {
-      //       control.markAsDirty();
-      //       control.updateValueAndValidity({ 'onlySelf': true });
-      //     }
-      //   });
-      // }
+      // } 
+    } else {
+      Object.values(this.businessListingForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ 'onlySelf': true });
+        }
+      });
     }
   }
 
@@ -314,6 +328,8 @@ export class NewBusinessListingComponent implements OnInit {
     businessListingRequest.businessListingDescription = this.businessListingDescription;
     businessListingRequest.businessListingSpecialConditions = this.businessListingSpecialConditions;
     businessListingRequest.businessListingDiscounts = this.businessListingDiscounts;
+    // console.log(this.businessListing)
+
 
     const formData: FormData = new FormData();
 
@@ -329,7 +345,7 @@ export class NewBusinessListingComponent implements OnInit {
       type: 'application/json'
     }));
 
-    if(Object.keys(this.businessListingSpecialConditions).length != 0) {
+    if (Object.keys(this.businessListingSpecialConditions).length != 0) {
       formData.append('businessListingSpecialConditions', new Blob([JSON
         .stringify(this.businessListingSpecialConditions)], {
         type: 'application/json'
@@ -340,6 +356,8 @@ export class NewBusinessListingComponent implements OnInit {
       .stringify(this.businessListingDiscounts)], {
       type: 'application/json'
     }));
+
+
 
     this.businessListingService.createBusinessListing(formData).subscribe({
       next: (res: any) => {
@@ -355,4 +373,15 @@ export class NewBusinessListingComponent implements OnInit {
     //   }
     // });
   }
+
+  // getBase64(file: any): string {
+  //   let me = this;
+  //   let reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = function () {
+  //     result = reader.result;
+  //   };
+
+  //   return '';
+  // }
 }

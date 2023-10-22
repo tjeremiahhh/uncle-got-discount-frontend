@@ -4,6 +4,7 @@ import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { BusinessListing, BusinessListingDescription, BusinessListingDiscounts, BusinessListingSpecialConditions } from '../model/business-listing.model';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { NzModalComponent } from 'ng-zorro-antd/modal';
 
 @Component({
     selector: 'app-reservation',
@@ -61,13 +62,12 @@ export class ViewBuinessListingComponent implements OnInit {
         private businessListingService: BusinessListingService,
         private fb: FormBuilder,
         private route: ActivatedRoute,
-
     ) {
         this.reservationGroup = this.fb.group({
             date: [null, [Validators.required]],
             noOfDiners: [null, [Validators.required]],
             businessListingDiscountsId: [null, [Validators.required]],
-            specialRequest: [null, [Validators.required]],
+            specialRequest: [null],
         })
     }
 
@@ -150,7 +150,18 @@ export class ViewBuinessListingComponent implements OnInit {
     }
 
     handleReviewReservation() {
-        this.showReservationModal = true;
+        if (this.reservationGroup.valid) {
+            this.showReservationModal = true;
+        } else {
+            Object.values(this.reservationGroup.controls).forEach(control => {
+                if (control.invalid) {
+                    console.log(control)
+
+                    control.markAsDirty();
+                    control.updateValueAndValidity({ 'onlySelf': true });
+                }
+            });
+        }
     }
 
     handleCloseModal() {

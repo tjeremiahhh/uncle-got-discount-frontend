@@ -114,7 +114,6 @@ export class EditBusinessListingComponent implements OnInit {
     } else {
       this.currentStep = 0;
     }
-    this.getBusinessListingDescriptionDetails(); //TODO: REMOVE
     this.currentStep = 1 //TODO: REMOVE
   }
 
@@ -215,14 +214,14 @@ export class EditBusinessListingComponent implements OnInit {
       formData.append("logoFile", this.file);
       console.log(this.file)
 
-      this.businessListingService.createBusinessListing(formData).subscribe({
-        next: (res: any) => {
-          this.businessListing = res;
-          console.log(res)
-          // this.currentStep += 1;
-          // this.getBusinessListingDescriptionDetails();
-        }
-      })
+      // this.businessListingService.createBusinessListing(formData).subscribe({
+      //   next: (res: any) => {
+      //     this.businessListing = res;
+      //     console.log(res)
+      //     // this.currentStep += 1;
+      //     // this.getBusinessListingDescriptionDetails();
+      //   }
+      // })
     } else {
       Object.values(this.businessListingForm.controls).forEach(control => {
         if (control.invalid) {
@@ -337,11 +336,11 @@ export class EditBusinessListingComponent implements OnInit {
     //   type: 'application/json'
     // }));
 
-    this.businessListingService.createBusinessListing(formData).subscribe({
-      next: (res: any) => {
-        console.log('created')
-      }
-    })
+    // this.businessListingService.createBusinessListing(formData).subscribe({
+    //   next: (res: any) => {
+    //     console.log('created')
+    //   }
+    // })
     // let params = new HttpParams();
     // params = params.set('businessListingId', this.businessListing.id != null ?  this.businessListing.id : 0);
 

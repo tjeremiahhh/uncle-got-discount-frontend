@@ -20,10 +20,9 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
-
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -40,9 +39,10 @@ import { UserOutline } from '@ant-design/icons-angular/icons';
 import { AuthenticateComponent } from './authentication/authenticate/authenticate.component';
 import { NewBusinessListingComponent } from './business-listing/new-business-listing/new-business-listing.component';
 import { EditBusinessListingComponent } from './business-listing/edit-business-listing/edit-business-listing.component';
-import { ViewBuinessListingComponent } from './business-listing/view-business-listing/view-business-listing.component';
-import en from '@angular/common/locales/en';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import en from '@angular/common/locales/en'
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { ViewBuinessListingComponent } from './business-listing/view-business-listing/view-business-listing.component';
 
 registerLocaleData(en);
 
@@ -56,6 +56,7 @@ registerLocaleData(en);
     AuthenticateComponent,
     NewBusinessListingComponent,
     EditBusinessListingComponent,
+    MyProfileComponent,
     ViewBuinessListingComponent,
   ],
   imports: [
@@ -77,9 +78,9 @@ registerLocaleData(en);
     NzMessageModule,
     NzCheckboxModule,
     NzSelectModule,
-    NzTabsModule,
-    NzDatePickerModule,
+    NzAvatarModule,
     NzTimePickerModule,
+    NzDatePickerModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NzIconModule.forChild([UserOutline]),
