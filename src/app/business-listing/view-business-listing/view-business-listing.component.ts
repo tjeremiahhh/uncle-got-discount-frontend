@@ -49,10 +49,11 @@ export class ViewBuinessListingComponent implements OnInit {
     ngOnInit() {
         const form = document.getElementById('reservation-form');
 
-
         if (form) {
             if (document.body.clientWidth <= 767)
                 form.style.marginTop = '16px';
+            else
+                window.addEventListener('scroll', this.onWindowScroll)
 
             window.addEventListener('resize', () => {
                 if (document.body.clientWidth > 767) {
@@ -88,8 +89,12 @@ export class ViewBuinessListingComponent implements OnInit {
         const form = document.getElementById('reservation-form');
 
         if (form && container) {
+            const maxMargin = container.getBoundingClientRect().height - form.getBoundingClientRect().height - 48;
+
             if (window.scrollY <= container.getBoundingClientRect().height - form.getBoundingClientRect().height - 48)
                 form.style.marginTop = window.scrollY + 'px';
+            else
+                form.style.marginTop = maxMargin + 'px';
         }
     }
 
