@@ -327,7 +327,9 @@ export class NewBusinessListingComponent implements OnInit {
     let businessListingRequest = new BusinessListingRequest();
     businessListingRequest.businessListing = this.businessListing;
     businessListingRequest.businessListingDescription = this.businessListingDescription;
-    businessListingRequest.businessListingSpecialConditions = this.businessListingSpecialConditions;
+    if(Object.keys(this.businessListingSpecialConditions).length != 0) {
+      businessListingRequest.businessListingSpecialConditions = this.businessListingSpecialConditions;
+    }
     businessListingRequest.businessListingDiscounts = this.businessListingDiscounts;
 
 
