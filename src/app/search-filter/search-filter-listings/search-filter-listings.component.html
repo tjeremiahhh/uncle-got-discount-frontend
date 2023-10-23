@@ -1,0 +1,31 @@
+<main class="container mx-auto px-3 py-6">
+    <app-search-filter-bar [atHomePage]="false" (searchButtonClicked)="searchListings()" [searchValue]="searchValue? searchValue : ''"></app-search-filter-bar>
+    <nz-divider></nz-divider>
+    <div nz-row nzGutter="24">
+        <!-- Filters -->
+        <div nz-col nzSpan="8">
+            <nz-card>
+                <h1>Filter</h1>
+                
+                <h2>Discounts</h2>
+                <nz-slider nzRange nzDots [nzMarks]="marks" [(ngModel)]="discountFilter" [nzTooltipVisible]="'never'"></nz-slider>
+
+                <h2 class="pt-3">Cuisines</h2>
+                <label nz-checkbox [(ngModel)]="allChecked" (ngModelChange)="updateAllChecked()">Select All</label>
+                <nz-checkbox-group [(ngModel)]="checkOptions"></nz-checkbox-group>
+            </nz-card>
+        </div>
+        <!-- Search Listings -->
+        <div nz-col nzSpan="16">
+            <div *ngFor="let searchListing of searchListingList" class="business-listing-container" routerLink="/reservation/{{searchListing.id}}">
+                <img class="search-img" src="../../../assets/images/restaurants-logos/restaurant-{{searchListing.id}}.jpg">
+                <div class="card-details">
+                    <div>{{ searchListing.outletName }}</div>
+                    <div>{{ searchListing.address }}</div>
+                </div>
+            </div>
+            <nz-card *ngIf="searchListingList.length === 0" style="display: flex; justify-content: center; align-items: center; color: red; font-weight: 400;">
+                Please search for a relevant restaurant</nz-card>
+        </div>
+    </div>
+</main>
