@@ -21,10 +21,10 @@ export class SearchFilterService {
             params = params.set("cuisine", cuisine);
         }
 
-        return this.http.get<ISearchResult[]>(prodMicroserviceUrl.search_filter + 'search-by-outlet-name', { params: params });
+        return this.http.get<ISearchResult[]>(devMicroserviceUrl.search_filter + 'search-by-outlet-name', { params: params });
     }
 
     getAllCuisines(): Observable<ICuisine[]> {
-        return this.http.get<ICuisine[]>(prodMicroserviceUrl.search_filter + 'get-all-cuisines');
+        return this.http.get<ICuisine[]>(devMicroserviceUrl.search_filter + 'get-all-cuisines');
     }
 }

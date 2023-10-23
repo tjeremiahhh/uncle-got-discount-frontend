@@ -3,6 +3,7 @@ import {ICuisine, ISearchResult } from '../model/search-filter.model';
 import { SearchFilterService } from '../search-filter.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-search-filter-bar',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-filter-bar.component.less']
 })
 export class SearchFilterBarComponent implements OnInit {
-  @Input("hasCuisineFilter") hasCuisineFilter ?: boolean;
+  @Input("atHomePage") atHomePage ?: boolean;
   searchValue ?: string;
   searchResults ?: ISearchResult[] = [];
   cuisineValue ?: number;
@@ -60,12 +61,23 @@ export class SearchFilterBarComponent implements OnInit {
         //       console.log(this.thumbnail);
         //     }
         //   }
-        // })
+        // }) 
       }
     })
+  }
+
+  public cuisineCallSearchByOutletName(): void {
   }
   
   public routeToViewRestaurant(): void {
     // Route to reservation component
+  }
+
+  public routeToSearchFilterListings(): void {
+    let httpParams: HttpParams = new HttpParams()
+      .set("searchValue", this.searchValue? this.searchValue : "")
+      .set("cuisineValue", this.cuisineValue? this.cuisineValue : "");
+
+    this.router.navigate(['search-filter-listings'], { queryParams: { searchValue: this.searchValue } });
   }
 }

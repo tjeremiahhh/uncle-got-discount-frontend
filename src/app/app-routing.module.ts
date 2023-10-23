@@ -8,6 +8,7 @@ import { MyProfileComponent } from './settings/my-profile/my-profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MyReservationComponent } from './settings/my-reservations/my-reservations.component';
 import { EditReservationComponent } from './reservation/edit-reservation/edit-reservation.component';
+import { SearchFilterListingsComponent } from './search-filter/search-filter-listings/search-filter-listings.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'edit-business-listing', component: EditBusinessListingComponent },
   { path: 'reservation/:id', component: ViewBuinessListingComponent },
   { path: 'edit-reservation/:id', component: EditReservationComponent },
+  { path: 'search-filter-listings', component: SearchFilterListingsComponent},
 
   {
     path: '', component: SettingsComponent,

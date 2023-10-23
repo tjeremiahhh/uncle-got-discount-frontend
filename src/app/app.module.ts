@@ -51,6 +51,7 @@ import { ViewBuinessListingComponent } from './business-listing/view-business-li
 import { SettingsComponent } from './settings/settings.component';
 import { MyReservationComponent } from './settings/my-reservations/my-reservations.component';
 import { EditReservationComponent } from './reservation/edit-reservation/edit-reservation.component';
+import { SearchFilterListingsComponent } from './search-filter/search-filter-listings/search-filter-listings.component';
 
 registerLocaleData(en);
 
@@ -63,13 +64,14 @@ registerLocaleData(en);
     RegisterComponent,
     AuthenticateComponent,
     NewBusinessListingComponent,
-    SearchFilterBarComponent,
     EditBusinessListingComponent,
     ViewBuinessListingComponent,
     SettingsComponent,
     MyProfileComponent,
     MyReservationComponent,
     EditReservationComponent,
+    SearchFilterBarComponent,
+    SearchFilterListingsComponent
   ],
   imports: [
     BrowserModule,
