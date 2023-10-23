@@ -87,4 +87,6 @@ export class Reservation {
     createdDate?: Date;
     updatedDate?: Date;
     createdBy?: number;
+    businessListing?: BusinessListing;
+    businessListingDiscount?: BusinessListingDiscounts;
 }
