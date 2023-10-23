@@ -23,10 +23,10 @@
     }
 }
 
-::ng-deep .search-bar nz-select {
-    max-width: 200px;
-    width: 100%;
-    height: 120%;
+:host ::ng-deep .search-bar nz-select {
+    max-width: 200px !important;
+    width: 100% !important;
+    height: 120% !important;
 
     nz-select-top-control {
         height: 100% !important;
@@ -35,22 +35,22 @@
     nz-select-placeholder,
     nz-select-search,
     nz-select-item {
-        display: flex;
-        align-items: center;
+        display: flex !important;
+        align-items: center !important;
     }
 }
 
 ::ng-deep nz-auto-option .ant-select-item-option-content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
     
     div {
         display: flex;
         flex-direction: column;
     }
     
-    img {
-        height: 50px;
+    .search-img {
+        width: 88.88px !important;
     }
 }

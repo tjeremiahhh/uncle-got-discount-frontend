@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {ICuisine, ISearchResult } from '../model/search-filter.model';
 import { SearchFilterService } from '../search-filter.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -12,7 +12,8 @@ import { HttpParams } from '@angular/common/http';
 })
 export class SearchFilterBarComponent implements OnInit {
   @Input("atHomePage") atHomePage ?: boolean;
-  searchValue ?: string;
+  @Input("searchValue") searchValue ?: string;
+  @Output() searchButtonClicked = new EventEmitter<boolean>();
   searchResults ?: ISearchResult[] = [];
   cuisineValue ?: number;
   cuisineList ?: ICuisine[] = [];
@@ -50,18 +51,18 @@ export class SearchFilterBarComponent implements OnInit {
     this.searchFilterService.searchByOutletName(value, this.cuisineValue).subscribe({
       next: (res: ISearchResult[]) => {
         this.searchResults = res;
-        // this.searchResults.forEach((result: ISearchResult) => {
-        //   if (result.imageFile) {
-        //     const blob = new Blob([result.imageFile], {type: 'image/jpeg'})
-        //     var reader = new FileReader();
-        //     var base64data;
-        //     reader.readAsDataURL(blob);
-        //     reader.onloadend = () => {
-        //       this.thumbnail = reader.result;
-        //       console.log(this.thumbnail);
-        //     }
-        //   }
-        // }) 
+        this.searchResults.forEach((result: ISearchResult) => {
+          if (result.imageFile) {
+            const blob = new Blob([result.imageFile], {type: 'image/jpeg'})
+            var reader = new FileReader();
+            var base64data;
+            reader.readAsDataURL(blob);
+            reader.onloadend = () => {
+              this.thumbnail = reader.result;
+              console.log(this.thumbnail);
+            }
+          }
+        }) 
       }
     })
   }
@@ -74,10 +75,13 @@ export class SearchFilterBarComponent implements OnInit {
   }
 
   public routeToSearchFilterListings(): void {
-    let httpParams: HttpParams = new HttpParams()
-      .set("searchValue", this.searchValue? this.searchValue : "")
-      .set("cuisineValue", this.cuisineValue? this.cuisineValue : "");
+    let queryParams = {
+      searchValue: this.searchValue,
+      cuisineValue: this.cuisineValue
+    }
 
-    this.router.navigate(['search-filter-listings'], { queryParams: { searchValue: this.searchValue } });
+    this.router.navigate(['search-filter-listings'], { queryParams: queryParams });
+
+    this.searchButtonClicked.emit(true);
   }
 }
