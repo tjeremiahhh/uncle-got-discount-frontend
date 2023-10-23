@@ -114,7 +114,26 @@ export class EditBusinessListingComponent implements OnInit {
     } else {
       this.currentStep = 0;
     }
-    this.currentStep = 1 //TODO: REMOVE
+
+    let params = new HttpParams();
+    params = params.set('id', this.businessListingId);
+    this.businessListingService.getBusinessListing(params).subscribe({
+      next : (res: any) => {
+        this.businessListing = res.businessListing; 
+        this.businessListingForm.patchValue({
+          outletName: this.businessListing.outletName,
+          emailAddress: this.businessListing.emailAddress,
+          phoneNumber: this.businessListing.phoneNumber,
+          address: this.businessListing.address,
+          // imageFile: this.
+          websiteUrl: this.businessListing.websiteUrl,
+          allowPublicHoliday: this.businessListing.allowPublicHoliday,
+          menuUrl: this.businessListing.menuUrl,
+          halalCertified: this.businessListing.halalCertified
+        })
+      }
+    })
+
   }
 
   onNext() {
@@ -202,17 +221,17 @@ export class EditBusinessListingComponent implements OnInit {
       this.businessListing.menuUrl = this.businessListingForm.get('menuUrl')?.value;
       this.businessListing.halalCertified = this.businessListingForm.get('halalCertified')?.value;
 
-      // this.currentStep += 1
+      this.currentStep += 1
 
-      // this.getBusinessListingDescriptionDetails();
+      this.getBusinessListingDescriptionDetails();
 
-      const formData: FormData = new FormData();
-      formData.append('businessListing', new Blob([JSON
-        .stringify(this.businessListing)], {
-        type: 'application/json'
-      }));
-      formData.append("logoFile", this.file);
-      console.log(this.file)
+      // const formData: FormData = new FormData();
+      // formData.append('businessListing', new Blob([JSON
+      //   .stringify(this.businessListing)], {
+      //   type: 'application/json'
+      // }));
+      // formData.append("logoFile", this.file);
+      // console.log(this.file)
 
       // this.businessListingService.createBusinessListing(formData).subscribe({
       //   next: (res: any) => {
@@ -322,7 +341,7 @@ export class EditBusinessListingComponent implements OnInit {
       .stringify(this.businessListing)], {
       type: 'application/json'
     }));
-    
+
     // formData.append('businessListingDescription', new Blob([JSON
     //   .stringify(this.businessListingDescription)], {
     //   type: 'application/json'

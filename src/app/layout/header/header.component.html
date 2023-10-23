@@ -13,7 +13,7 @@
         <ul nz-menu>
           <li nz-menu-item [routerLink]="'/my-profile'">my profile</li>
           <li nz-menu-item [routerLink]="['/my-upcoming-reservations']">my reservations</li>
-          <li *ngIf="currentUser.isBusinessOwner" [routerLink]="['/edit-business-listing']" [queryParams]="{ id: 1 }" nz-menu-item>my restaurant</li>
+          <li *ngIf="currentUser.isBusinessOwner" [routerLink]="['/edit-business-listing']" [queryParams]="{ id: businessListingId }" nz-menu-item>my restaurant</li>
         </ul>
       </nz-dropdown-menu>
       <a (click)="onLogOut()">log out</a>
