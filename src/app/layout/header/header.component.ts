@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { AuthenticateComponent } from 'src/app/authentication/authenticate/authenticate.component';
 import { AuthenticationService } from 'src/app/authentication/authenticate/authentication.service';
@@ -14,7 +15,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private modalService: NzModalService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class HeaderComponent implements OnInit {
 
   onLogOut(){
     this.authenticationService.logOut();
+    this.router.navigate(['/home']);
   }
 
 }

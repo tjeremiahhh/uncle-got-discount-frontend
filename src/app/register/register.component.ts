@@ -7,6 +7,7 @@ import { RegisterRequest } from './model/register.model';
 import { RegisterService } from './register.service';
 import { AuthenticationService } from '../authentication/authenticate/authentication.service';
 import { AuthenticationRequest } from '../authentication/authenticate/model/authenticate.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -23,6 +24,7 @@ export class RegisterComponent implements OnInit {
     private notificationService: NzNotificationService,
     private registerService: RegisterService,
     private authenticationService: AuthenticationService,
+    private router: Router,
   ) {
     this.registerForm = this.fb.group({
       name: [null, [Validators.required]],
@@ -66,6 +68,8 @@ export class RegisterComponent implements OnInit {
           this.notificationService.success('', "Account successfully created!");
           this.modalRef.close();
           this.authenticate();
+          this.router.navigate(['/home']);
+
         }
       })
 

@@ -5,6 +5,7 @@ import { RegisterComponent } from 'src/app/register/register.component';
 import { AuthenticationRequest } from './model/authenticate.model';
 import { AuthenticationService } from './authentication.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authenticate',
@@ -12,21 +13,22 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   styleUrls: ['./authenticate.component.less']
 })
 export class AuthenticateComponent implements OnInit {
-  authenticateForm : UntypedFormGroup;
+  authenticateForm: UntypedFormGroup;
 
   constructor(
-    private modalService : NzModalService,
-    private modalRef : NzModalRef,
-    private fb : FormBuilder,
-    private authenticationService : AuthenticationService,
-    private notificationService : NzNotificationService
-    
+    private modalService: NzModalService,
+    private modalRef: NzModalRef,
+    private fb: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private notificationService: NzNotificationService,
+    private router: Router
+
   ) {
     this.authenticateForm = this.fb.group({
       emailAddress: [null, [Validators.required]],
       password: [null, [Validators.required]]
     })
-   }
+  }
 
   ngOnInit() {
     console.log(this.authenticationService.currentUser)
@@ -47,20 +49,22 @@ export class AuthenticateComponent implements OnInit {
   }
 
   onLogIn() {
-    if(this.authenticateForm.valid) {
+    if (this.authenticateForm.valid) {
       let authenticationRequest = new AuthenticationRequest;
       authenticationRequest.emailAddress = this.authenticateForm.get('emailAddress')?.value;
       authenticationRequest.password = this.authenticateForm.get('password')?.value;
 
       this.authenticationService.authenticate(authenticationRequest).subscribe({
-        next: (res : any) => {
+        next: (res: any) => {
           this.notificationService.success('', "Successfully logged in!");
           this.modalRef.close();
+          this.router.navigate(['/home']);
+
         }
       })
     } else {
       Object.values(this.authenticateForm.controls).forEach(control => {
-        if(control.invalid) {
+        if (control.invalid) {
           control.markAsDirty();
           control.updateValueAndValidity({ 'onlySelf': true });
         }
