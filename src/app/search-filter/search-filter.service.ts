@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { devMicroserviceUrl, prodMicroserviceUrl } from "src/environments/environments";
-import { ICuisine, ISearchResult } from "./model/search-filter.model";
+import { ICuisine, IDiscount, ISearchListing, ISearchListingsRequest, ISearchResult } from "./model/search-filter.model";
 
 
 @Injectable({
@@ -10,7 +10,7 @@ import { ICuisine, ISearchResult } from "./model/search-filter.model";
 })
 export class SearchFilterService {
     baseUrl = "https://gew0xe9lag.execute-api.ap-southeast-1.amazonaws.com/api/business-listing/"
-    searchFilterUrl = devMicroserviceUrl.search_filter;
+    searchFilterUrl = prodMicroserviceUrl.search_filter;
 
     constructor(private http : HttpClient) {}
 
@@ -26,5 +26,13 @@ export class SearchFilterService {
 
     getAllCuisines(): Observable<ICuisine[]> {
         return this.http.get<ICuisine[]>(prodMicroserviceUrl.search_filter + 'get-all-cuisines');
+    }
+
+    getAllDiscounts(): Observable<IDiscount[]> {
+        return this.http.get<IDiscount[]>(prodMicroserviceUrl.search_filter + 'get-all-discounts');
+    }
+
+    searchListings(searchListingsRequest: ISearchListingsRequest): Observable<ISearchListing[]> {
+        return this.http.post<ISearchListing[]>(prodMicroserviceUrl.search_filter + 'search-listings', searchListingsRequest);
     }
 }

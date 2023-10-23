@@ -25,6 +25,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzSliderModule } from 'ng-zorro-antd/slider';
 
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -51,6 +52,7 @@ import { ViewBuinessListingComponent } from './business-listing/view-business-li
 import { SettingsComponent } from './settings/settings.component';
 import { MyReservationComponent } from './settings/my-reservations/my-reservations.component';
 import { EditReservationComponent } from './reservation/edit-reservation/edit-reservation.component';
+import { SearchFilterListingsComponent } from './search-filter/search-filter-listings/search-filter-listings.component';
 
 registerLocaleData(en);
 
@@ -63,13 +65,14 @@ registerLocaleData(en);
     RegisterComponent,
     AuthenticateComponent,
     NewBusinessListingComponent,
-    SearchFilterBarComponent,
     EditBusinessListingComponent,
     ViewBuinessListingComponent,
     SettingsComponent,
     MyProfileComponent,
     MyReservationComponent,
     EditReservationComponent,
+    SearchFilterBarComponent,
+    SearchFilterListingsComponent
   ],
   imports: [
     BrowserModule,
@@ -95,6 +98,7 @@ registerLocaleData(en);
     NzTimePickerModule,
     NzLayoutModule,
     NzDatePickerModule,
+    NzSliderModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NzIconModule.forChild([UserOutline, TagOutline]),

@@ -3,10 +3,11 @@
     <input nz-input nzSize="large" type="text" [nzAutocomplete]="auto" [(ngModel)]="searchValue"
       (input)="searchByOutletName($event)" (click)="searchByOutletName($event)" placeholder="Search for a Restaurant Name"/>
   </nz-input-group>
-  <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a Cuisine" [(ngModel)]="cuisineValue">
+  <nz-select *ngIf="atHomePage" nzShowSearch nzAllowClear nzPlaceHolder="Select a Cuisine" [(ngModel)]="cuisineValue" 
+    (ngModelChange)="cuisineCallSearchByOutletName()">
     <nz-option *ngFor="let cuisine of cuisineList" [nzValue]="cuisine.id" [nzLabel]="cuisine.cuisine"></nz-option>
   </nz-select>
-  <button nz-button nzSize="large" nzType="primary">search</button>
+  <button nz-button nzSize="large" nzType="primary" (click)="routeToSearchFilterListings()">search</button>
 </div>
 <ng-template #inputClearTpl>
   <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="searchValue"
@@ -14,9 +15,9 @@
 </ng-template>
 <nz-autocomplete #auto [nzBackfill]="true">
   <nz-auto-option *ngFor="let searchResult of searchResults" [nzValue]="searchResult.id"
-    [nzLabel]="searchResult.outletName" (click)="routeToViewRestaurant()">
-    <img alt
-      [src]="'https://media.licdn.com/dms/image/C5603AQHLDs5m0fe-NQ/profile-displayphoto-shrink_800_800/0/1644740105431?e=1703721600&v=beta&t=J42_ELIKmYg82GtQ9Yv6IXUBjo0TorWWgQ1SmMP-Fto'">
+    [nzLabel]="searchResult.outletName" (click)="routeToViewRestaurant()" routerLink="/reservation/{{searchResult.id}}">
+    <img class="search-img"
+    src="../../../assets/images/restaurants-logos/restaurant-{{searchResult.id}}.jpg">
     <div>
       <span>{{ searchResult.outletName }}</span>
       <span>{{ searchResult.address }}</span>
