@@ -39,7 +39,7 @@ export class ViewBuinessListingComponent implements OnInit {
         private datepipe: DatePipe
     ) {
         this.reservationGroup = this.fb.group({
-            date: [new Date(), [Validators.required]],
+            date: [null, [Validators.required]],
             noOfDiners: [null, [Validators.required]],
             businessListingDiscountsId: [null, [Validators.required]],
             specialRequest: [null],
@@ -79,6 +79,10 @@ export class ViewBuinessListingComponent implements OnInit {
                 next: (res: any) => {
                     this.businessListingDescriptionMaster = res;
                     this.getBusinessListing();
+
+                    // this.reservationGroup.patchValue({
+                    //     date: new Date()
+                    // })
                 }
             })
         }

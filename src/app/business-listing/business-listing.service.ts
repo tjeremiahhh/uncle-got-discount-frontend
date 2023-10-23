@@ -49,4 +49,8 @@ export class BusinessListingService {
     createNewReservation(reservation: Reservation): Observable<any> {
         return this.http.post<any>(this.reservationBaseUrl + 'create-new-reservation', reservation);
     }
+
+    getBusinessListingIdByUserId(params: HttpParams) {
+        return this.http.get<any>(this.businessListingBaseUrl + 'get-business-listing-id-by-userid', { params });
+    }
 }
