@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'join-us', component: NewBusinessListingComponent },
   { path: 'edit-business-listing', component: EditBusinessListingComponent },
   { path: 'reservation/:id', component: ViewBuinessListingComponent },
-  { path: 'edit-reservation/:id', component: EditReservationComponent },
+  { path: 'edit-reservation', component: EditReservationComponent },
 
   {
     path: '', component: SettingsComponent,

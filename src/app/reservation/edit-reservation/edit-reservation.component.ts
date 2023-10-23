@@ -17,8 +17,8 @@ import { ViewBuinessListingComponent } from 'src/app/business-listing/view-busin
   styleUrls: ['./edit-reservation.component.less']
 })
 export class EditReservationComponent implements OnInit {
-  @Input() businessId: string | null = '1';
-  @Input() reservationId: string = '7';
+  businessId!: string | null;
+  reservationId!: string | null;
 
   reservationGroup!: UntypedFormGroup;
 
@@ -51,25 +51,28 @@ export class EditReservationComponent implements OnInit {
       businessListingDiscountsId: [null, [Validators.required]],
       specialRequests: [null],
     })
+
+    this.reservationId = this.route.snapshot.queryParamMap.get('reservationId');
+    this.businessId = this.route.snapshot.queryParamMap.get('businessListingId');
   }
 
   ngOnInit() {
     let params = new HttpParams;
-    params = params.set('id', this.reservationId);
+    if(this.reservationId != null) {
+      params = params.set('id', this.reservationId);
+    }
     this.reservationService.getReservation(params).subscribe({
       next: (res: any) => {
         this.reservation = res;
         if (this.reservation.date != null) {
           this.reservation.date = new Date(this.reservation.date);
         }
+        this.getDescriptionDetails();
       }
     })
+  }
 
-    // Setting routes id into variable
-
-  
-
-    // On load, call api to get details 
+  getDescriptionDetails() {
     if (this.businessId) {
       // Getting master list of metadata
       this.businessListingService.getBusinessListingDescriptionDetails().subscribe({
@@ -153,11 +156,11 @@ export class EditReservationComponent implements OnInit {
   }
 
   onReserve() {
-    this.businessListingService.createNewReservation(this.reservation).subscribe({
+    this.reservationService.editReservation(this.reservation).subscribe({
       next: (res: any) => {
-        this.notificationService.success('', "Reservation created!");
+        this.notificationService.success('', "Reservation updated!");
         this.showReservationModal = false;
-        this.reservationGroup.reset(({ date: new Date() }));
+        this.ngOnInit();        
       }
     })
   }
@@ -176,7 +179,6 @@ export class EditReservationComponent implements OnInit {
 
   handleReviewReservation() {
     if (this.reservationGroup.valid) {
-      this.reservation = new Reservation();
       this.reservation.date = this.datepipe.transform(this.reservationGroup.get('date')?.value, 'yyyy-MM-dd HH:mm');
       this.reservation.businessListingDiscountsId = this.reservationGroup.get('businessListingDiscountsId')?.value;
       this.reservation.noOfDiners = this.reservationGroup.get('noOfDiners')?.value;

@@ -91,7 +91,6 @@ export class MyReservationComponent implements OnInit {
       this.reservationService.getAllHistoricalReservations(params).subscribe({
         next: (res: any) => {
           this.reservations = res;
-          console.log(res)
           this.getBusinessListingAndDiscounts()
         }
       });
@@ -126,7 +125,6 @@ export class MyReservationComponent implements OnInit {
             reservation.businessListingId = res.businessListing.id
             reservation.businessListingDiscount = this.processBusinessListingDiscounts(res.businessListingDiscounts);
 
-            console.log(reservation.businessListingDiscount)
             // reservation.businessListingDescription = this.processBusinessListingDescription(res.businessListingDescription);
             
           }
@@ -157,17 +155,17 @@ export class MyReservationComponent implements OnInit {
     return businessListingDiscounts;
   }
 
-  onEdit(reservationId: number | undefined, businessId: number) {
-    this.modalService.create({
-      nzTitle: "<b class='text-[20px]'>edit reservation</b>",
-      nzContent: EditReservationComponent,
-      nzWidth: "1000px",
-      nzFooter: null,
-      nzData: {
-        businessId: 1,
-        reservationId: reservationId
-      }
-    })
-  }
+  // onEdit(reservationId: number | undefined, businessId: number | undefined) {
+  //   const modal = this.modalService.create({
+  //     nzTitle: "<b class='text-[20px]'>edit reservation</b>",
+  //     nzContent: EditReservationComponent,
+  //     nzWidth: "1000px",
+  //     nzFooter: null,
+  //     nzData: {
+  //       businessId: businessId,
+  //       reservationId: reservationId
+  //     }
+  //   })
+  // }
 
 }
