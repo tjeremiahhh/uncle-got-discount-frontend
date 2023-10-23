@@ -3,8 +3,8 @@ import { BusinessListingService } from '../../business-listing/business-listing.
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { BusinessListing, BusinessListingDescription, BusinessListingDiscounts, BusinessListingSpecialConditions, Reservation } from '../../business-listing/model/business-listing.model';
 import { HttpParams } from '@angular/common/http';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { NzModalComponent, NzModalService } from 'ng-zorro-antd/modal';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { NzModalComponent, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { AuthenticationService } from 'src/app/authentication/authenticate/authentication.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { DatePipe } from '@angular/common';
@@ -44,6 +44,7 @@ export class EditReservationComponent implements OnInit {
     private notificationService: NzNotificationService,
     private datepipe: DatePipe,
     private modalService: NzModalService,
+    private router: Router
   ) {
     this.reservationGroup = this.fb.group({
       date: [new Date(), [Validators.required]],
@@ -58,7 +59,7 @@ export class EditReservationComponent implements OnInit {
 
   ngOnInit() {
     let params = new HttpParams;
-    if(this.reservationId != null) {
+    if (this.reservationId != null) {
       params = params.set('id', this.reservationId);
     }
     this.reservationService.getReservation(params).subscribe({
@@ -160,7 +161,7 @@ export class EditReservationComponent implements OnInit {
       next: (res: any) => {
         this.notificationService.success('', "Reservation updated!");
         this.showReservationModal = false;
-        this.ngOnInit();        
+        this.ngOnInit();
       }
     })
   }
@@ -199,5 +200,24 @@ export class EditReservationComponent implements OnInit {
 
   handleCloseModal() {
     this.showReservationModal = false;
+  }
+
+  onDelete() {
+    this.modalService.create({
+      nzTitle: "cancel reservation",
+      nzContent: "are you sure you want to cancel reservation?",
+      nzOnOk: () => {
+        if(this.reservationId != null) {
+          let params = new HttpParams();
+          params = params.set('id', this.reservationId);
+          this.reservationService.deleteReservation(params).subscribe({
+            next: (res: any) => {
+              this.notificationService.success('', "Reservation cancelled!");
+              this.router.navigate(['/my-upcoming-reservations']);
+            }
+          })
+        }
+      }
+    })
   }
 }

@@ -21,4 +21,8 @@ export class ReservationService {
     editReservation(reservation: Reservation): Observable<any> {
         return this.http.post<any>(this.reservationBaseUrl + 'edit-reservation', reservation);
     }
+
+    deleteReservation(params: HttpParams): Observable<any> {
+        return this.http.post<any>(this.reservationBaseUrl + 'delete-reservation', {}, { params });
+    }
 }
