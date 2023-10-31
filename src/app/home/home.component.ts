@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BusinessListing, ISearchResult } from './model/home.model';
 import { HomeService } from './home.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Cuisines } from '../business-listing/model/business-listing.model';
+import { ISearchParams } from '../search-filter/model/search-filter.model';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private homeService: HomeService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -40,5 +42,9 @@ export class HomeComponent implements OnInit {
       const sliderItem = sliderItems[0].scrollWidth;
       slider.scrollLeft += sliderItem * direction;
     }
+  }
+
+  public searchByCuisine(cuisineValue: number): void {
+    this.router.navigate(['search-filter-listings'], { queryParams: { cuisineValue: cuisineValue} });
   }
 }

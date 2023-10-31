@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/authentication/authenticate/authentication.service';
-import { CheckOption, ICuisine, IDiscount, ISearchListing, SearchListingsRequest } from '../model/search-filter.model';
+import { CheckOption, ICuisine, IDiscount, ISearchListing, ISearchListingsRequest, ISearchParams, SearchListingsRequest } from '../model/search-filter.model';
 import { SearchFilterService } from '../search-filter.service';
-import { combineLatest } from 'rxjs';
+import { Subject, combineLatest, finalize, switchMap, tap } from 'rxjs';
 import { NzMarks } from 'ng-zorro-antd/slider';
 
 @Component({
@@ -13,7 +13,7 @@ import { NzMarks } from 'ng-zorro-antd/slider';
 })
 export class SearchFilterListingsComponent implements OnInit {
 
-  searchValue ?: string | null;
+  searchValue ?: string;
   cuisineValue ?: number | null;
   cuisineList ?: ICuisine[] = [];
   discountList ?: IDiscount[] = [];
@@ -29,11 +29,14 @@ export class SearchFilterListingsComponent implements OnInit {
   checkOptions : CheckOption[] = [];
   allChecked ?: boolean;
   searchListingList : ISearchListing[] = [];
+  isLoading: boolean = false;
+  searchListings$: Subject<SearchListingsRequest> = new Subject<SearchListingsRequest>();
 
   constructor(
     private authenticationService: AuthenticationService,
     private activatedRoute: ActivatedRoute,
-    private searchFilterService: SearchFilterService
+    private searchFilterService: SearchFilterService,
+    private router: Router
   ) {
   }
 
@@ -48,23 +51,18 @@ export class SearchFilterListingsComponent implements OnInit {
       this.searchFilterService.getAllDiscounts()
     ]).subscribe(([params, cuisineList, discountList]) => {
       // Handle Search Value
-      this.searchValue = params.get('searchValue');
+      this.searchValue = params.get('searchValue')?.valueOf();
 
-      
       // Handle Cuisine List & Cuisine Value
       this.cuisineList = cuisineList;
 
       if (params.get('cuisineValue')) {
         this.cuisineValue = new Number(params.get('cuisineValue')).valueOf();
         this.allChecked = false;
-        this.cuisineList.forEach((cuisine) => {
-          this.checkOptions.push(new CheckOption(cuisine.cuisine, cuisine.id, cuisine.id === this.cuisineValue));
-        });
+        this.checkOptions = this.cuisineList.map((cuisine: ICuisine) => new CheckOption(cuisine.cuisine, cuisine.id, cuisine.id === this.cuisineValue))
       } else {
         this.allChecked = true;
-        this.cuisineList.forEach((cuisine) => {
-          this.checkOptions.push(new CheckOption(cuisine.cuisine, cuisine.id, true));
-        });
+        this.checkOptions = this.cuisineList.map((cuisine: ICuisine) => new CheckOption(cuisine.cuisine, cuisine.id, true));
       }
 
       // Handle Discount List
@@ -76,7 +74,23 @@ export class SearchFilterListingsComponent implements OnInit {
       this.discountMap.set(100, 50);
 
       // Search
-      this.searchListings();
+      let searchListingsRequest: SearchListingsRequest = new SearchListingsRequest(
+        this.searchValue? this.searchValue : '',
+        this.checkOptions.filter((checkOption) => checkOption.checked === true).map((checkOption) => checkOption.value),
+        this.discountMap.get(this.discountFilter[0]),
+        this.discountMap.get(this.discountFilter[1])
+        )
+
+      this.searchListings$.pipe(
+        tap(() => this.isLoading = true),
+        switchMap((searchListingRequest: SearchListingsRequest) => 
+          this.searchFilterService.searchListings(searchListingRequest).pipe(finalize(() => this.isLoading = false))
+        )
+      ).subscribe((searchListingList: ISearchListing[]) => {
+        this.searchListingList = searchListingList;
+      });
+
+      this.searchListings$.next(searchListingsRequest);
     })
   }
 
@@ -85,19 +99,26 @@ export class SearchFilterListingsComponent implements OnInit {
       ...item,
       checked: this.allChecked
     }))
+
+    this.searchListings();
   }
 
-  
-  public searchListings(): void {
+  public searchListings(searchValue?: string): void {
+    if (searchValue != undefined) {
+      this.searchValue = searchValue;
+    }
+
     let searchListingsRequest: SearchListingsRequest = new SearchListingsRequest(
       this.searchValue? this.searchValue : '',
-      this.checkOptions.filter((checkOption) => checkOption.checked = true).map((checkOption) => checkOption.value),
+      this.checkOptions.filter((checkOption) => checkOption.checked === true).map((checkOption) => checkOption.value),
       this.discountMap.get(this.discountFilter[0]),
       this.discountMap.get(this.discountFilter[1])
       )
 
-    this.searchFilterService.searchListings(searchListingsRequest).subscribe((searchListingList: ISearchListing[]) => {
-      this.searchListingList = searchListingList;
-    });
+    this.searchListings$.next(searchListingsRequest);
+  }
+
+  ngOnDestroy(): void {
+    this.searchListings$.unsubscribe();
   }
 }

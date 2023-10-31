@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {ICuisine, ISearchResult } from '../model/search-filter.model';
+import {ICuisine, ISearchParams, ISearchResult, SearchParams } from '../model/search-filter.model';
 import { SearchFilterService } from '../search-filter.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
@@ -11,9 +11,9 @@ import { HttpParams } from '@angular/common/http';
   styleUrls: ['./search-filter-bar.component.less']
 })
 export class SearchFilterBarComponent implements OnInit {
-  @Input("atHomePage") atHomePage ?: boolean;
+  @Input("atSearchPage") atSearchPage ?: boolean;
   @Input("searchValue") searchValue ?: string;
-  @Output() searchButtonClicked = new EventEmitter<boolean>();
+  @Output() searchButtonClicked = new EventEmitter<string>();
   searchResults ?: ISearchResult[] = [];
   cuisineValue ?: number;
   cuisineList ?: ICuisine[] = [];
@@ -22,7 +22,8 @@ export class SearchFilterBarComponent implements OnInit {
   constructor(
     private searchFilterService: SearchFilterService,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -36,7 +37,7 @@ export class SearchFilterBarComponent implements OnInit {
   }
   
   public clearSearchValue(): void {
-    this.searchValue = "";
+    this.searchValue = '';
     this.searchResults = [];
   }
 
@@ -66,22 +67,26 @@ export class SearchFilterBarComponent implements OnInit {
       }
     })
   }
-
-  public cuisineCallSearchByOutletName(): void {
-  }
   
   public routeToViewRestaurant(): void {
     // Route to reservation component
   }
 
   public routeToSearchFilterListings(): void {
-    let queryParams = {
-      searchValue: this.searchValue,
-      cuisineValue: this.cuisineValue
+    if (this.atSearchPage) {
+      this.searchButtonClicked.emit(this.searchValue);
+    } else {
+      let queryParams = {
+        searchValue: this.searchValue,
+        cuisineValue: this.cuisineValue
+      }
+
+      this.router.navigate(['search-filter-listings'], { queryParams: queryParams });
     }
-
-    this.router.navigate(['search-filter-listings'], { queryParams: queryParams });
-
-    this.searchButtonClicked.emit(true);
+    
+    
+    // if (!this.atHomePage) {
+    //   this.searchButtonClicked.emit();
+    // }
   }
 }

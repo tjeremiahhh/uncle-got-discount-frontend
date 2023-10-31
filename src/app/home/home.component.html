@@ -1,8 +1,8 @@
 <main>
   <div class="hero-banner">
     <div class="hero-content">
-      <h1>uncle no discount</h1>
-      <app-search-filter-bar [atHomePage]="true"></app-search-filter-bar>
+      <h1>uncle got discount</h1>
+      <app-search-filter-bar [atSearchPage]="false"></app-search-filter-bar>
     </div>
 
     <nz-carousel nzAutoPlay="true" nzDots="false" nzEnableSwipe="false">
@@ -58,7 +58,7 @@
       </button>
 
       <div nz-col nzXs="14" nzSm="10" nzMd="7" nzLg="5" nzXl="4" class="custom-list-item"
-        *ngFor="let cuisine of cuisines; index as i ">
+        *ngFor="let cuisine of cuisines; index as i " (click)="searchByCuisine(cuisine.id)">
         <nz-card [nzCover]="coverTemplate" nzHoverable="true">
           <nz-card-meta nzTitle="{{cuisine.cuisine}}"></nz-card-meta>
         </nz-card>

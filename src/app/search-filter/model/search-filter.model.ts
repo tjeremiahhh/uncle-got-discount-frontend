@@ -42,9 +42,19 @@ export interface ISearchListing extends ISearchResult {
     discountList?: IBusinessListingDiscount[];
 }
 
-export interface ISearchListingsRequest {
+export interface ISearchParams {
     outletName?: string;
     cuisineList?: (number | undefined)[];
+}
+
+export class SearchParams implements ISearchParams {
+    constructor(
+        public outletName?: string,
+        public cuisineList?: (number | undefined)[]
+    ){}
+}
+
+export interface ISearchListingsRequest extends ISearchParams {
     minDiscount?: number;
     maxDiscount?: number;
 }
@@ -57,3 +67,5 @@ export class SearchListingsRequest implements ISearchListingsRequest {
         public maxDiscount?: number
     ){}
 }
+
+

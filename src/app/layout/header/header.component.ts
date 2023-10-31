@@ -38,7 +38,6 @@ export class HeaderComponent implements OnInit {
     this.businessListingService.getBusinessListingIdByUserId(params).subscribe({
       next: (res: any) => {
         this.businessListingId = res;
-        console.log(res)
       }
     })
   }
