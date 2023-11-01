@@ -1,3 +1,5 @@
+import { NzTableQueryParams } from "ng-zorro-antd/table";
+
 export interface ISearchResult {
     id ?: number;
     outletName ?: string;
@@ -68,4 +70,7 @@ export class SearchListingsRequest implements ISearchListingsRequest {
     ){}
 }
 
-
+export interface ISearchListingsPageable {
+    search: ISearchListingsRequest;
+    pageable: NzTableQueryParams;
+}

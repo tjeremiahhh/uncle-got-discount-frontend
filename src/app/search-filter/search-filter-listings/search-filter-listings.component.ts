@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/authentication/authenticate/authentication.service';
-import { CheckOption, ICuisine, IDiscount, ISearchListing, ISearchListingsRequest, ISearchParams, SearchListingsRequest } from '../model/search-filter.model';
+import { CheckOption, ICuisine, IDiscount, ISearchListing, ISearchListingsPageable, ISearchListingsRequest, ISearchParams, SearchListingsRequest } from '../model/search-filter.model';
 import { SearchFilterService } from '../search-filter.service';
 import { Subject, combineLatest, finalize, switchMap, tap } from 'rxjs';
 import { NzMarks } from 'ng-zorro-antd/slider';
+import { IPageableResponseBody } from 'src/app/model/pageable-response.model';
+import { HttpParams } from '@angular/common/http';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { deepCopy } from '@angular-devkit/core/src/utils/object';
 
 @Component({
   selector: 'app-search-filter-listings',
@@ -30,7 +34,27 @@ export class SearchFilterListingsComponent implements OnInit {
   allChecked ?: boolean;
   searchListingList : ISearchListing[] = [];
   isLoading: boolean = false;
-  searchListings$: Subject<SearchListingsRequest> = new Subject<SearchListingsRequest>();
+  searchListings$: Subject<ISearchListingsPageable> = new Subject<ISearchListingsPageable>();
+
+  page: number = 1;
+  size: number = 10;
+  sort: string[] = [];
+  total: number = 0;
+  totalPages: number = 0;
+
+  sortParams = [
+    { name: 'Outlet Name', sort: { key: 'business_listings.outlet_name', value: '' }},
+    { name: 'Address', sort: { key: 'business_listings.address', value: '' }}
+  ]
+
+  defaultTableQueryParams: NzTableQueryParams = {
+    pageIndex: 1,
+    pageSize: 10,
+    sort: this.sortParams.map((param) => param.sort),
+    filter: []
+  }
+
+  tableQueryParams: NzTableQueryParams = deepCopy(this.defaultTableQueryParams);
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -42,6 +66,21 @@ export class SearchFilterListingsComponent implements OnInit {
 
   ngOnInit() {
     this.initialLoad();
+  }
+
+  public min(num1: number, num2: number): number {
+    return Math.min(num1, num2);
+  }
+
+  private buildSearchObject(tableQueryParams?: NzTableQueryParams): ISearchListingsPageable {
+    let searchListingsRequest: SearchListingsRequest = new SearchListingsRequest(
+      this.searchValue? this.searchValue : '',
+      this.checkOptions.filter((checkOption) => checkOption.checked === true).map((checkOption) => checkOption.value),
+      this.discountMap.get(this.discountFilter[0]),
+      this.discountMap.get(this.discountFilter[1])
+      )
+    
+    return { search: searchListingsRequest, pageable: tableQueryParams? tableQueryParams : this.tableQueryParams };
   }
 
   private initialLoad(): void  {
@@ -83,14 +122,15 @@ export class SearchFilterListingsComponent implements OnInit {
 
       this.searchListings$.pipe(
         tap(() => this.isLoading = true),
-        switchMap((searchListingRequest: SearchListingsRequest) => 
-          this.searchFilterService.searchListings(searchListingRequest).pipe(finalize(() => this.isLoading = false))
+        switchMap((searchListingsPageable: ISearchListingsPageable) => 
+          this.searchFilterService.searchListings(searchListingsPageable).pipe(finalize(() => this.isLoading = false))
         )
-      ).subscribe((searchListingList: ISearchListing[]) => {
-        this.searchListingList = searchListingList;
+      ).subscribe((searchListingList: IPageableResponseBody<ISearchListing>) => {
+        this.searchListingList = searchListingList.content;
+        this.total = searchListingList.totalElements;
       });
 
-      this.searchListings$.next(searchListingsRequest);
+      this.searchListings$.next(this.buildSearchObject());
     })
   }
 
@@ -115,7 +155,28 @@ export class SearchFilterListingsComponent implements OnInit {
       this.discountMap.get(this.discountFilter[1])
       )
 
-    this.searchListings$.next(searchListingsRequest);
+    this.searchListings$.next(this.buildSearchObject());
+  }
+
+  // Pagination
+  public toFirstPage(): void {
+    this.page = 1;
+    this.searchListings();
+  }
+
+  public toLastPage(): void {
+    this.page = this.totalPages;
+    this.searchListings();
+  }
+
+  public onParamsChange(index: number): void {
+    const value = this.tableQueryParams.sort[index].value;
+
+    this.tableQueryParams.sort = deepCopy(this.defaultTableQueryParams.sort);
+    
+    this.tableQueryParams.sort[index].value = value === ''? 'ascend' : value === 'ascend'? 'descend' : '';
+
+    this.searchListings$.next(this.buildSearchObject());
   }
 
   ngOnDestroy(): void {

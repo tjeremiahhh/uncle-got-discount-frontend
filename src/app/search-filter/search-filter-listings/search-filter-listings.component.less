@@ -29,13 +29,72 @@ h2 {
     flex-direction: column !important; 
 }
 
+.search-listing-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.search-listing-pagination {
+    display: flex;
+    justify-content: space-between;
+    
+    .pagination-navigation {
+        display: flex;
+        gap: 5px;
+    }
+
+    .selectable {
+        cursor: pointer;
+        pointer-events: all;
+    }
+
+    .non-selectable {
+        cursor: none;
+        pointer-events: none;
+        color: gray;
+    }
+}
+
+:host ::ng-deep .ant-table {
+    background: none;
+
+    .ant-table-tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .ant-table-row {
+            min-height: 100px;
+            height: 150px;
+        }
+
+        .ant-table-placeholder {
+            display: flex;
+
+            .nz-disable-td {
+                width: 100%;
+
+                nz-card {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: red;
+                    font-weight: 400;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+
 .business-listing-container {
     display: flex;
     width: 100%;
     background-color: white;
     gap: 1rem;
     padding: 1rem;
-    margin-bottom: 1rem;
     cursor: pointer;
     
     img {
@@ -51,5 +110,41 @@ h2 {
         color: @primary-color;
         font-weight: 400;
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    }
+}
+
+.search-listing-sort {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    .sort-button {
+        display: flex;
+        gap: 5px;
+        height: 40px;
+        align-items: center;
+        background: white;
+        cursor: pointer;
+        padding: 10px;
+        border: 1px solid lightgray;
+
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            i {
+                color: darkslategray;
+            }
+
+            .selected {
+                color: @primary-color;
+            }
+        }
+    }
+
+    .sort-button:hover {
+        translate: -1px -1px;
+        box-shadow: 1px 1px darkgray;
     }
 }

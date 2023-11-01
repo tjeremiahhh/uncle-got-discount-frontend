@@ -2,9 +2,11 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { devMicroserviceUrl, prodMicroserviceUrl } from "src/environments/environments";
-import { ICuisine, IDiscount, ISearchListing, ISearchListingsRequest, ISearchResult } from "./model/search-filter.model";
+import { ICuisine, IDiscount, ISearchListing, ISearchListingsPageable, ISearchListingsRequest, ISearchResult } from "./model/search-filter.model";
+import { IPageableResponseBody } from "../model/pageable-response.model";
+import { createTableQueryHttpParam } from "../util/http-param-utility";
 
-const searchFilterUrl = prodMicroserviceUrl.search_filter;
+const searchFilterUrl = devMicroserviceUrl.search_filter;
 
 @Injectable({
     providedIn: 'root'
@@ -32,7 +34,7 @@ export class SearchFilterService {
         return this.http.get<IDiscount[]>(searchFilterUrl + 'get-all-discounts');
     }
 
-    searchListings(searchListingsRequest: ISearchListingsRequest): Observable<ISearchListing[]> {
-        return this.http.post<ISearchListing[]>(searchFilterUrl + 'search-listings', searchListingsRequest);
+    searchListings(searchListingsPageable: ISearchListingsPageable): Observable<IPageableResponseBody<ISearchListing>> {
+        return this.http.post<IPageableResponseBody<ISearchListing>>(searchFilterUrl + 'search-listings', searchListingsPageable.search , { params: createTableQueryHttpParam(searchListingsPageable.pageable) });
     }
 }

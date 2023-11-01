@@ -26,6 +26,7 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -99,6 +100,7 @@ registerLocaleData(en);
     NzLayoutModule,
     NzDatePickerModule,
     NzSliderModule,
+    NzTableModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NzIconModule.forChild([UserOutline, TagOutline]),

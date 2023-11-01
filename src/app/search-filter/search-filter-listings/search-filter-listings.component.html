@@ -16,16 +16,43 @@
             </nz-card>
         </div>
         <!-- Search Listings -->
-        <div nz-col nzSpan="16">
-            <div *ngFor="let searchListing of searchListingList" class="business-listing-container" routerLink="/reservation/{{searchListing.id}}">
+        <div nz-col nzSpan="16" class="search-listing-container">
+            <div class="search-listing-sort">
+                <span>Sort by: </span>
+                <div class="sort-button" *ngFor="let sort of tableQueryParams.sort; let i = index" (click)="onParamsChange(i)">
+                    <span>{{ sortParams[i].name | titlecase }}</span>
+                    <div>
+                        <i nz-icon nzType="caret-up" nzTheme="fill" [class]="sort.value === 'ascend'? 'selected' : ''"></i>
+                        <i nz-icon nzType="caret-down" nzTheme="fill" [class]="sort.value === 'descend'? 'selected' : ''"></i>
+                    </div>
+                </div>
+            </div>
+            <ng-template #rangeTemplate let-range="range" let-total>
+                {{ range[0] }}-{{ range[1] }} of {{ total }}
+            </ng-template>
+            <nz-table #searchTable [nzShowTotal]="rangeTemplate" [nzData]="searchListingList" [(nzPageIndex)]="tableQueryParams.pageIndex" 
+                [(nzPageSize)]="tableQueryParams.pageSize" nzPaginationPosition="both" [nzTotal]="total" [nzNoResult]="noResultTemplate">
+                <tbody>
+                    <tr *ngFor="let searchListing of searchTable.data" class="business-listing-container" routerLink="/reservation/{{searchListing.id}}">
+                        <img class="search-img" src="../../../assets/images/restaurants-logos/restaurant-{{searchListing.id}}.jpg">
+                        <div class="card-details">
+                            <div>{{ searchListing.outletName }}</div>
+                            <div>{{ searchListing.address }}</div>
+                        </div>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <!-- <div *ngFor="let searchListing of searchListingList" class="business-listing-container" routerLink="/reservation/{{searchListing.id}}">
                 <img class="search-img" src="../../../assets/images/restaurants-logos/restaurant-{{searchListing.id}}.jpg">
                 <div class="card-details">
                     <div>{{ searchListing.outletName }}</div>
                     <div>{{ searchListing.address }}</div>
                 </div>
-            </div>
-            <nz-card *ngIf="searchListingList.length === 0" style="display: flex; justify-content: center; align-items: center; color: red; font-weight: 400;">
-                Please search for a relevant restaurant</nz-card>
+            </div> -->
+            <ng-template #noResultTemplate>
+                <nz-card *ngIf="searchListingList.length === 0">
+                    Please search for a relevant restaurant</nz-card>
+            </ng-template>
         </div>
     </div>
 </main>
